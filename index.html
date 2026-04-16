@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Innova Digital — Soluções Adaptive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS & RESET
+═══════════════════════════════════════════ */
+:root {
+  --navy:      #0B1D4E;
+  --blue:      #0052CC;
+  --sky:       #0EA5E9;
+  --cyan:      #00C8FF;
+  --white:     #FFFFFF;
+  --off:       #F4F7FF;
+  --muted:     #8B9CC8;
+  --border:    #D6E0F5;
+  --card:      #FFFFFF;
+  --text:      #1A2B5E;
+  --text-sm:   #4A5980;
+  --danger:    #E53E3E;
+  --success:   #38A169;
+  --warn:      #D97706;
+
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  --radius:    12px;
+  --radius-lg: 20px;
+  --shadow:    0 4px 24px rgba(11,29,78,.10);
+  --shadow-lg: 0 12px 48px rgba(11,29,78,.18);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--off);
+  color: var(--text);
+  overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: var(--font-body); border: none; }
+input, textarea, select { font-family: var(--font-body); }
+
+/* ═══════════════════════════════════════════
+   VIEWS
+═══════════════════════════════════════════ */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ═══════════════════════════════════════════
+   TOPBAR
+═══════════════════════════════════════════ */
+#topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(11,29,78,.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,200,255,.15);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+}
+.topbar-logo {
+  font-family: var(--font-head);
+  font-size: 1.3rem; font-weight: 800;
+  color: var(--white);
+  letter-spacing: -.5px;
+}
+.topbar-logo span { color: var(--cyan); }
+.topbar-nav { display: flex; gap: 32px; align-items: center; }
+.topbar-nav a {
+  color: rgba(255,255,255,.7); font-size: .9rem;
+  transition: color .2s;
+}
+.topbar-nav a:hover { color: var(--cyan); }
+.topbar-actions { display: flex; gap: 12px; align-items: center; }
+#btn-logout {
+  background: transparent; border: 1px solid rgba(0,200,255,.4);
+  color: var(--cyan); padding: 7px 16px; border-radius: 8px;
+  font-size: .85rem; transition: all .2s;
+}
+#btn-logout:hover { background: rgba(0,200,255,.1); }
+#user-display { color: rgba(255,255,255,.6); font-size: .85rem; }
+#topbar-auth-btns { display: flex; gap: 10px; }
+.btn-ghost {
+  background: transparent; border: 1px solid rgba(255,255,255,.25);
+  color: var(--white); padding: 8px 18px; border-radius: 8px;
+  font-size: .85rem; transition: all .2s;
+}
+.btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+.btn-primary-sm {
+  background: var(--cyan); color: var(--navy);
+  padding: 8px 18px; border-radius: 8px; font-size: .85rem;
+  font-weight: 600; transition: all .2s;
+}
+.btn-primary-sm:hover { background: #00e5ff; box-shadow: 0 0 16px rgba(0,200,255,.4); }
+
+/* ═══════════════════════════════════════════
+   LANDING — HERO
+═══════════════════════════════════════════ */
+#landing { padding-top: 64px; }
+
+.hero {
+  min-height: 100vh;
+  background: var(--navy);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center;
+}
+.hero-bg {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.hero-bg::before {
+  content: '';
+  position: absolute; width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(0,200,255,.12) 0%, transparent 70%);
+  top: -200px; right: -200px; border-radius: 50%;
+}
+.hero-bg::after {
+  content: '';
+  position: absolute; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0,82,204,.2) 0%, transparent 70%);
+  bottom: -100px; left: 10%; border-radius: 50%;
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,200,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,200,255,.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.hero-content {
+  position: relative; z-index: 2;
+  max-width: 1200px; margin: 0 auto; padding: 0 40px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,200,255,.1); border: 1px solid rgba(0,200,255,.25);
+  color: var(--cyan); font-size: .8rem; font-weight: 500;
+  padding: 6px 14px; border-radius: 100px; margin-bottom: 24px;
+}
+.hero-badge::before {
+  content: ''; width: 6px; height: 6px; background: var(--cyan);
+  border-radius: 50%; animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .5; transform: scale(1.5); }
+}
+.hero-title {
+  font-family: var(--font-head);
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 800; line-height: 1.1;
+  color: var(--white); margin-bottom: 20px;
+}
+.hero-title em { font-style: normal; color: var(--cyan); }
+.hero-subtitle {
+  color: rgba(255,255,255,.6); font-size: 1.05rem;
+  line-height: 1.7; margin-bottom: 36px; max-width: 480px;
+}
+.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-hero-primary {
+  background: linear-gradient(135deg, var(--sky), var(--cyan));
+  color: var(--navy); padding: 14px 32px; border-radius: var(--radius);
+  font-size: 1rem; font-weight: 700; font-family: var(--font-head);
+  transition: all .25s; box-shadow: 0 4px 20px rgba(0,200,255,.3);
+}
+.btn-hero-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,200,255,.45); }
+.btn-hero-ghost {
+  background: transparent; border: 1.5px solid rgba(255,255,255,.2);
+  color: var(--white); padding: 14px 32px; border-radius: var(--radius);
+  font-size: 1rem; font-weight: 500; transition: all .25s;
+}
+.btn-hero-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+
+.hero-visual {
+  position: relative;
+}
+.hero-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  backdrop-filter: blur(12px);
+}
+.hero-card-header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+}
+.hero-card-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--blue), var(--sky));
+  display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+}
+.hero-card-title { color: var(--white); font-weight: 600; font-size: .95rem; }
+.hero-card-sub { color: var(--muted); font-size: .8rem; margin-top: 2px; }
+.hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.hero-stat {
+  background: rgba(0,0,0,.2); border-radius: 10px; padding: 14px;
+  border: 1px solid rgba(255,255,255,.06);
+}
+.hero-stat-val {
+  font-family: var(--font-head); font-size: 1.5rem; font-weight: 700;
+  color: var(--cyan);
+}
+.hero-stat-label { color: var(--muted); font-size: .75rem; margin-top: 2px; }
+.hero-progress-list { display: flex; flex-direction: column; gap: 10px; }
+.hero-prog-item { display: flex; align-items: center; gap: 10px; }
+.hero-prog-label { color: rgba(255,255,255,.7); font-size: .8rem; width: 100px; flex-shrink: 0; }
+.hero-prog-bar { flex: 1; height: 6px; background: rgba(255,255,255,.1); border-radius: 3px; overflow: hidden; }
+.hero-prog-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+.hero-prog-pct { color: var(--cyan); font-size: .8rem; width: 36px; text-align: right; }
+
+.hero-float {
+  position: absolute; top: -20px; right: -20px;
+  background: var(--success); color: white;
+  padding: 8px 14px; border-radius: 100px;
+  font-size: .78rem; font-weight: 600;
+  box-shadow: 0 4px 16px rgba(56,161,105,.4);
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+/* ═══════════════════════════════════════════
+   LANDING — SERVICES
+═══════════════════════════════════════════ */
+.section {
+  padding: 96px 40px;
+  max-width: 1200px; margin: 0 auto;
+}
+.section-label {
+  font-size: .8rem; font-weight: 600; letter-spacing: 2px;
+  color: var(--sky); text-transform: uppercase; margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-head); font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 800; color: var(--navy); line-height: 1.15;
+  margin-bottom: 16px;
+}
+.section-subtitle {
+  color: var(--text-sm); font-size: 1.05rem; line-height: 1.7;
+  max-width: 520px; margin-bottom: 56px;
+}
+
+.services-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.service-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 32px;
+  transition: all .3s; position: relative; overflow: hidden;
+}
+.service-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .3s;
+}
+.service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--sky); }
+.service-card:hover::before { transform: scaleX(1); }
+.service-icon {
+  width: 52px; height: 52px; border-radius: 14px;
+  background: linear-gradient(135deg, rgba(0,82,204,.1), rgba(14,165,233,.15));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; margin-bottom: 20px;
+  border: 1px solid rgba(0,82,204,.15);
+}
+.service-title {
+  font-family: var(--font-head); font-size: 1.1rem; font-weight: 700;
+  color: var(--navy); margin-bottom: 10px;
+}
+.service-desc { color: var(--text-sm); font-size: .9rem; line-height: 1.65; }
+.service-tag {
+  display: inline-block; margin-top: 16px;
+  background: rgba(0,82,204,.08); color: var(--blue);
+  font-size: .75rem; font-weight: 600;
+  padding: 4px 10px; border-radius: 6px;
+}
+
+/* ═══════════════════════════════════════════
+   LANDING — FEATURES BANNER
+═══════════════════════════════════════════ */
+.features-banner {
+  background: var(--navy); padding: 80px 40px;
+}
+.features-banner-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.features-list { display: flex; flex-direction: column; gap: 20px; }
+.feature-item {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 20px; border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,.06);
+  background: rgba(255,255,255,.03);
+  transition: all .2s;
+}
+.feature-item:hover { border-color: rgba(0,200,255,.2); background: rgba(0,200,255,.04); }
+.feature-item-icon {
+  width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
+  background: rgba(0,200,255,.1); border: 1px solid rgba(0,200,255,.2);
+  display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+}
+.feature-item-title { color: var(--white); font-weight: 600; font-size: .95rem; margin-bottom: 4px; }
+.feature-item-desc { color: var(--muted); font-size: .85rem; line-height: 1.6; }
+
+.features-right {
+  position: relative;
+}
+.upload-preview {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius-lg); padding: 28px;
+}
+.upload-preview-title {
+  color: var(--white); font-weight: 600; margin-bottom: 20px; font-size: .95rem;
+}
+.upload-drop-zone {
+  border: 2px dashed rgba(0,200,255,.3);
+  border-radius: var(--radius); padding: 40px 20px;
+  text-align: center; margin-bottom: 16px;
+  background: rgba(0,200,255,.03);
+  transition: all .2s;
+}
+.upload-drop-zone:hover { border-color: var(--cyan); background: rgba(0,200,255,.07); }
+.upload-drop-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.upload-drop-text { color: rgba(255,255,255,.6); font-size: .88rem; line-height: 1.6; }
+.upload-drop-text strong { color: var(--cyan); }
+.upload-file-list { display: flex; flex-direction: column; gap: 8px; }
+.upload-file-item {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(255,255,255,.04); border-radius: 8px; padding: 10px 14px;
+  border: 1px solid rgba(255,255,255,.06);
+}
+.upload-file-ext {
+  background: var(--blue); color: white;
+  font-size: .7rem; font-weight: 700; padding: 3px 7px; border-radius: 5px; flex-shrink: 0;
+}
+.upload-file-name { color: rgba(255,255,255,.7); font-size: .83rem; flex: 1; }
+.upload-file-size { color: var(--muted); font-size: .78rem; }
+.upload-file-ok { color: var(--success); font-size: 1rem; }
+
+/* ═══════════════════════════════════════════
+   LANDING — CONTACT
+═══════════════════════════════════════════ */
+.contact-section { padding: 96px 40px; background: white; }
+.contact-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+}
+.contact-info { }
+.contact-info-item {
+  display: flex; gap: 14px; align-items: flex-start; margin-bottom: 24px;
+}
+.contact-info-icon {
+  width: 40px; height: 40px; background: var(--off);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink: 0; border: 1px solid var(--border);
+}
+.contact-info-label { color: var(--muted); font-size: .8rem; margin-bottom: 2px; }
+.contact-info-val { color: var(--navy); font-weight: 500; font-size: .9rem; }
+
+.contact-form { display: flex; flex-direction: column; gap: 14px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-size: .83rem; font-weight: 500; color: var(--text-sm); }
+.form-input {
+  padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px;
+  font-size: .9rem; color: var(--navy); background: var(--off);
+  transition: all .2s; outline: none;
+}
+.form-input:focus { border-color: var(--sky); background: white; box-shadow: 0 0 0 3px rgba(14,165,233,.1); }
+textarea.form-input { resize: vertical; min-height: 110px; }
+.btn-submit {
+  background: linear-gradient(135deg, var(--blue), var(--sky));
+  color: white; padding: 13px 28px; border-radius: 10px;
+  font-weight: 600; font-size: .95rem; transition: all .2s;
+  box-shadow: 0 4px 16px rgba(0,82,204,.25); align-self: flex-start;
+}
+.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,82,204,.35); }
+#contact-success {
+  display: none; background: rgba(56,161,105,.1);
+  border: 1px solid rgba(56,161,105,.3); border-radius: 10px;
+  padding: 12px 16px; color: var(--success); font-size: .9rem; font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer {
+  background: var(--navy); padding: 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-logo {
+  font-family: var(--font-head); font-size: 1.1rem; font-weight: 800;
+  color: var(--white);
+}
+.footer-logo span { color: var(--cyan); }
+.footer-text { color: var(--muted); font-size: .82rem; }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { color: var(--muted); font-size: .82rem; transition: color .2s; }
+.footer-links a:hover { color: var(--cyan); }
+
+/* ═══════════════════════════════════════════
+   AUTH VIEW
+═══════════════════════════════════════════ */
+#auth-view {
+  min-height: 100vh; background: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  padding: 80px 20px;
+}
+.auth-card {
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius-lg); padding: 48px; width: 100%; max-width: 440px;
+  backdrop-filter: blur(12px);
+}
+.auth-logo {
+  font-family: var(--font-head); font-size: 1.4rem; font-weight: 800;
+  color: white; margin-bottom: 8px; text-align: center;
+}
+.auth-logo span { color: var(--cyan); }
+.auth-subtitle { color: var(--muted); font-size: .88rem; text-align: center; margin-bottom: 32px; }
+.auth-tabs { display: flex; gap: 0; margin-bottom: 28px; border-radius: 10px; overflow: hidden; background: rgba(255,255,255,.06); }
+.auth-tab {
+  flex: 1; padding: 10px; text-align: center; color: var(--muted);
+  font-size: .88rem; font-weight: 500; cursor: pointer; transition: all .2s;
+}
+.auth-tab.active { background: var(--blue); color: white; }
+.auth-form { display: flex; flex-direction: column; gap: 14px; }
+.auth-input {
+  padding: 12px 14px; border: 1.5px solid rgba(255,255,255,.1); border-radius: 10px;
+  background: rgba(255,255,255,.06); color: white; font-size: .9rem; outline: none;
+  transition: all .2s;
+}
+.auth-input::placeholder { color: rgba(255,255,255,.3); }
+.auth-input:focus { border-color: var(--sky); box-shadow: 0 0 0 3px rgba(14,165,233,.15); }
+.btn-auth {
+  background: linear-gradient(135deg, var(--blue), var(--sky));
+  color: white; padding: 13px; border-radius: 10px;
+  font-weight: 700; font-size: .95rem; transition: all .2s;
+  box-shadow: 0 4px 16px rgba(0,82,204,.3);
+}
+.btn-auth:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,82,204,.4); }
+.auth-error {
+  background: rgba(229,62,62,.1); border: 1px solid rgba(229,62,62,.3);
+  color: #FC8181; padding: 10px 14px; border-radius: 8px;
+  font-size: .85rem; display: none;
+}
+.auth-back {
+  color: var(--muted); font-size: .83rem; text-align: center;
+  margin-top: 16px; cursor: pointer; transition: color .2s;
+}
+.auth-back:hover { color: var(--cyan); }
+
+/* ═══════════════════════════════════════════
+   PORTAL / DASHBOARD
+═══════════════════════════════════════════ */
+#portal-view {
+  padding-top: 64px; min-height: 100vh; background: var(--off);
+}
+.portal-layout {
+  display: flex; min-height: calc(100vh - 64px);
+}
+.sidebar {
+  width: 240px; flex-shrink: 0;
+  background: white; border-right: 1px solid var(--border);
+  padding: 28px 16px; display: flex; flex-direction: column; gap: 4px;
+}
+.sidebar-section { font-size: .72rem; font-weight: 700; color: var(--muted);
+  letter-spacing: 1.5px; text-transform: uppercase; padding: 14px 12px 6px; }
+.sidebar-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 10px; cursor: pointer;
+  color: var(--text-sm); font-size: .88rem; font-weight: 500; transition: all .2s;
+}
+.sidebar-item .icon { font-size: 1.1rem; width: 22px; text-align: center; }
+.sidebar-item:hover { background: var(--off); color: var(--navy); }
+.sidebar-item.active { background: rgba(0,82,204,.08); color: var(--blue); }
+.sidebar-item.active .icon { filter: none; }
+
+.portal-main {
+  flex: 1; padding: 36px; overflow-y: auto;
+}
+.portal-header { margin-bottom: 32px; }
+.portal-header h1 {
+  font-family: var(--font-head); font-size: 1.8rem; font-weight: 800;
+  color: var(--navy); margin-bottom: 4px;
+}
+.portal-header p { color: var(--text-sm); font-size: .9rem; }
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ═══════════════════════════════════════════
+   PANEL: UPLOAD
+═══════════════════════════════════════════ */
+.upload-container { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 28px;
+  box-shadow: var(--shadow);
+}
+.card-title {
+  font-family: var(--font-head); font-size: 1rem; font-weight: 700;
+  color: var(--navy); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 8px;
+}
+.card-title .ctag {
+  font-size: .75rem; font-weight: 600; padding: 3px 9px; border-radius: 6px;
+  background: rgba(0,82,204,.08); color: var(--blue); font-family: var(--font-body);
+}
+
+.drop-zone {
+  border: 2px dashed var(--border); border-radius: var(--radius);
+  padding: 48px 20px; text-align: center; cursor: pointer;
+  transition: all .2s; position: relative;
+}
+.drop-zone:hover, .drop-zone.drag-over {
+  border-color: var(--sky); background: rgba(14,165,233,.04);
+}
+.drop-zone input[type="file"] { display: none; }
+.drop-icon { font-size: 2.8rem; margin-bottom: 14px; }
+.drop-title { font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+.drop-sub { color: var(--text-sm); font-size: .85rem; line-height: 1.6; }
+.drop-sub strong { color: var(--blue); cursor: pointer; }
+.drop-types {
+  display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 14px;
+}
+.drop-type {
+  background: var(--off); border: 1px solid var(--border);
+  color: var(--text-sm); font-size: .72rem; padding: 3px 9px; border-radius: 5px;
+}
+
+.upload-queue { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.queue-item {
+  display: flex; align-items: center; gap: 12px;
+  border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;
+  background: var(--off); position: relative; overflow: hidden;
+}
+.queue-item .qi-ext {
+  background: var(--blue); color: white; font-size: .68rem; font-weight: 700;
+  padding: 3px 7px; border-radius: 5px; flex-shrink: 0; text-transform: uppercase;
+}
+.queue-item .qi-name { flex: 1; font-size: .85rem; color: var(--navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.queue-item .qi-size { color: var(--muted); font-size: .78rem; flex-shrink: 0; }
+.queue-item .qi-status { font-size: .9rem; flex-shrink: 0; }
+.queue-item .qi-remove {
+  background: none; color: var(--muted); font-size: 1rem;
+  padding: 2px 4px; transition: color .2s; flex-shrink: 0;
+}
+.queue-item .qi-remove:hover { color: var(--danger); }
+.qi-progress {
+  position: absolute; bottom: 0; left: 0; height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  transition: width .3s; border-radius: 0 2px 2px 0;
+}
+
+.upload-actions { display: flex; gap: 10px; margin-top: 16px; }
+.btn-upload-submit {
+  background: linear-gradient(135deg, var(--blue), var(--sky));
+  color: white; padding: 11px 24px; border-radius: 10px; font-weight: 600;
+  font-size: .88rem; transition: all .2s; display: flex; align-items: center; gap: 8px;
+  box-shadow: 0 4px 14px rgba(0,82,204,.25);
+}
+.btn-upload-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,82,204,.35); }
+.btn-upload-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.btn-clear {
+  background: white; color: var(--text-sm); padding: 11px 16px;
+  border-radius: 10px; font-size: .88rem; border: 1px solid var(--border);
+  transition: all .2s;
+}
+.btn-clear:hover { border-color: var(--danger); color: var(--danger); }
+
+/* Files list */
+.files-list { display: flex; flex-direction: column; gap: 8px; }
+.file-row {
+  display: flex; align-items: center; gap: 12px;
+  border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;
+  transition: all .2s;
+}
+.file-row:hover { border-color: var(--sky); background: rgba(14,165,233,.02); }
+.file-row .fr-ext {
+  background: var(--off); border: 1px solid var(--border);
+  color: var(--blue); font-size: .68rem; font-weight: 700;
+  padding: 3px 7px; border-radius: 5px; flex-shrink: 0; text-transform: uppercase;
+}
+.file-row .fr-name { flex: 1; font-size: .88rem; color: var(--navy); }
+.file-row .fr-date { color: var(--muted); font-size: .78rem; flex-shrink: 0; }
+.file-row .fr-size { color: var(--muted); font-size: .78rem; flex-shrink: 0; width: 60px; text-align: right; }
+.file-row .fr-dl {
+  background: rgba(0,82,204,.08); color: var(--blue);
+  border: 1px solid rgba(0,82,204,.15); padding: 5px 12px;
+  border-radius: 7px; font-size: .78rem; font-weight: 600; transition: all .2s; flex-shrink: 0;
+}
+.file-row .fr-dl:hover { background: var(--blue); color: white; }
+.file-row .fr-del {
+  background: none; color: var(--muted); font-size: .9rem; padding: 4px; transition: color .2s; flex-shrink: 0;
+}
+.file-row .fr-del:hover { color: var(--danger); }
+
+.empty-state {
+  text-align: center; padding: 48px 20px;
+  color: var(--muted); font-size: .9rem;
+}
+.empty-icon { font-size: 2.5rem; margin-bottom: 12px; opacity: .5; }
+
+/* ═══════════════════════════════════════════
+   PANEL: VISÃO GERAL
+═══════════════════════════════════════════ */
+.metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+.metric-card {
+  background: white; border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 22px; box-shadow: var(--shadow);
+}
+.metric-icon { font-size: 1.4rem; margin-bottom: 10px; }
+.metric-val {
+  font-family: var(--font-head); font-size: 1.8rem; font-weight: 800;
+  color: var(--navy); margin-bottom: 2px;
+}
+.metric-label { color: var(--text-sm); font-size: .8rem; }
+.metric-delta {
+  font-size: .78rem; font-weight: 600; margin-top: 6px;
+}
+.metric-delta.up { color: var(--success); }
+.metric-delta.down { color: var(--danger); }
+
+.activity-list { display: flex; flex-direction: column; gap: 10px; }
+.activity-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+}
+.activity-item:last-child { border-bottom: none; padding-bottom: 0; }
+.activity-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.activity-text { flex: 1; font-size: .87rem; color: var(--text-sm); }
+.activity-text strong { color: var(--navy); }
+.activity-time { color: var(--muted); font-size: .78rem; }
+
+/* ═══════════════════════════════════════════
+   ADMIN
+═══════════════════════════════════════════ */
+.admin-tabs { display: flex; gap: 0; margin-bottom: 24px; border-bottom: 2px solid var(--border); }
+.admin-tab {
+  padding: 10px 20px; color: var(--text-sm); font-size: .88rem; font-weight: 500;
+  cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .2s;
+}
+.admin-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+.admin-panel { display: none; }
+.admin-panel.active { display: block; }
+
+.admin-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+.admin-table th {
+  text-align: left; padding: 10px 14px; background: var(--off);
+  color: var(--text-sm); font-weight: 600; font-size: .78rem;
+  border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+.admin-table td {
+  padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text);
+}
+.admin-table tr:hover td { background: rgba(14,165,233,.03); }
+.badge {
+  display: inline-block; padding: 3px 9px; border-radius: 6px;
+  font-size: .73rem; font-weight: 600;
+}
+.badge-green { background: rgba(56,161,105,.1); color: var(--success); }
+.badge-blue  { background: rgba(0,82,204,.1);   color: var(--blue); }
+.badge-warn  { background: rgba(217,119,6,.1);  color: var(--warn); }
+.badge-red   { background: rgba(229,62,62,.1);  color: var(--danger); }
+
+.btn-table-action {
+  background: var(--off); border: 1px solid var(--border);
+  color: var(--text-sm); padding: 5px 12px; border-radius: 7px;
+  font-size: .78rem; transition: all .2s;
+}
+.btn-table-action:hover { border-color: var(--sky); color: var(--blue); }
+.btn-table-danger {
+  background: rgba(229,62,62,.06); border: 1px solid rgba(229,62,62,.2);
+  color: var(--danger); padding: 5px 12px; border-radius: 7px;
+  font-size: .78rem; transition: all .2s;
+}
+.btn-table-danger:hover { background: var(--danger); color: white; }
+
+/* ═══════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════ */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.55); align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: white; border-radius: var(--radius-lg); padding: 32px;
+  width: 90%; max-width: 500px; box-shadow: var(--shadow-lg);
+}
+.modal-title {
+  font-family: var(--font-head); font-size: 1.2rem; font-weight: 700;
+  color: var(--navy); margin-bottom: 20px;
+}
+.modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
+.btn-modal-cancel {
+  background: var(--off); border: 1px solid var(--border); color: var(--text-sm);
+  padding: 10px 20px; border-radius: 8px; font-size: .88rem;
+}
+.btn-modal-confirm {
+  background: linear-gradient(135deg, var(--blue), var(--sky));
+  color: white; padding: 10px 22px; border-radius: 8px;
+  font-size: .88rem; font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════
+   LOADING / TOAST
+═══════════════════════════════════════════ */
+#loading-overlay {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(11,29,78,.85); align-items: center; justify-content: center;
+  flex-direction: column; gap: 16px;
+}
+#loading-overlay.show { display: flex; }
+.spinner {
+  width: 44px; height: 44px; border: 3px solid rgba(0,200,255,.2);
+  border-top-color: var(--cyan); border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { color: var(--cyan); font-size: .9rem; }
+
+#toast {
+  position: fixed; bottom: 28px; right: 28px; z-index: 400;
+  background: var(--navy); color: white; padding: 13px 20px;
+  border-radius: 10px; font-size: .88rem; box-shadow: var(--shadow-lg);
+  transform: translateY(80px); opacity: 0; transition: all .3s;
+  display: flex; align-items: center; gap: 10px;
+  border-left: 3px solid var(--cyan);
+}
+#toast.show { transform: translateY(0); opacity: 1; }
+#toast.error { border-left-color: var(--danger); }
+#toast.success { border-left-color: var(--success); }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .hero-content { grid-template-columns: 1fr; gap: 40px; }
+  .hero-visual { display: none; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .features-banner-inner { grid-template-columns: 1fr; }
+  .contact-inner { grid-template-columns: 1fr; }
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .upload-container { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .topbar-nav { display: none; }
+  .section { padding: 64px 20px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .portal-main { padding: 20px; }
+  .metrics-grid { grid-template-columns: 1fr 1fr; }
+  #topbar { padding: 0 20px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ TOPBAR ═══════════ -->
+<header id="topbar">
+  <div class="topbar-logo">Innova<span>Digital</span></div>
+  <nav class="topbar-nav" id="landing-nav">
+    <a href="#" onclick="scrollTo('#services')">Serviços</a>
+    <a href="#" onclick="scrollTo('#contato')">Contato</a>
+  </nav>
+  <div class="topbar-actions">
+    <div id="topbar-auth-btns">
+      <button class="btn-ghost" onclick="showAuth('login')">Entrar</button>
+      <button class="btn-primary-sm" onclick="showAuth('register')">Criar conta</button>
+    </div>
+    <div id="topbar-user-area" style="display:none; align-items:center; gap:12px;">
+      <span id="user-display"></span>
+      <button id="btn-logout" onclick="doLogout()">Sair</button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════ LOADING ═══════════ -->
+<div id="loading-overlay">
+  <div class="spinner"></div>
+  <div class="loading-text" id="loading-text">Carregando...</div>
+</div>
+<div id="toast"></div>
+
+<!-- ═══════════ VIEW: LANDING ═══════════ -->
+<div id="landing" class="view active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"><div class="hero-grid"></div></div>
+    <div class="hero-content">
+      <div>
+        <div class="hero-badge">Distribuidor Autorizado Adaptive</div>
+        <h1 class="hero-title">
+          Gestão inteligente para <em>postos e distribuidoras</em>
+        </h1>
+        <p class="hero-subtitle">
+          Implantação, suporte e evolução do sistema Adaptive — com portal exclusivo para seus documentos, relatórios e atualizações.
+        </p>
+        <div class="hero-cta">
+          <button class="btn-hero-primary" onclick="showAuth('register')">Acessar o Portal</button>
+          <button class="btn-hero-ghost" onclick="document.getElementById('contato').scrollIntoView({behavior:'smooth'})">Falar com consultor</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-float">✅ Portal atualizado</div>
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div class="hero-card-icon">📊</div>
+            <div>
+              <div class="hero-card-title">Dashboard do Cliente</div>
+              <div class="hero-card-sub">Acesso 24h aos seus arquivos</div>
+            </div>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="hero-stat-val">47</div>
+              <div class="hero-stat-label">Arquivos disponíveis</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-val">8</div>
+              <div class="hero-stat-label">Atualizações novas</div>
+            </div>
+          </div>
+          <div class="hero-progress-list">
+            <div class="hero-prog-item">
+              <span class="hero-prog-label">ETLs</span>
+              <div class="hero-prog-bar"><div class="hero-prog-fill" style="width:80%"></div></div>
+              <span class="hero-prog-pct">80%</span>
+            </div>
+            <div class="hero-prog-item">
+              <span class="hero-prog-label">Relatórios</span>
+              <div class="hero-prog-bar"><div class="hero-prog-fill" style="width:65%"></div></div>
+              <span class="hero-prog-pct">65%</span>
+            </div>
+            <div class="hero-prog-item">
+              <span class="hero-prog-label">Suporte</span>
+              <div class="hero-prog-bar"><div class="hero-prog-fill" style="width:92%"></div></div>
+              <span class="hero-prog-pct">92%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <div id="services">
+    <div class="section">
+      <div class="section-label">O que fazemos</div>
+      <h2 class="section-title">Soluções completas<br>sobre o Adaptive</h2>
+      <p class="section-subtitle">Do zero ao avançado — implantação, customizações, treinamentos e suporte técnico especializado.</p>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🚀</div>
+          <div class="service-title">Implantação Adaptive</div>
+          <div class="service-desc">Configuração completa do sistema, migração de dados legados e parametrização de acordo com a operação do cliente.</div>
+          <span class="service-tag">Implantação</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🔄</div>
+          <div class="service-title">Migração de Dados</div>
+          <div class="service-desc">Transferência estruturada de dados do sistema legado para o Adaptive, com validação e integridade garantida.</div>
+          <span class="service-tag">Migração</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🔧</div>
+          <div class="service-title">Parametrização</div>
+          <div class="service-desc">Configuração fiscal, financeira e operacional do sistema de acordo com a realidade de cada empresa.</div>
+          <span class="service-tag">Configuração</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🛡️</div>
+          <div class="service-title">Suporte Técnico</div>
+          <div class="service-desc">Atendimento especializado com SLA definido. Acompanhamento de atualizações e resolução de incidentes.</div>
+          <span class="service-tag">Suporte</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🎓</div>
+          <div class="service-title">Treinamentos</div>
+          <div class="service-desc">Capacitação da equipe operacional e fiscal para uso completo das funcionalidades do sistema.</div>
+          <span class="service-tag">Educação</span>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📂</div>
+          <div class="service-title">Portal do Cliente</div>
+          <div class="service-desc">Acesso centralizado a documentos, scripts, relatórios e arquivos entregues — com upload e histórico completo.</div>
+          <span class="service-tag">Portal</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- CONTATO -->
+  <div id="contato">
+    <div class="contact-section">
+      <div class="contact-inner">
+        <div>
+          <div class="section-label">Entre em contato</div>
+          <h2 class="section-title">Vamos conversar sobre sua operação</h2>
+          <p class="section-subtitle">Conte como funciona seu negócio e entendemos juntos como o Adaptive pode ser configurado para você.</p>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📧</div>
+            <div>
+              <div class="contact-info-label">E-mail</div>
+              <div class="contact-info-val">contato@innovadigital.com.br</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📱</div>
+            <div>
+              <div class="contact-info-label">WhatsApp</div>
+              <div class="contact-info-val">(XX) 9 XXXX-XXXX</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📍</div>
+            <div>
+              <div class="contact-info-label">Localização</div>
+              <div class="contact-info-val">Sua cidade, UF — Brasil</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-title">Enviar mensagem</div>
+            <div class="contact-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Nome *</label>
+                  <input class="form-input" id="cf-nome" type="text" placeholder="Seu nome">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Empresa</label>
+                  <input class="form-input" id="cf-empresa" type="text" placeholder="Nome da empresa">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">E-mail *</label>
+                <input class="form-input" id="cf-email" type="email" placeholder="seu@email.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Assunto</label>
+                <select class="form-input" id="cf-assunto">
+                  <option value="">Selecione...</option>
+                  <option>Implantação Adaptive</option>
+                  <option>Desenvolvimento de ETL</option>
+                  <option>Relatório Stimulsoft</option>
+                  <option>Suporte Técnico</option>
+                  <option>Portal do Cliente</option>
+                  <option>Outro</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Mensagem *</label>
+                <textarea class="form-input" id="cf-msg" placeholder="Descreva sua necessidade..."></textarea>
+              </div>
+              <button class="btn-submit" onclick="submitContact()">Enviar mensagem →</button>
+              <div id="contact-success">✅ Mensagem enviada! Retornaremos em breve.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Innova<span>Digital</span></div>
+    <div class="footer-text">© 2025 Innova Digital — Distribuidor Adaptive</div>
+  <div class="footer-text" style="font-size:.75rem; opacity:.5;">Desenvolvido por Nexus Data Engenharia</div>
+    <div class="footer-links">
+      <a href="#" onclick="showAuth('login')">Portal do Cliente</a>
+      <a href="#contato" onclick="document.getElementById('contato').scrollIntoView({behavior:'smooth'})">Contato</a>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════ VIEW: AUTH ═══════════ -->
+<div id="auth-view" class="view">
+  <div class="auth-card">
+    <div class="auth-logo">Innova<span>Digital</span></div>
+    <div class="auth-subtitle">Portal exclusivo para clientes</div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Entrar</div>
+      <div class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Criar conta</div>
+    </div>
+    <div class="auth-error" id="auth-error"></div>
+
+    <!-- LOGIN FORM -->
+    <div id="form-login" class="auth-form">
+      <input class="auth-input" id="login-email" type="email" placeholder="E-mail">
+      <input class="auth-input" id="login-pass"  type="password" placeholder="Senha">
+      <button class="btn-auth" onclick="doLogin()">Entrar no Portal</button>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div id="form-register" class="auth-form" style="display:none">
+      <input class="auth-input" id="reg-name"    type="text"     placeholder="Nome completo">
+      <input class="auth-input" id="reg-empresa" type="text"     placeholder="Empresa">
+      <input class="auth-input" id="reg-email"   type="email"    placeholder="E-mail">
+      <input class="auth-input" id="reg-pass"    type="password" placeholder="Senha (mín. 6 caracteres)">
+      <button class="btn-auth" onclick="doRegister()">Criar conta</button>
+    </div>
+
+    <div class="auth-back" onclick="showLanding()">← Voltar ao site</div>
+  </div>
+</div>
+
+<!-- ═══════════ VIEW: PORTAL ═══════════ -->
+<div id="portal-view" class="view">
+  <div class="portal-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-section">Menu</div>
+      <div class="sidebar-item active" onclick="showPanel('overview')">
+        <span class="icon">🏠</span> Visão Geral
+      </div>
+      <div class="sidebar-item" onclick="showPanel('upload')">
+        <span class="icon">📤</span> Meus Arquivos
+      </div>
+
+      <div id="sidebar-admin" style="display:none">
+        <div class="sidebar-section">Administração</div>
+        <div class="sidebar-item" onclick="showPanel('admin')">
+          <span class="icon">⚙️</span> Painel Admin
+        </div>
+      </div>
+
+      <div style="flex:1"></div>
+      <div class="sidebar-item" onclick="showLanding()">
+        <span class="icon">🌐</span> Portal Público
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="portal-main">
+
+      <!-- OVERVIEW PANEL -->
+      <div id="panel-overview" class="panel active">
+        <div class="portal-header">
+          <h1>Visão Geral</h1>
+          <p id="welcome-text">Bem-vindo ao seu portal</p>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-icon">📁</div>
+            <div class="metric-val" id="m-files">–</div>
+            <div class="metric-label">Arquivos disponíveis</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon">📤</div>
+            <div class="metric-val" id="m-uploads">–</div>
+            <div class="metric-label">Enviados por você</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon">🕐</div>
+            <div class="metric-val" id="m-last">–</div>
+            <div class="metric-label">Último acesso</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon">🔔</div>
+            <div class="metric-val" id="m-new">–</div>
+            <div class="metric-label">Novos esta semana</div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+          <div class="card">
+            <div class="card-title">📋 Atividade Recente</div>
+            <div class="activity-list" id="activity-list">
+              <div style="color:var(--muted); font-size:.85rem; text-align:center; padding:20px">Carregando...</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">🚀 Acesso Rápido</div>
+            <div style="display:flex; flex-direction:column; gap:10px; margin-top:4px;">
+              <button class="btn-table-action" style="text-align:left; padding:12px 16px;" onclick="showPanel('upload')">
+                📤 Enviar novo arquivo
+              </button>
+              <button class="btn-table-action" style="text-align:left; padding:12px 16px;" onclick="showPanel('upload')">
+                📥 Ver arquivos disponíveis
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPLOAD PANEL -->
+      <div id="panel-upload" class="panel">
+        <div class="portal-header">
+          <h1>Meus Arquivos</h1>
+          <p>Envie e acesse seus documentos, scripts e relatórios</p>
+        </div>
+        <div class="upload-container">
+
+          <!-- ENVIO -->
+          <div class="card">
+            <div class="card-title">📤 Enviar Arquivos <span class="ctag">Novo</span></div>
+            <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()"
+              ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+              <input type="file" id="file-input" multiple onchange="handleFileSelect(this.files)">
+              <div class="drop-icon">📂</div>
+              <div class="drop-title">Arraste arquivos aqui</div>
+              <div class="drop-sub">ou <strong onclick="document.getElementById('file-input').click()">clique para selecionar</strong><br>Máximo 50MB por arquivo</div>
+              <div class="drop-types">
+                <span class="drop-type">PDF</span>
+                <span class="drop-type">Excel</span>
+                <span class="drop-type">CSV</span>
+                <span class="drop-type">SQL</span>
+                <span class="drop-type">LAY</span>
+                <span class="drop-type">ZIP</span>
+                <span class="drop-type">TXT</span>
+              </div>
+            </div>
+            <div class="upload-queue" id="upload-queue"></div>
+            <div class="upload-actions" id="upload-actions" style="display:none">
+              <button class="btn-upload-submit" id="btn-do-upload" onclick="doUpload()">
+                ☁️ Enviar para o portal
+              </button>
+              <button class="btn-clear" onclick="clearQueue()">Limpar</button>
+            </div>
+          </div>
+
+          <!-- MEUS ARQUIVOS -->
+          <div class="card">
+            <div class="card-title">📥 Arquivos Disponíveis</div>
+            <div id="my-files-list">
+              <div class="empty-state">
+                <div class="empty-icon">📂</div>
+                Carregando seus arquivos...
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ADMIN PANEL -->
+      <div id="panel-admin" class="panel">
+        <div class="portal-header">
+          <h1>Painel Administrativo</h1>
+          <p>Gerencie usuários, arquivos e contatos</p>
+        </div>
+
+        <div class="admin-tabs">
+          <div class="admin-tab active" onclick="switchAdminTab('contacts')">📬 Contatos</div>
+          <div class="admin-tab" onclick="switchAdminTab('users')">👥 Usuários</div>
+          <div class="admin-tab" onclick="switchAdminTab('all-files')">📁 Todos os Arquivos</div>
+        </div>
+
+        <!-- Contatos -->
+        <div id="atab-contacts" class="admin-panel active">
+          <div class="card">
+            <div class="card-title">📬 Mensagens Recebidas</div>
+            <div id="admin-contacts-table">Carregando...</div>
+          </div>
+        </div>
+
+        <!-- Usuários -->
+        <div id="atab-users" class="admin-panel">
+          <div class="card">
+            <div class="card-title">👥 Usuários Cadastrados</div>
+            <div id="admin-users-table">Carregando...</div>
+          </div>
+        </div>
+
+        <!-- Todos os arquivos -->
+        <div id="atab-all-files" class="admin-panel">
+          <div class="card">
+            <div class="card-title">📁 Todos os Arquivos</div>
+            <div id="admin-files-table">Carregando...</div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- MODAL CONFIRM DELETE -->
+<div class="modal-overlay" id="modal-delete">
+  <div class="modal">
+    <div class="modal-title">🗑️ Excluir arquivo</div>
+    <p style="color:var(--text-sm); font-size:.9rem;">Tem certeza que deseja excluir <strong id="modal-file-name"></strong>?<br>Esta ação não pode ser desfeita.</p>
+    <div class="modal-footer">
+      <button class="btn-modal-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-modal-confirm" style="background:var(--danger);" onclick="confirmDelete()">Excluir</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ FIREBASE + LÓGICA ═══════════ -->
+<script type="module">
+// ─── FIREBASE CONFIG ───────────────────────────────────────────────────────
+// ⚠️  SUBSTITUA pelos valores do seu projeto Firebase
+import { initializeApp }          from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+         signOut, onAuthStateChanged }
+                                   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, doc, getDoc,
+         setDoc, updateDoc, deleteDoc, query, where, orderBy, serverTimestamp }
+                                   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject }
+                                   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+
+const firebaseConfig = {
+  apiKey:            "SUA_API_KEY",
+  authDomain:        "SEU_PROJETO.firebaseapp.com",
+  projectId:         "SEU_PROJETO",
+  storageBucket:     "SEU_PROJETO.appspot.com",
+  messagingSenderId: "SEU_SENDER_ID",
+  appId:             "SEU_APP_ID"
+};
+
+const app     = initializeApp(firebaseConfig);
+const auth    = getAuth(app);
+const db      = getFirestore(app);
+const storage = getStorage(app);
+
+// ─── ESTADO ────────────────────────────────────────────────────────────────
+let currentUser  = null;
+let isAdmin      = false;
+let uploadQueue  = [];
+let deleteTarget = null;
+const ADMIN_EMAILS = ["admin@innovadigital.com.br"]; // ← altere
+
+// ─── HELPERS UI ────────────────────────────────────────────────────────────
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function loading(show, txt='Carregando...') {
+  const el = document.getElementById('loading-overlay');
+  document.getElementById('loading-text').textContent = txt;
+  el.classList.toggle('show', show);
+}
+function toast(msg, type='info') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show ' + type;
+  setTimeout(() => el.classList.remove('show'), 3500);
+}
+function formatDate(ts) {
+  if (!ts) return '–';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+}
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+  return (bytes/(1024*1024)).toFixed(1) + ' MB';
+}
+function getExt(name) { return name.split('.').pop().toUpperCase() || 'FILE'; }
+
+// ─── NAVEGAÇÃO PÚBLICA ─────────────────────────────────────────────────────
+window.showLanding = () => {
+  showView('landing');
+  document.getElementById('topbar-auth-btns').style.display = 'flex';
+  document.getElementById('topbar-user-area').style.display = 'none';
+  document.getElementById('landing-nav').style.display = 'flex';
+};
+
+window.showAuth = (tab='login') => {
+  showView('auth-view');
+  document.getElementById('topbar-auth-btns').style.display = 'none';
+  document.getElementById('landing-nav').style.display = 'none';
+  switchAuthTab(tab);
+};
+
+window.switchAuthTab = (tab) => {
+  document.getElementById('form-login').style.display    = tab==='login'    ? 'flex' : 'none';
+  document.getElementById('form-register').style.display = tab==='register' ? 'flex' : 'none';
+  document.getElementById('tab-login').classList.toggle('active',    tab==='login');
+  document.getElementById('tab-register').classList.toggle('active', tab==='register');
+  document.getElementById('auth-error').style.display = 'none';
+};
+
+// ─── AUTH ──────────────────────────────────────────────────────────────────
+window.doLogin = async () => {
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-pass').value;
+  if (!email || !pass) return showAuthError('Preencha e-mail e senha.');
+  loading(true, 'Entrando...');
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch(e) {
+    loading(false);
+    showAuthError(e.code === 'auth/invalid-credential' ? 'E-mail ou senha incorretos.' : e.message);
+  }
+};
+
+window.doRegister = async () => {
+  const name    = document.getElementById('reg-name').value.trim();
+  const empresa = document.getElementById('reg-empresa').value.trim();
+  const email   = document.getElementById('reg-email').value.trim();
+  const pass    = document.getElementById('reg-pass').value;
+  if (!name || !email || !pass) return showAuthError('Preencha todos os campos obrigatórios.');
+  if (pass.length < 6) return showAuthError('Senha deve ter no mínimo 6 caracteres.');
+  loading(true, 'Criando conta...');
+  try {
+    const uc = await createUserWithEmailAndPassword(auth, email, pass);
+    await setDoc(doc(db, 'users', uc.user.uid), {
+      name, empresa, email, role: 'client',
+      createdAt: serverTimestamp()
+    });
+  } catch(e) {
+    loading(false);
+    showAuthError(e.code === 'auth/email-already-in-use' ? 'E-mail já cadastrado.' : e.message);
+  }
+};
+
+window.doLogout = async () => {
+  await signOut(auth);
+  showLanding();
+  toast('Você saiu da conta.', 'info');
+};
+
+function showAuthError(msg) {
+  const el = document.getElementById('auth-error');
+  el.textContent = msg; el.style.display = 'block';
+}
+
+// ─── AUTH STATE ────────────────────────────────────────────────────────────
+onAuthStateChanged(auth, async (user) => {
+  loading(false);
+  if (!user) return;
+
+  currentUser = user;
+  const snap = await getDoc(doc(db, 'users', user.uid));
+  const data = snap.exists() ? snap.data() : {};
+  isAdmin = ADMIN_EMAILS.includes(user.email) || data.role === 'admin';
+
+  // Topbar
+  document.getElementById('topbar-auth-btns').style.display = 'none';
+  document.getElementById('topbar-user-area').style.display = 'flex';
+  document.getElementById('user-display').textContent = data.name || user.email;
+  document.getElementById('landing-nav').style.display = 'none';
+  document.getElementById('sidebar-admin').style.display = isAdmin ? 'block' : 'none';
+
+  document.getElementById('welcome-text').textContent =
+    'Bem-vindo, ' + (data.name || user.email) + (data.empresa ? ' — ' + data.empresa : '');
+
+  showView('portal-view');
+  showPanel('overview');
+  loadOverview();
+  loadMyFiles();
+});
+
+// ─── PORTAL NAVIGATION ────────────────────────────────────────────────────
+window.showPanel = (id) => {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+
+  const idx = ['overview','upload','admin'].indexOf(id);
+  const items = document.querySelectorAll('.sidebar-item');
+  if (items[idx]) items[idx].classList.add('active');
+
+  if (id === 'admin' && isAdmin) loadAdmin();
+};
+
+// ─── OVERVIEW ──────────────────────────────────────────────────────────────
+async function loadOverview() {
+  // Meus uploads
+  const myQ = query(collection(db,'files'), where('uid','==',currentUser.uid), orderBy('createdAt','desc'));
+  const mySnap = await getDocs(myQ).catch(()=>({docs:[]}));
+  const myDocs = mySnap.docs || [];
+
+  document.getElementById('m-files').textContent   = myDocs.length;
+  document.getElementById('m-uploads').textContent = myDocs.length;
+  document.getElementById('m-last').textContent    = 'Agora';
+
+  const oneWeekAgo = new Date(); oneWeekAgo.setDate(oneWeekAgo.getDate()-7);
+  const newFiles = myDocs.filter(d => {
+    const ts = d.data().createdAt;
+    return ts && ts.toDate && ts.toDate() > oneWeekAgo;
+  });
+  document.getElementById('m-new').textContent = newFiles.length;
+
+  // Activity list
+  const al = document.getElementById('activity-list');
+  if (myDocs.length === 0) {
+    al.innerHTML = '<div style="color:var(--muted); font-size:.85rem; text-align:center; padding:20px">Nenhuma atividade ainda.</div>';
+    return;
+  }
+  al.innerHTML = myDocs.slice(0,5).map(d => {
+    const f = d.data();
+    return `<div class="activity-item">
+      <div class="activity-dot" style="background:var(--blue)"></div>
+      <div class="activity-text"><strong>${f.name}</strong> enviado</div>
+      <div class="activity-time">${formatDate(f.createdAt)}</div>
+    </div>`;
+  }).join('');
+}
+
+// ─── MY FILES ──────────────────────────────────────────────────────────────
+async function loadMyFiles() {
+  const container = document.getElementById('my-files-list');
+  container.innerHTML = '<div class="empty-state"><div class="empty-icon">⏳</div>Carregando...</div>';
+
+  try {
+    const q = query(collection(db,'files'), where('uid','==',currentUser.uid), orderBy('createdAt','desc'));
+    const snap = await getDocs(q);
+
+    if (snap.empty) {
+      container.innerHTML = '<div class="empty-state"><div class="empty-icon">📂</div>Nenhum arquivo ainda.<br><small>Envie seu primeiro arquivo acima.</small></div>';
+      return;
+    }
+
+    container.innerHTML = '<div class="files-list">' +
+      snap.docs.map(d => {
+        const f = d.data();
+        return `<div class="file-row">
+          <span class="fr-ext">${getExt(f.name)}</span>
+          <span class="fr-name">${f.name}</span>
+          <span class="fr-date">${formatDate(f.createdAt)}</span>
+          <span class="fr-size">${formatSize(f.size||0)}</span>
+          <a class="fr-dl" href="${f.url}" target="_blank" download>⬇ Baixar</a>
+          <button class="fr-del" onclick="openDeleteModal('${d.id}','${f.name.replace(/'/g,"\\'")}','${f.storagePath||''}')">🗑</button>
+        </div>`;
+      }).join('') + '</div>';
+  } catch(e) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div>Erro ao carregar arquivos.</div>';
+    console.error(e);
+  }
+}
+
+// ─── UPLOAD ────────────────────────────────────────────────────────────────
+window.handleDragOver = (e) => {
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.add('drag-over');
+};
+window.handleDragLeave = () => {
+  document.getElementById('drop-zone').classList.remove('drag-over');
+};
+window.handleDrop = (e) => {
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.remove('drag-over');
+  handleFileSelect(e.dataTransfer.files);
+};
+window.handleFileSelect = (files) => {
+  for (const file of files) {
+    if (uploadQueue.find(f => f.name===file.name)) continue;
+    if (file.size > 50*1024*1024) { toast('Arquivo muito grande: ' + file.name, 'error'); continue; }
+    uploadQueue.push(file);
+  }
+  renderQueue();
+};
+function renderQueue() {
+  const container = document.getElementById('upload-queue');
+  const actions   = document.getElementById('upload-actions');
+  if (uploadQueue.length === 0) { container.innerHTML=''; actions.style.display='none'; return; }
+  actions.style.display = 'flex';
+  container.innerHTML = uploadQueue.map((f,i) => `
+    <div class="queue-item" id="qi-${i}">
+      <span class="qi-ext">${getExt(f.name)}</span>
+      <span class="qi-name">${f.name}</span>
+      <span class="qi-size">${formatSize(f.size)}</span>
+      <span class="qi-status" id="qis-${i}">⏳</span>
+      <button class="qi-remove" onclick="removeFromQueue(${i})">✕</button>
+      <div class="qi-progress" id="qip-${i}" style="width:0%"></div>
+    </div>`).join('');
+}
+window.removeFromQueue = (i) => { uploadQueue.splice(i,1); renderQueue(); };
+window.clearQueue = () => { uploadQueue = []; renderQueue(); };
+
+window.doUpload = async () => {
+  if (!uploadQueue.length) return;
+  const btn = document.getElementById('btn-do-upload');
+  btn.disabled = true;
+
+  for (let i = 0; i < uploadQueue.length; i++) {
+    const file = uploadQueue[i];
+    const statusEl = document.getElementById('qis-'+i);
+    const progEl   = document.getElementById('qip-'+i);
+    try {
+      const path = `files/${currentUser.uid}/${Date.now()}_${file.name}`;
+      const storRef = ref(storage, path);
+      const task    = uploadBytesResumable(storRef, file);
+
+      await new Promise((resolve, reject) => {
+        task.on('state_changed',
+          (snap) => {
+            const pct = Math.round(snap.bytesTransferred / snap.totalBytes * 100);
+            if (progEl) progEl.style.width = pct + '%';
+          },
+          reject,
+          async () => {
+            const url = await getDownloadURL(task.snapshot.ref);
+            await addDoc(collection(db,'files'), {
+              uid: currentUser.uid,
+              name: file.name,
+              size: file.size,
+              url,
+              storagePath: path,
+              createdAt: serverTimestamp()
+            });
+            if (statusEl) statusEl.textContent = '✅';
+            resolve();
+          }
+        );
+      });
+    } catch(e) {
+      if (statusEl) statusEl.textContent = '❌';
+      toast('Erro ao enviar: ' + file.name, 'error');
+    }
+  }
+
+  btn.disabled = false;
+  toast('Arquivos enviados com sucesso!', 'success');
+  uploadQueue = [];
+  renderQueue();
+  loadMyFiles();
+  loadOverview();
+};
+
+// ─── DELETE ────────────────────────────────────────────────────────────────
+window.openDeleteModal = (id, name, path) => {
+  deleteTarget = { id, path };
+  document.getElementById('modal-file-name').textContent = name;
+  document.getElementById('modal-delete').classList.add('open');
+};
+window.closeModal = () => {
+  deleteTarget = null;
+  document.getElementById('modal-delete').classList.remove('open');
+};
+window.confirmDelete = async () => {
+  if (!deleteTarget) return;
+  loading(true, 'Excluindo...');
+  closeModal();
+  try {
+    if (deleteTarget.path) await deleteObject(ref(storage, deleteTarget.path)).catch(()=>{});
+    await deleteDoc(doc(db,'files', deleteTarget.id));
+    toast('Arquivo excluído.', 'success');
+    loadMyFiles();
+    loadOverview();
+  } catch(e) {
+    toast('Erro ao excluir.', 'error');
+  }
+  loading(false);
+};
+
+// ─── CONTACT FORM ──────────────────────────────────────────────────────────
+window.submitContact = async () => {
+  const nome    = document.getElementById('cf-nome').value.trim();
+  const email   = document.getElementById('cf-email').value.trim();
+  const empresa = document.getElementById('cf-empresa').value.trim();
+  const assunto = document.getElementById('cf-assunto').value;
+  const msg     = document.getElementById('cf-msg').value.trim();
+  if (!nome || !email || !msg) return toast('Preencha os campos obrigatórios.', 'error');
+  try {
+    await addDoc(collection(db,'contacts'), {
+      nome, email, empresa, assunto, msg,
+      lido: false, createdAt: serverTimestamp()
+    });
+    document.getElementById('contact-success').style.display = 'block';
+    ['cf-nome','cf-email','cf-empresa','cf-msg'].forEach(id => document.getElementById(id).value='');
+    document.getElementById('cf-assunto').value='';
+  } catch(e) { toast('Erro ao enviar mensagem.', 'error'); }
+};
+
+// ─── ADMIN ─────────────────────────────────────────────────────────────────
+window.switchAdminTab = (tab) => {
+  document.querySelectorAll('.admin-tab').forEach((t,i) => {
+    const tabs = ['contacts','users','all-files'];
+    t.classList.toggle('active', tabs[i]===tab);
+  });
+  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('atab-'+tab).classList.add('active');
+};
+
+async function loadAdmin() {
+  if (!isAdmin) return;
+  // Contacts
+  const cs = await getDocs(query(collection(db,'contacts'), orderBy('createdAt','desc'))).catch(()=>({docs:[]}));
+  const ctEl = document.getElementById('admin-contacts-table');
+  if (!cs.docs || cs.docs.length === 0) {
+    ctEl.innerHTML = '<div class="empty-state"><div class="empty-icon">📬</div>Nenhuma mensagem.</div>';
+  } else {
+    ctEl.innerHTML = `<table class="admin-table"><thead><tr>
+      <th>Nome</th><th>E-mail</th><th>Empresa</th><th>Assunto</th><th>Data</th><th>Status</th><th></th>
+    </tr></thead><tbody>` +
+    cs.docs.map(d => {
+      const c = d.data();
+      return `<tr>
+        <td>${c.nome||'–'}</td>
+        <td>${c.email||'–'}</td>
+        <td>${c.empresa||'–'}</td>
+        <td>${c.assunto||'–'}</td>
+        <td>${formatDate(c.createdAt)}</td>
+        <td><span class="badge ${c.lido?'badge-green':'badge-warn'}">${c.lido?'Lido':'Novo'}</span></td>
+        <td><button class="btn-table-action" onclick="markRead('${d.id}')">✓ Marcar lido</button></td>
+      </tr>`;
+    }).join('') + '</tbody></table>';
+  }
+
+  // Users
+  const us = await getDocs(collection(db,'users')).catch(()=>({docs:[]}));
+  const utEl = document.getElementById('admin-users-table');
+  if (!us.docs || us.docs.length === 0) {
+    utEl.innerHTML = '<div class="empty-state"><div class="empty-icon">👥</div>Nenhum usuário.</div>';
+  } else {
+    utEl.innerHTML = `<table class="admin-table"><thead><tr>
+      <th>Nome</th><th>E-mail</th><th>Empresa</th><th>Função</th><th>Cadastro</th>
+    </tr></thead><tbody>` +
+    us.docs.map(d => {
+      const u = d.data();
+      return `<tr>
+        <td>${u.name||'–'}</td>
+        <td>${u.email||'–'}</td>
+        <td>${u.empresa||'–'}</td>
+        <td><span class="badge ${u.role==='admin'?'badge-blue':'badge-green'}">${u.role||'client'}</span></td>
+        <td>${formatDate(u.createdAt)}</td>
+      </tr>`;
+    }).join('') + '</tbody></table>';
+  }
+
+  // All Files
+  const fs = await getDocs(query(collection(db,'files'), orderBy('createdAt','desc'))).catch(()=>({docs:[]}));
+  const ftEl = document.getElementById('admin-files-table');
+  if (!fs.docs || fs.docs.length === 0) {
+    ftEl.innerHTML = '<div class="empty-state"><div class="empty-icon">📁</div>Nenhum arquivo.</div>';
+  } else {
+    ftEl.innerHTML = `<table class="admin-table"><thead><tr>
+      <th>Arquivo</th><th>Tamanho</th><th>Usuário</th><th>Data</th><th></th>
+    </tr></thead><tbody>` +
+    fs.docs.map(d => {
+      const f = d.data();
+      return `<tr>
+        <td>${f.name||'–'}</td>
+        <td>${formatSize(f.size||0)}</td>
+        <td>${f.uid||'–'}</td>
+        <td>${formatDate(f.createdAt)}</td>
+        <td style="display:flex;gap:6px">
+          <a class="btn-table-action" href="${f.url}" target="_blank">⬇ Baixar</a>
+          <button class="btn-table-danger" onclick="openDeleteModal('${d.id}','${(f.name||'').replace(/'/g,"\\'")}','${f.storagePath||''}')">🗑</button>
+        </td>
+      </tr>`;
+    }).join('') + '</tbody></table>';
+  }
+}
+
+window.markRead = async (id) => {
+  await updateDoc(doc(db,'contacts',id), { lido: true }).catch(()=>{});
+  loadAdmin();
+  toast('Marcado como lido.', 'success');
+};
+
+// ─── INIT ──────────────────────────────────────────────────────────────────
+// Fecha modal clicando fora
+document.getElementById('modal-delete').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeModal();
+});
+</script>
+</body>
+</html>
