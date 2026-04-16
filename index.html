@@ -215,8 +215,29 @@ input, textarea, select { font-family: var(--font-body); }
 .hero-prog-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--blue), var(--cyan)); }
 .hero-prog-pct { color: var(--cyan); font-size: .8rem; width: 36px; text-align: right; }
 
-.hero-float {
-  position: absolute; top: -20px; right: -20px;
+.hero-diferencial-list {
+  display: flex; flex-direction: column; gap: 16px;
+}
+.hero-dif-item {
+  display: flex; align-items: flex-start; gap: 16px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius); padding: 20px;
+  transition: all .2s;
+}
+.hero-dif-item:hover {
+  border-color: rgba(0,200,255,.2);
+  background: rgba(0,200,255,.05);
+}
+.hero-dif-icon {
+  font-size: 1.3rem; flex-shrink: 0; margin-top: 2px;
+}
+.hero-dif-title {
+  color: var(--white); font-weight: 600; font-size: .95rem; margin-bottom: 4px;
+}
+.hero-dif-desc {
+  color: var(--muted); font-size: .85rem; line-height: 1.6;
+}
   background: var(--success); color: white;
   padding: 8px 14px; border-radius: 100px;
   font-size: .78rem; font-weight: 600;
@@ -774,7 +795,7 @@ footer {
 
 <!-- ═══════════ TOPBAR ═══════════ -->
 <header id="topbar">
-  <div class="topbar-logo">Innova<span>Digital</span></div>
+  <div class="topbar-logo" onclick="showLanding()" style="cursor:pointer;">Innova<span>Digital</span></div>
   <nav class="topbar-nav" id="landing-nav">
     <a href="#" onclick="scrollTo('#services')">Serviços</a>
     <a href="#" onclick="scrollTo('#contato')">Contato</a>
@@ -819,40 +840,33 @@ footer {
         </div>
       </div>
       <div class="hero-visual">
-        <div class="hero-float">✅ Portal atualizado</div>
-        <div class="hero-card">
-          <div class="hero-card-header">
-            <div class="hero-card-icon">📊</div>
+        <div class="hero-diferencial-list">
+          <div class="hero-dif-item">
+            <div class="hero-dif-icon">✅</div>
             <div>
-              <div class="hero-card-title">Dashboard do Cliente</div>
-              <div class="hero-card-sub">Acesso 24h aos seus arquivos</div>
+              <div class="hero-dif-title">Distribuidor oficial Adaptive</div>
+              <div class="hero-dif-desc">Credenciado diretamente pela Linx para venda, implantação e suporte do sistema.</div>
             </div>
           </div>
-          <div class="hero-stats">
-            <div class="hero-stat">
-              <div class="hero-stat-val">47</div>
-              <div class="hero-stat-label">Arquivos disponíveis</div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-val">8</div>
-              <div class="hero-stat-label">Atualizações novas</div>
+          <div class="hero-dif-item">
+            <div class="hero-dif-icon">🏁</div>
+            <div>
+              <div class="hero-dif-title">Especialistas no setor</div>
+              <div class="hero-dif-desc">Experiência focada em postos de combustível, distribuidoras e conveniências.</div>
             </div>
           </div>
-          <div class="hero-progress-list">
-            <div class="hero-prog-item">
-              <span class="hero-prog-label">ETLs</span>
-              <div class="hero-prog-bar"><div class="hero-prog-fill" style="width:80%"></div></div>
-              <span class="hero-prog-pct">80%</span>
+          <div class="hero-dif-item">
+            <div class="hero-dif-icon">🔧</div>
+            <div>
+              <div class="hero-dif-title">Suporte técnico dedicado</div>
+              <div class="hero-dif-desc">Atendimento próximo, com SLA definido e equipe que conhece profundamente o sistema.</div>
             </div>
-            <div class="hero-prog-item">
-              <span class="hero-prog-label">Relatórios</span>
-              <div class="hero-prog-bar"><div class="hero-prog-fill" style="width:65%"></div></div>
-              <span class="hero-prog-pct">65%</span>
-            </div>
-            <div class="hero-prog-item">
-              <span class="hero-prog-label">Suporte</span>
-              <div class="hero-prog-bar"><div class="hero-prog-fill" style="width:92%"></div></div>
-              <span class="hero-prog-pct">92%</span>
+          </div>
+          <div class="hero-dif-item">
+            <div class="hero-dif-icon">📂</div>
+            <div>
+              <div class="hero-dif-title">Portal exclusivo do cliente</div>
+              <div class="hero-dif-desc">Acesse manuais, documentações e arquivos a qualquer momento, de forma organizada e segura.</div>
             </div>
           </div>
         </div>
