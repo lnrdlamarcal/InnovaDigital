@@ -181,39 +181,7 @@ input, textarea, select { font-family: var(--font-body); }
 .hero-visual {
   position: relative;
 }
-.hero-card {
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: var(--radius-lg);
-  padding: 28px;
-  backdrop-filter: blur(12px);
-}
-.hero-card-header {
-  display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
-}
-.hero-card-icon {
-  width: 40px; height: 40px; border-radius: 10px;
-  background: linear-gradient(135deg, var(--blue), var(--sky));
-  display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
-}
-.hero-card-title { color: var(--white); font-weight: 600; font-size: .95rem; }
-.hero-card-sub { color: var(--muted); font-size: .8rem; margin-top: 2px; }
-.hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-.hero-stat {
-  background: rgba(0,0,0,.2); border-radius: 10px; padding: 14px;
-  border: 1px solid rgba(255,255,255,.06);
-}
-.hero-stat-val {
-  font-family: var(--font-head); font-size: 1.5rem; font-weight: 700;
-  color: var(--cyan);
-}
-.hero-stat-label { color: var(--muted); font-size: .75rem; margin-top: 2px; }
-.hero-progress-list { display: flex; flex-direction: column; gap: 10px; }
-.hero-prog-item { display: flex; align-items: center; gap: 10px; }
-.hero-prog-label { color: rgba(255,255,255,.7); font-size: .8rem; width: 100px; flex-shrink: 0; }
-.hero-prog-bar { flex: 1; height: 6px; background: rgba(255,255,255,.1); border-radius: 3px; overflow: hidden; }
-.hero-prog-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--blue), var(--cyan)); }
-.hero-prog-pct { color: var(--cyan); font-size: .8rem; width: 36px; text-align: right; }
+
 
 .hero-diferencial-list {
   display: flex; flex-direction: column; gap: 16px;
@@ -797,8 +765,8 @@ footer {
 <header id="topbar">
   <div class="topbar-logo" onclick="showLanding()" style="cursor:pointer;">Innova<span>Digital</span></div>
   <nav class="topbar-nav" id="landing-nav">
-    <a href="#" onclick="scrollTo('#services')">Serviços</a>
-    <a href="#" onclick="scrollTo('#contato')">Contato</a>
+    <a href="#" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'}); return false;">Serviços</a>
+    <a href="#" onclick="document.getElementById('contato').scrollIntoView({behavior:'smooth'}); return false;">Contato</a>
   </nav>
   <div class="topbar-actions">
     <div id="topbar-auth-btns">
