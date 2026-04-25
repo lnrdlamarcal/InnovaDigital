@@ -873,25 +873,34 @@ footer{
         <p class="pm-sub">Envie e acesse seus documentos fiscais, XMLs e relatórios</p>
         <div class="pm-divider"></div>
         <div class="af-layout">
-          <!-- UPLOAD (só para cliente e admin) -->
+          <!-- CADASTRO DE ARQUIVO (só para admin) -->
           <div class="card" id="upload-card">
-            <div class="card-title">📤 Enviar Arquivos <span style="background:rgba(27,63,171,.08);color:var(--blue2);font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:6px;font-family:var(--font-b)">Novo</span></div>
-            <div class="drop-zone" id="dz" onclick="document.getElementById('fi').click()"
-              ondragover="dzOver(event)" ondragleave="dzLeave()" ondrop="dzDrop(event)">
-              <input type="file" id="fi" multiple onchange="fileSelect(this.files)">
-              <div class="dz-icon">📂</div>
-              <div class="dz-title">Arraste arquivos aqui</div>
-              <div class="dz-sub">ou <strong onclick="document.getElementById('fi').click()">clique para selecionar</strong><br>Máximo 50MB por arquivo</div>
-              <div class="dz-types">
-                <span class="dz-type">XML</span><span class="dz-type">PDF</span>
-                <span class="dz-type">Excel</span><span class="dz-type">CSV</span>
-                <span class="dz-type">ZIP</span><span class="dz-type">TXT</span>
-              </div>
+            <div class="card-title">📎 Adicionar Arquivo</div>
+            <div class="form-group" style="margin-bottom:12px">
+              <label class="form-label">Nome do arquivo *</label>
+              <input class="form-input" id="f-name" type="text" placeholder="Ex: XMLs Outubro 2025.zip">
             </div>
-            <div class="upload-queue" id="uq"></div>
-            <div class="upload-actions" id="ua" style="display:none">
-              <button class="btn-upload" id="btn-up" onclick="doUpload()">☁️ Enviar arquivos</button>
-              <button class="btn-clear" onclick="clearQ()">Limpar</button>
+            <div class="form-group" style="margin-bottom:12px">
+              <label class="form-label">Link do Google Drive *</label>
+              <input class="form-input" id="f-url" type="url" placeholder="https://drive.google.com/file/d/...">
+            </div>
+            <div class="form-group" style="margin-bottom:16px">
+              <label class="form-label">Disponibilizar para</label>
+              <select class="form-input" id="f-target">
+                <option value="all">Todos os usuários</option>
+                <option value="client">Somente clientes</option>
+                <option value="accountant">Somente contadores</option>
+              </select>
+            </div>
+            <button class="btn-upload" onclick="addFile()">➕ Adicionar arquivo</button>
+            <div style="margin-top:14px;padding:12px;background:var(--off);border-radius:9px;border:1px solid var(--border)">
+              <div style="font-size:.75rem;font-weight:700;color:var(--text2);margin-bottom:6px;letter-spacing:.3px">COMO GERAR O LINK</div>
+              <div style="font-size:.78rem;color:var(--text2);line-height:1.7">
+                1. Abra o arquivo no Google Drive<br>
+                2. Clique em <strong>Compartilhar</strong><br>
+                3. Mude para <strong>"Qualquer pessoa com o link"</strong><br>
+                4. Copie e cole o link acima
+              </div>
             </div>
           </div>
 
@@ -945,29 +954,26 @@ footer{
 // ─── FIREBASE CONFIG ───────────────────────────────────────────────────
 // ⚠️ Substitua pelos valores do seu projeto Firebase
 import { initializeApp }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
          signOut, onAuthStateChanged }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs, doc, getDoc,
          setDoc, updateDoc, deleteDoc, query, where, orderBy, serverTimestamp }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+  from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey:            "SUA_API_KEY",
-  authDomain:        "SEU_PROJETO.firebaseapp.com",
-  projectId:         "SEU_PROJETO",
-  storageBucket:     "SEU_PROJETO.appspot.com",
-  messagingSenderId: "SEU_SENDER_ID",
-  appId:             "SEU_APP_ID"
+  apiKey:            "AIzaSyDj2pX7I6RpaVYL3mZNaswi9JAihu1th-U",
+  authDomain:        "innovadigital-46bc6.firebaseapp.com",
+  projectId:         "innovadigital-46bc6",
+  storageBucket:     "innovadigital-46bc6.firebasestorage.app",
+  messagingSenderId: "775648507820",
+  appId:             "1:775648507820:web:0cdaae28e6e3a020deac09"
 };
 
-const app     = initializeApp(firebaseConfig);
-const auth    = getAuth(app);
-const db      = getFirestore(app);
-const storage = getStorage(app);
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
 
 // ─── ESTADO ───────────────────────────────────────────────────────────
 let CU       = null; // currentUser
@@ -1088,10 +1094,8 @@ onAuthStateChanged(auth, async (user) => {
     'Bem-vindo'+(data.name?', '+data.name:'')+(data.empresa?' — '+data.empresa:'');
   document.getElementById('sb-admin-sec').style.display=isAdmin?'block':'none';
 
-  // Contador só vê arquivos fiscais no upload (read-only)
-  if(userRole==='accountant'){
-    document.getElementById('upload-card').style.display='none';
-  }
+  // Upload card só para admin
+  document.getElementById('upload-card').style.display = isAdmin ? 'block' : 'none';
 
   showView('portal-view');
   showPanel('overview');
@@ -1113,8 +1117,14 @@ window.showPanel = (id) => {
 
 // ─── OVERVIEW ─────────────────────────────────────────────────────────
 async function loadOverview() {
-  const q=query(collection(db,'files'),where('uid','==',CU.uid),orderBy('createdAt','desc'));
-  const snap=await getDocs(q).catch(()=>({docs:[]}));
+  let snap;
+  if(isAdmin){
+    snap=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc'))).catch(()=>({docs:[]}));
+  } else {
+    const q1=await getDocs(query(collection(db,'files'),where('target','==','all'))).catch(()=>({docs:[]}));
+    const q2=await getDocs(query(collection(db,'files'),where('target','==',userRole))).catch(()=>({docs:[]}));
+    snap={docs:[...q1.docs,...q2.docs]};
+  }
   const docs=snap.docs||[];
   document.getElementById('m-total').textContent=docs.length;
   document.getElementById('m-uploads').textContent=docs.length;
@@ -1125,11 +1135,12 @@ async function loadOverview() {
   }).length;
   const al=document.getElementById('ov-activity');
   if(!docs.length){al.innerHTML='<div style="color:var(--muted);font-size:.85rem;text-align:center;padding:20px">Nenhuma atividade ainda.</div>';return}
-  al.innerHTML=docs.slice(0,5).map(d=>{
+  const sorted=[...docs].sort((a,b)=>(b.data().createdAt?.toMillis?.()??0)-(a.data().createdAt?.toMillis?.()??0));
+  al.innerHTML=sorted.slice(0,5).map(d=>{
     const f=d.data();
     return`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
       <div style="width:7px;height:7px;border-radius:50%;background:var(--blue2);flex-shrink:0"></div>
-      <div style="flex:1;font-size:.84rem;color:var(--text2)"><strong style="color:var(--navy)">${f.name}</strong> enviado</div>
+      <div style="flex:1;font-size:.84rem;color:var(--text2)"><strong style="color:var(--navy)">${f.name}</strong> disponibilizado</div>
       <div style="color:var(--muted);font-size:.74rem">${fmtDate(f.createdAt)}</div>
     </div>`;
   }).join('');
@@ -1140,98 +1151,69 @@ async function loadFiles() {
   const el=document.getElementById('files-list');
   el.innerHTML='<div class="empty-st"><div class="ei">⏳</div>Carregando...</div>';
   try{
-    const q=query(collection(db,'files'),where('uid','==',CU.uid),orderBy('createdAt','desc'));
-    const snap=await getDocs(q);
-    if(snap.empty){
-      el.innerHTML='<div class="empty-st"><div class="ei">📂</div>Nenhum arquivo ainda.<br><small>Envie seu primeiro arquivo acima.</small></div>';
+    // Admin vê todos; cliente e contador veem os que têm target compatível
+    let snap;
+    if(isAdmin){
+      snap=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc')));
+    } else {
+      // Busca arquivos com target 'all' ou target igual ao role do usuário
+      const q1=await getDocs(query(collection(db,'files'),where('target','==','all'),orderBy('createdAt','desc')));
+      const q2=await getDocs(query(collection(db,'files'),where('target','==',userRole),orderBy('createdAt','desc')));
+      // Mescla e ordena por data
+      const merged=[...q1.docs,...q2.docs].sort((a,b)=>{
+        const ta=a.data().createdAt?.toMillis?.()??0;
+        const tb=b.data().createdAt?.toMillis?.()??0;
+        return tb-ta;
+      });
+      snap={docs:merged};
+    }
+    if(!snap.docs.length){
+      el.innerHTML='<div class="empty-st"><div class="ei">📂</div>Nenhum arquivo disponível.</div>';
       return;
     }
     el.innerHTML='<div class="files-list">'+snap.docs.map(d=>{
       const f=d.data();
-      const canDel=!isAdmin&&userRole!=='accountant'?
-        `<button class="fr-del" onclick="openDel('${d.id}','${f.name.replace(/'/g,"\\'")}','${f.storagePath||''}')">🗑</button>`:'';
-      const adminDel=isAdmin?
-        `<button class="fr-del" onclick="openDel('${d.id}','${f.name.replace(/'/g,"\\'")}','${f.storagePath||''}')">🗑</button>`:'';
+      const delBtn=isAdmin
+        ?`<button class="fr-del" onclick="openDel('${d.id}','${f.name.replace(/'/g,"\\'")}')">🗑</button>`
+        :'';
       return`<div class="fr">
         <span class="fr-ext">${ext(f.name)}</span>
         <span class="fr-name">${f.name}</span>
         <span class="fr-date">${fmtDate(f.createdAt)}</span>
-        <span class="fr-size">${fmtSize(f.size||0)}</span>
-        <a class="fr-dl" href="${f.url}" target="_blank" download>⬇ Baixar</a>
-        ${canDel||adminDel}
+        <a class="fr-dl" href="${f.url}" target="_blank">⬇ Baixar</a>
+        ${delBtn}
       </div>`;
     }).join('')+'</div>';
   }catch(e){
     el.innerHTML='<div class="empty-st"><div class="ei">⚠️</div>Erro ao carregar arquivos.</div>';
+    console.error(e);
   }
 }
 
-// ─── UPLOAD ───────────────────────────────────────────────────────────
-window.dzOver  = (e)=>{e.preventDefault();document.getElementById('dz').classList.add('drag-over')};
-window.dzLeave = ()=>document.getElementById('dz').classList.remove('drag-over');
-window.dzDrop  = (e)=>{e.preventDefault();document.getElementById('dz').classList.remove('drag-over');fileSelect(e.dataTransfer.files)};
-window.fileSelect = (files) => {
-  for(const f of files){
-    if(uQueue.find(x=>x.name===f.name))continue;
-    if(f.size>50*1024*1024){toast('Arquivo muito grande: '+f.name,'err');continue}
-    uQueue.push(f);
-  }
-  renderQ();
-};
-function renderQ() {
-  const c=document.getElementById('uq');
-  const a=document.getElementById('ua');
-  if(!uQueue.length){c.innerHTML='';a.style.display='none';return}
-  a.style.display='flex';
-  c.innerHTML=uQueue.map((f,i)=>`
-    <div class="qi" id="qi${i}">
-      <span class="qi-ext">${ext(f.name)}</span>
-      <span class="qi-name">${f.name}</span>
-      <span class="qi-size">${fmtSize(f.size)}</span>
-      <span class="qi-st" id="qist${i}">⏳</span>
-      <button class="qi-rm" onclick="rmQ(${i})">✕</button>
-      <div class="qi-bar" id="qib${i}" style="width:0%"></div>
-    </div>`).join('');
-}
-window.rmQ    = (i)=>{uQueue.splice(i,1);renderQ()};
-window.clearQ = ()=>{uQueue=[];renderQ()};
-
-window.doUpload = async () => {
-  if(!uQueue.length)return;
-  const btn=document.getElementById('btn-up');
-  btn.disabled=true;
-  for(let i=0;i<uQueue.length;i++){
-    const file=uQueue[i];
-    const st=document.getElementById('qist'+i);
-    const pb=document.getElementById('qib'+i);
-    try{
-      const path=`files/${CU.uid}/${Date.now()}_${file.name}`;
-      const sr=ref(storage,path);
-      const task=uploadBytesResumable(sr,file);
-      await new Promise((res,rej)=>{
-        task.on('state_changed',
-          s=>{if(pb)pb.style.width=Math.round(s.bytesTransferred/s.totalBytes*100)+'%'},
-          rej,
-          async()=>{
-            const url=await getDownloadURL(task.snapshot.ref);
-            await addDoc(collection(db,'files'),{
-              uid:CU.uid,name:file.name,size:file.size,
-              url,storagePath:path,createdAt:serverTimestamp()
-            });
-            if(st)st.textContent='✅';res();
-          }
-        );
-      });
-    }catch(e){if(st)st.textContent='❌';toast('Erro ao enviar: '+file.name,'err')}
-  }
-  btn.disabled=false;
-  toast('Arquivos enviados com sucesso!','ok');
-  uQueue=[];renderQ();loadFiles();loadOverview();
+// ─── ADD FILE (link Drive) ────────────────────────────────────────────
+window.addFile = async () => {
+  const name   = document.getElementById('f-name').value.trim();
+  const url    = document.getElementById('f-url').value.trim();
+  const target = document.getElementById('f-target').value;
+  if(!name||!url){toast('Preencha nome e link do arquivo.','err');return}
+  if(!url.startsWith('http')){toast('Link inválido.','err');return}
+  loading(true,'Salvando...');
+  try{
+    await addDoc(collection(db,'files'),{
+      uid:CU.uid, name, url, target,
+      size:0, createdAt:serverTimestamp()
+    });
+    document.getElementById('f-name').value='';
+    document.getElementById('f-url').value='';
+    toast('Arquivo adicionado!','ok');
+    loadFiles(); loadOverview();
+  }catch(e){toast('Erro ao salvar.','err')}
+  loading(false);
 };
 
 // ─── DELETE ───────────────────────────────────────────────────────────
-window.openDel = (id,name,path) => {
-  delTarget={id,path};
+window.openDel = (id,name) => {
+  delTarget={id};
   document.getElementById('del-name').textContent=name;
   document.getElementById('modal-del').classList.add('open');
 };
@@ -1240,10 +1222,9 @@ window.confirmDelete = async () => {
   loading(true,'Excluindo...');
   closeModal('modal-del');
   try{
-    if(delTarget.path) await deleteObject(ref(storage,delTarget.path)).catch(()=>{});
     await deleteDoc(doc(db,'files',delTarget.id));
     toast('Arquivo excluído.','ok');
-    loadFiles();loadOverview();
+    loadFiles(); loadOverview();
   }catch(e){toast('Erro ao excluir.','err')}
   loading(false);
 };
