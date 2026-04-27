@@ -1216,19 +1216,29 @@ window.doLogin = async () => {
   btn.innerHTML = '⏳ Entrando...';
   document.getElementById('login-err').style.display = 'none';
 
+  const timeout = new Promise((_,reject) =>
+    setTimeout(() => reject(new Error('timeout')), 10000)
+  );
+
   try{
-    await signInWithEmailAndPassword(auth, email, pass);
-    // onAuthStateChanged cuida do resto — não precisa de loading aqui
+    await Promise.race([
+      signInWithEmailAndPassword(auth, email, pass),
+      timeout
+    ]);
   }catch(e){
     btn.disabled = false;
     btn.innerHTML = originalText;
-    showLoginErr(e.code==='auth/invalid-credential'||e.code==='auth/wrong-password'
-      ? 'E-mail ou senha incorretos.'
-      : e.code==='auth/user-not-found'
-      ? 'Usuário não encontrado.'
-      : e.code==='auth/network-request-failed'
-      ? 'Erro de conexão. Verifique sua internet.'
-      : e.message);
+    if(e.message === 'timeout'){
+      showLoginErr('Tempo esgotado. Verifique sua conexão ou abra o arquivo via servidor HTTP (não file://).');
+    } else if(e.code==='auth/invalid-credential'||e.code==='auth/wrong-password'){
+      showLoginErr('E-mail ou senha incorretos.');
+    } else if(e.code==='auth/user-not-found'){
+      showLoginErr('Usuário não encontrado.');
+    } else if(e.code==='auth/network-request-failed'){
+      showLoginErr('Erro de conexão. O arquivo precisa ser aberto via servidor HTTP, não file://.');
+    } else {
+      showLoginErr(e.message);
+    }
   }
 };
 
