@@ -1254,32 +1254,61 @@ function showLoginErr(msg){
 
 // ─── AUTH STATE ───────────────────────────────────────────────────────
 onAuthStateChanged(auth, async (user) => {
-  loading(false);
-  if(!user) return;
-  CU=user;
-  const snap=await getDoc(doc(db,'users',user.uid));
-  const data=snap.exists()?snap.data():{};
-  isAdmin = ADMIN_EMAILS.includes(user.email)||data.role==='admin';
-  userRole= isAdmin?'admin':(data.role||'client');
+  if(!user){ loading(false); return; }
 
-  // Sidebar user
-  document.getElementById('sb-name').textContent=data.name||user.email;
-  document.getElementById('sb-role').textContent=
-    userRole==='admin'?'Administrador':userRole==='accountant'?'Contador':'Cliente';
-  document.getElementById('sb-av').textContent=initials(data.name||user.email);
-  document.getElementById('pm-empresa').textContent=data.empresa||'–';
-  document.getElementById('p-welcome').textContent=
-    'Bem-vindo'+(data.name?', '+data.name:'')+(data.empresa?' — '+data.empresa:'');
-  document.getElementById('sb-admin-sec').style.display=isAdmin?'block':'none';
+  try{
+    CU = user;
 
-  // Upload card só para admin
-  document.getElementById('upload-card').style.display = isAdmin ? 'block' : 'none';
+    // Busca dados do usuário — com fallback se falhar
+    let data = {};
+    try{
+      const snap = await getDoc(doc(db,'users',user.uid));
+      if(snap.exists()) data = snap.data();
+    }catch(e){
+      console.warn('Não foi possível ler dados do usuário:', e.message);
+    }
 
-  showView('portal-view');
-  showPanel('overview');
-  loadOverview();
-  loadFiles();
-  if(isAdmin) loadUsersDropdown();
+    isAdmin  = ADMIN_EMAILS.includes(user.email) || data.role === 'admin';
+    userRole = isAdmin ? 'admin' : (data.role || 'client');
+
+    // Se o documento do usuário não existe ainda (primeiro login),
+    // cria com role padrão para não bloquear o acesso
+    if(!data.email){
+      try{
+        await setDoc(doc(db,'users',user.uid), {
+          name:      data.name  || '',
+          empresa:   data.empresa || '',
+          email:     user.email,
+          role:      isAdmin ? 'admin' : 'client',
+          createdAt: serverTimestamp()
+        }, { merge: true });
+        data.email = user.email;
+      }catch(e){ console.warn('Erro ao criar documento do usuário:', e.message) }
+    }
+
+    // Sidebar
+    document.getElementById('sb-name').textContent = data.name || user.email;
+    document.getElementById('sb-role').textContent =
+      userRole==='admin' ? 'Administrador' : userRole==='accountant' ? 'Contador' : 'Cliente';
+    document.getElementById('sb-av').textContent = initials(data.name || user.email);
+    document.getElementById('pm-empresa').textContent = data.empresa || '–';
+    document.getElementById('p-welcome').textContent =
+      'Bem-vindo' + (data.name ? ', ' + data.name : '') + (data.empresa ? ' — ' + data.empresa : '');
+    document.getElementById('sb-admin-sec').style.display = isAdmin ? 'block' : 'none';
+    document.getElementById('upload-card').style.display  = isAdmin ? 'block' : 'none';
+
+    showView('portal-view');
+    showPanel('overview');
+    loadOverview();
+    loadFiles();
+    if(isAdmin) loadUsersDropdown();
+
+  }catch(e){
+    console.error('Erro no login:', e);
+    toast('Erro ao carregar portal. Tente novamente.','err');
+  }finally{
+    loading(false);
+  }
 });
 
 // ─── PORTAL PANELS ────────────────────────────────────────────────────
