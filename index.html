@@ -79,7 +79,7 @@ input,textarea,select{font-family:var(--font-b)}
 /* HERO */
 .hero{
   min-height:100vh;
-  background:#050d22;
+  background:#040c1e;
   display:flex;align-items:center;padding-top:64px;
   position:relative;overflow:hidden;
 }
@@ -89,52 +89,36 @@ input,textarea,select{font-family:var(--font-b)}
 .hero-grid{
   position:absolute;inset:0;pointer-events:none;
   background-image:
-    linear-gradient(rgba(91,164,245,.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(91,164,245,.025) 1px,transparent 1px);
+    linear-gradient(rgba(91,164,245,.022) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(91,164,245,.022) 1px,transparent 1px);
   background-size:52px 52px;
 }
-/* Foto posto — direita, colorizada azul */
+/* Foto bomba — ocupa fundo inteiro, sem corte duro */
 .hero-photo-wrap{
-  position:absolute;right:0;top:0;bottom:0;width:55%;
+  position:absolute;inset:0;
   overflow:hidden;pointer-events:none;
 }
 .hero-photo-wrap::before{
   content:'';position:absolute;inset:0;z-index:2;
-  background:linear-gradient(
-    90deg,
-    #050d22 0%,
-    rgba(5,13,34,.92) 20%,
-    rgba(5,13,34,.7) 45%,
-    rgba(5,13,34,.2) 75%,
-    transparent 100%
-  );
-}
-.hero-photo-wrap::after{
-  content:'';position:absolute;inset:0;z-index:1;
-  background:linear-gradient(
-    180deg,
-    rgba(5,13,34,.75) 0%,
-    transparent 20%,
-    transparent 75%,
-    rgba(5,13,34,.9) 100%
-  );
+  background:
+    linear-gradient(90deg, #040c1e 0%, #040c1e 28%, rgba(4,12,30,.88) 45%, rgba(4,12,30,.5) 65%, rgba(4,12,30,.2) 85%, rgba(4,12,30,.4) 100%),
+    linear-gradient(180deg, rgba(4,12,30,.7) 0%, transparent 15%, transparent 78%, #040c1e 100%);
 }
 .hero-photo{
   width:100%;height:100%;
-  background:url('https://images.unsplash.com/photo-1607000975574-bce09f3a8e17?w=1400&q=85') center/cover no-repeat;
-  filter:brightness(.5) saturate(.7) hue-rotate(180deg) sepia(.4);
-  mix-blend-mode:normal;
+  background:url('https://images.unsplash.com/photo-1586953983027-d5c4e2b9b54b?w=1600&q=90') right center/cover no-repeat;
+  filter:brightness(.38) saturate(.6) hue-rotate(200deg) sepia(.55);
 }
 /* Bokeh dots flutuantes */
 .hero-bokeh{position:absolute;inset:0;pointer-events:none;z-index:4}
 .bk{
   position:absolute;border-radius:50%;
-  background:radial-gradient(circle,rgba(120,180,255,.85) 0%,transparent 70%);
+  background:radial-gradient(circle,rgba(120,190,255,.9) 0%,transparent 70%);
   animation:bkFloat ease-in-out infinite;
 }
 @keyframes bkFloat{
   0%,100%{transform:translateY(0) scale(1);opacity:.7}
-  50%{transform:translateY(-18px) scale(1.1);opacity:.2}
+  50%{transform:translateY(-18px) scale(1.15);opacity:.2}
 }
 /* Conteúdo hero */
 .hero-inner{
@@ -154,7 +138,7 @@ input,textarea,select{font-family:var(--font-b)}
   font-size:clamp(2.8rem,5.5vw,4.4rem);
   font-weight:800;line-height:1.06;color:#fff;margin-bottom:24px;
   max-width:600px;
-  text-shadow:0 2px 40px rgba(0,0,0,.6);
+  text-shadow:0 2px 40px rgba(0,0,0,.7);
 }
 .hero-h1 em{
   font-style:normal;
@@ -651,95 +635,115 @@ footer{
     <!-- Grid -->
     <div class="hero-grid"></div>
 
-    <!-- Foto de posto colorizada -->
+    <!-- Foto bomba de gasolina colorizada -->
     <div class="hero-photo-wrap"><div class="hero-photo"></div></div>
 
-    <!-- SVG curvas de luz — Imagem 1 e 2 -->
+    <!-- SVG curvas de luz — arcos dramáticos estilo referência -->
     <svg class="hero-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <!-- Gradiente arco principal azul vivo -->
-        <linearGradient id="arc1" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="transparent"/>
-          <stop offset="30%" stop-color="#1a6fff" stop-opacity=".6"/>
-          <stop offset="55%" stop-color="#4db8ff" stop-opacity=".9"/>
-          <stop offset="75%" stop-color="#ffffff" stop-opacity=".8"/>
-          <stop offset="90%" stop-color="#4db8ff" stop-opacity=".5"/>
+        <linearGradient id="arcA" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="transparent"/>
+          <stop offset="25%"  stop-color="#1a5fff" stop-opacity=".5"/>
+          <stop offset="50%"  stop-color="#50b8ff" stop-opacity="1"/>
+          <stop offset="65%"  stop-color="#ffffff" stop-opacity=".95"/>
+          <stop offset="80%"  stop-color="#50b8ff" stop-opacity=".6"/>
           <stop offset="100%" stop-color="transparent"/>
         </linearGradient>
-        <!-- Gradiente arco secundário mais suave -->
-        <linearGradient id="arc2" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="transparent"/>
-          <stop offset="40%" stop-color="#1a4fc4" stop-opacity=".4"/>
-          <stop offset="60%" stop-color="#3a90e0" stop-opacity=".7"/>
-          <stop offset="80%" stop-color="#7ac8ff" stop-opacity=".5"/>
+        <linearGradient id="arcB" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="transparent"/>
+          <stop offset="30%"  stop-color="#1040cc" stop-opacity=".4"/>
+          <stop offset="55%"  stop-color="#3a8fff" stop-opacity=".85"/>
+          <stop offset="75%"  stop-color="#88d0ff" stop-opacity=".7"/>
           <stop offset="100%" stop-color="transparent"/>
         </linearGradient>
-        <!-- Gradiente traço de luz fino (Imagem 2) -->
-        <linearGradient id="streak" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="transparent"/>
-          <stop offset="35%" stop-color="#a0d8ff" stop-opacity=".3"/>
-          <stop offset="50%" stop-color="#ffffff" stop-opacity=".95"/>
-          <stop offset="65%" stop-color="#a0d8ff" stop-opacity=".3"/>
+        <linearGradient id="arcC" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="transparent"/>
+          <stop offset="35%"  stop-color="#0d30a0" stop-opacity=".3"/>
+          <stop offset="60%"  stop-color="#2060d0" stop-opacity=".6"/>
+          <stop offset="85%"  stop-color="#5090e0" stop-opacity=".4"/>
           <stop offset="100%" stop-color="transparent"/>
         </linearGradient>
-        <!-- Blur para brilho -->
-        <filter id="glow1"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        <filter id="glow2"><feGaussianBlur stdDeviation="8" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        <filter id="softer"><feGaussianBlur stdDeviation="1.5"/></filter>
+        <linearGradient id="streakG" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stop-color="transparent"/>
+          <stop offset="30%"  stop-color="#90d0ff" stop-opacity=".4"/>
+          <stop offset="50%"  stop-color="#ffffff" stop-opacity=".98"/>
+          <stop offset="70%"  stop-color="#90d0ff" stop-opacity=".4"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </linearGradient>
+        <filter id="gB4"><feGaussianBlur stdDeviation="4"/></filter>
+        <filter id="gB10"><feGaussianBlur stdDeviation="10"/></filter>
+        <filter id="gB20"><feGaussianBlur stdDeviation="20"/></filter>
+        <filter id="gB1"><feGaussianBlur stdDeviation="1"/></filter>
       </defs>
 
-      <!-- Glow de fundo difuso grande — canto superior direito -->
-      <ellipse cx="1100" cy="280" rx="520" ry="340" fill="rgba(30,80,220,.12)"/>
-      <ellipse cx="950" cy="500" rx="400" ry="280" fill="rgba(15,50,180,.1)"/>
-      <ellipse cx="720" cy="700" rx="300" ry="200" fill="rgba(10,40,150,.08)"/>
+      <!-- Glow de fundo difuso — atmosfera azul -->
+      <ellipse cx="1150" cy="300" rx="580" ry="380" fill="#0d2a80" opacity=".18" filter="url(#gB20)"/>
+      <ellipse cx="900"  cy="580" rx="420" ry="280" fill="#081850" opacity=".15" filter="url(#gB20)"/>
 
-      <!-- ARCO PRINCIPAL — grande curva azul viva (Imagem 1) -->
-      <path d="M -100,800 Q 400,100 900,300 T 1600,50"
-        stroke="url(#arc1)" stroke-width="2.5" fill="none"
-        filter="url(#glow2)" opacity=".85"/>
-      <!-- Versão mais grossa e difusa abaixo -->
-      <path d="M -100,800 Q 400,100 900,300 T 1600,50"
-        stroke="#3a8fff" stroke-width="12" fill="none"
-        filter="url(#glow2)" opacity=".18"/>
+      <!-- ARCO 1 — grande curva principal -->
+      <path d="M -200,1000 C 200,600 500,200 900,150 S 1350,300 1700,100"
+        stroke="#2060e0" stroke-width="60" fill="none" opacity=".12" filter="url(#gB20)"/>
+      <path d="M -200,1000 C 200,600 500,200 900,150 S 1350,300 1700,100"
+        stroke="url(#arcA)" stroke-width="2.5" fill="none" opacity=".95"/>
+      <path d="M -200,1000 C 200,600 500,200 900,150 S 1350,300 1700,100"
+        stroke="#a0d8ff" stroke-width="8" fill="none" opacity=".2" filter="url(#gB4)"/>
 
-      <!-- ARCO SECUNDÁRIO — paralelo, mais suave -->
-      <path d="M -100,900 Q 500,200 1000,380 T 1650,130"
-        stroke="url(#arc2)" stroke-width="1.5" fill="none"
-        filter="url(#glow1)" opacity=".7"/>
-      <path d="M -100,900 Q 500,200 1000,380 T 1650,130"
-        stroke="#1a6fff" stroke-width="8" fill="none"
-        filter="url(#glow2)" opacity=".12"/>
+      <!-- ARCO 2 — paralelo ligeiramente abaixo -->
+      <path d="M -200,1050 C 250,650 550,280 950,230 S 1380,370 1700,180"
+        stroke="#1a60e0" stroke-width="40" fill="none" opacity=".1" filter="url(#gB20)"/>
+      <path d="M -200,1050 C 250,650 550,280 950,230 S 1380,370 1700,180"
+        stroke="url(#arcB)" stroke-width="1.5" fill="none" opacity=".85"/>
+      <path d="M -200,1050 C 250,650 550,280 950,230 S 1380,370 1700,180"
+        stroke="#60a0ff" stroke-width="6" fill="none" opacity=".15" filter="url(#gB4)"/>
 
-      <!-- TERCEIRO ARCO menor — Imagem 1 curva interna -->
-      <path d="M 200,900 Q 600,350 1100,420 T 1600,200"
-        stroke="#5ba4f5" stroke-width="1" fill="none"
-        filter="url(#glow1)" opacity=".5"/>
+      <!-- ARCO 3 — curva mais suave -->
+      <path d="M -100,1100 C 300,700 700,400 1100,320 S 1500,400 1700,280"
+        stroke="#0830a0" stroke-width="25" fill="none" opacity=".1" filter="url(#gB10)"/>
+      <path d="M -100,1100 C 300,700 700,400 1100,320 S 1500,400 1700,280"
+        stroke="url(#arcC)" stroke-width="1" fill="none" opacity=".7"/>
 
-      <!-- TRAÇO DE LUZ BRILHANTE — Imagem 2, linha diagonal */-->
-      <line x1="480" y1="0" x2="1050" y2="900"
-        stroke="url(#streak)" stroke-width="1.5"
-        filter="url(#glow1)" opacity=".9"/>
-      <!-- Versão glow difuso do traço -->
-      <line x1="480" y1="0" x2="1050" y2="900"
-        stroke="white" stroke-width="6"
-        filter="url(#glow2)" opacity=".12"/>
+      <!-- ARCO 4 — curva menor central-alta -->
+      <path d="M 300,900 C 500,500 800,280 1200,240 S 1550,350 1700,260"
+        stroke="#4488dd" stroke-width="1" fill="none" opacity=".45"/>
 
-      <!-- Brilho pontual no pico do arco -->
-      <circle cx="870" cy="290" r="4" fill="white" filter="url(#glow2)" opacity=".9"/>
-      <circle cx="870" cy="290" r="14" fill="#7ac8ff" filter="url(#glow2)" opacity=".35"/>
+      <!-- TRAÇO DE LUZ DIAGONAL -->
+      <line x1="560" y1="-50" x2="1180" y2="950"
+        stroke="white" stroke-width="30" opacity=".05" filter="url(#gB20)"/>
+      <line x1="560" y1="-50" x2="1180" y2="950"
+        stroke="#b0dcff" stroke-width="6" opacity=".18" filter="url(#gB4)"/>
+      <line x1="560" y1="-50" x2="1180" y2="950"
+        stroke="url(#streakG)" stroke-width="1.2" opacity=".95"/>
 
-      <!-- Partículas de luz nos arcos -->
-      <circle cx="420" cy="480" r="2" fill="#7ac8ff" filter="url(#glow1)" opacity=".8">
-        <animate attributeName="opacity" values=".8;.2;.8" dur="3s" repeatCount="indefinite"/>
+      <!-- PONTO DE BRILHO — pico do arco principal -->
+      <circle cx="880" cy="158" r="3"  fill="white"   opacity=".95"/>
+      <circle cx="880" cy="158" r="12" fill="#80c8ff" opacity=".5"  filter="url(#gB4)"/>
+      <circle cx="880" cy="158" r="30" fill="#4090ff" opacity=".2"  filter="url(#gB10)"/>
+      <circle cx="880" cy="158" r="60" fill="#2060d0" opacity=".1"  filter="url(#gB20)"/>
+
+      <!-- Segundo brilho no traço diagonal -->
+      <circle cx="870" cy="450" r="2"  fill="white"   opacity=".85"/>
+      <circle cx="870" cy="450" r="8"  fill="#a0d8ff" opacity=".4"  filter="url(#gB4)"/>
+
+      <!-- Partículas animadas -->
+      <circle cx="320" cy="690" r="2" fill="#60aaff" opacity=".8" filter="url(#gB1)">
+        <animate attributeName="opacity" values=".8;.15;.8" dur="3.2s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="2;3;2" dur="3.2s" repeatCount="indefinite"/>
       </circle>
-      <circle cx="650" cy="350" r="1.5" fill="white" filter="url(#glow1)" opacity=".7">
-        <animate attributeName="opacity" values=".7;.1;.7" dur="4s" begin="1s" repeatCount="indefinite"/>
+      <circle cx="580" cy="420" r="1.5" fill="white" opacity=".7" filter="url(#gB1)">
+        <animate attributeName="opacity" values=".7;.1;.7" dur="4.5s" begin=".8s" repeatCount="indefinite"/>
       </circle>
-      <circle cx="1050" cy="310" r="2.5" fill="#a0d8ff" filter="url(#glow1)" opacity=".75">
-        <animate attributeName="opacity" values=".75;.15;.75" dur="5s" begin=".5s" repeatCount="indefinite"/>
+      <circle cx="780" cy="270" r="2.5" fill="#90d0ff" opacity=".75" filter="url(#gB1)">
+        <animate attributeName="opacity" values=".75;.1;.75" dur="5s" begin="1.5s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="2.5;4;2.5" dur="5s" begin="1.5s" repeatCount="indefinite"/>
       </circle>
-      <circle cx="310" cy="620" r="1.5" fill="#4db8ff" filter="url(#glow1)" opacity=".6">
-        <animate attributeName="opacity" values=".6;.1;.6" dur="3.5s" begin="2s" repeatCount="indefinite"/>
+      <circle cx="1050" cy="230" r="2" fill="#c0e8ff" opacity=".6" filter="url(#gB1)">
+        <animate attributeName="opacity" values=".6;.1;.6" dur="3.8s" begin="2.2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="440" cy="570" r="1.5" fill="#4499ff" opacity=".65" filter="url(#gB1)">
+        <animate attributeName="opacity" values=".65;.08;.65" dur="6s" begin=".3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="1200" cy="290" r="2" fill="white" opacity=".5" filter="url(#gB1)">
+        <animate attributeName="opacity" values=".5;.08;.5" dur="4s" begin="3s" repeatCount="indefinite"/>
       </circle>
     </svg>
 
