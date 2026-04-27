@@ -626,7 +626,6 @@ footer{
       <a href="#" onclick="document.getElementById('contato').scrollIntoView({behavior:'smooth'});return false">Contato</a>
     </nav>
     <div class="ln-btns">
-      <button class="btn-ghost" onclick="showLogin()">Entrar</button>
       <button class="btn-portal" onclick="showLogin()">Portal do Cliente</button>
     </div>
   </header>
@@ -1033,21 +1032,18 @@ footer{
       <!-- ARQUIVOS FISCAIS -->
       <div id="panel-fiscal" class="panel">
         <div class="pm-title">Arquivos Fiscais</div>
-        <p class="pm-sub">Envie e acesse seus documentos fiscais, XMLs e relatórios</p>
+        <p class="pm-sub">Documentos disponibilizados pela Innova Digital para sua empresa</p>
         <div class="pm-divider"></div>
-        <div class="af-layout">
-          <!-- CADASTRO DE ARQUIVO (só para admin) -->
-          <div class="card" id="upload-card">
-            <div class="card-title">📎 Adicionar Arquivo</div>
-            <div class="form-group" style="margin-bottom:12px">
+
+        <!-- Card admin: adicionar arquivo -->
+        <div class="card" id="upload-card" style="margin-bottom:24px">
+          <div class="card-title">📎 Adicionar Arquivo</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+            <div class="form-group" style="margin-bottom:0">
               <label class="form-label">Nome do arquivo *</label>
               <input class="form-input" id="f-name" type="text" placeholder="Ex: XMLs Outubro 2025.zip">
             </div>
-            <div class="form-group" style="margin-bottom:12px">
-              <label class="form-label">Link do Google Drive *</label>
-              <input class="form-input" id="f-url" type="url" placeholder="https://drive.google.com/file/d/...">
-            </div>
-            <div class="form-group" style="margin-bottom:16px">
+            <div class="form-group" style="margin-bottom:0">
               <label class="form-label">Disponibilizar para</label>
               <select class="form-input" id="f-target">
                 <option value="all">Todos os usuários</option>
@@ -1055,23 +1051,44 @@ footer{
                 <option value="accountant">Somente contadores</option>
               </select>
             </div>
+          </div>
+          <div class="form-group" style="margin-bottom:14px">
+            <label class="form-label">Link do Google Drive *</label>
+            <input class="form-input" id="f-url" type="url" placeholder="https://drive.google.com/file/d/...">
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
             <button class="btn-upload" onclick="addFile()">➕ Adicionar arquivo</button>
-            <div style="margin-top:14px;padding:12px;background:var(--off);border-radius:9px;border:1px solid var(--border)">
-              <div style="font-size:.75rem;font-weight:700;color:var(--text2);margin-bottom:6px;letter-spacing:.3px">COMO GERAR O LINK</div>
-              <div style="font-size:.78rem;color:var(--text2);line-height:1.7">
-                1. Abra o arquivo no Google Drive<br>
-                2. Clique em <strong>Compartilhar</strong><br>
-                3. Mude para <strong>"Qualquer pessoa com o link"</strong><br>
-                4. Copie e cole o link acima
-              </div>
+            <div style="font-size:.75rem;color:var(--muted)">
+              💡 No Drive: Compartilhar → "Qualquer pessoa com o link" → Copiar link
             </div>
           </div>
+        </div>
 
-          <!-- LISTA -->
-          <div class="card">
-            <div class="card-title">📥 Arquivos Disponíveis</div>
-            <div id="files-list"><div class="empty-st"><div class="ei">📂</div>Carregando arquivos...</div></div>
+        <!-- Lista de arquivos -->
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px">
+            <div class="card-title" style="margin-bottom:0">📥 Documentos Disponíveis</div>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+              <div style="position:relative">
+                <input class="form-input" id="search-files" type="text" placeholder="Buscar..."
+                  style="padding-left:30px;width:180px;font-size:.82rem;padding-top:7px;padding-bottom:7px"
+                  oninput="filterFiles()">
+                <span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.82rem;pointer-events:none">🔍</span>
+              </div>
+              <select class="form-input" id="filter-ext" style="font-size:.82rem;padding:7px 10px;width:auto" onchange="filterFiles()">
+                <option value="">Todos os tipos</option>
+                <option value="PDF">PDF</option>
+                <option value="XML">XML</option>
+                <option value="ZIP">ZIP</option>
+                <option value="XLSX">Excel</option>
+                <option value="CSV">CSV</option>
+                <option value="TXT">TXT</option>
+                <option value="LAY">LAY</option>
+              </select>
+            </div>
           </div>
+          <div id="files-list"><div class="empty-st"><div class="ei">📂</div>Carregando arquivos...</div></div>
+          <div id="files-count" style="margin-top:10px;font-size:.75rem;color:var(--muted);text-align:right;display:none"></div>
         </div>
       </div>
 
@@ -1310,48 +1327,66 @@ async function loadOverview() {
 }
 
 // ─── FILES ────────────────────────────────────────────────────────────
+let allFiles = []; // cache para filtro client-side
+
 async function loadFiles() {
   const el=document.getElementById('files-list');
   el.innerHTML='<div class="empty-st"><div class="ei">⏳</div>Carregando...</div>';
   try{
-    // Admin vê todos; cliente e contador veem os que têm target compatível
-    let snap;
+    let docs=[];
     if(isAdmin){
-      snap=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc')));
+      const snap=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc')));
+      docs=snap.docs;
     } else {
-      // Busca arquivos com target 'all' ou target igual ao role do usuário
-      const q1=await getDocs(query(collection(db,'files'),where('target','==','all'),orderBy('createdAt','desc')));
-      const q2=await getDocs(query(collection(db,'files'),where('target','==',userRole),orderBy('createdAt','desc')));
-      // Mescla e ordena por data
-      const merged=[...q1.docs,...q2.docs].sort((a,b)=>{
-        const ta=a.data().createdAt?.toMillis?.()??0;
-        const tb=b.data().createdAt?.toMillis?.()??0;
-        return tb-ta;
-      });
-      snap={docs:merged};
+      const q1=await getDocs(query(collection(db,'files'),where('target','==','all'),orderBy('createdAt','desc'))).catch(()=>({docs:[]}));
+      const q2=await getDocs(query(collection(db,'files'),where('target','==',userRole),orderBy('createdAt','desc'))).catch(()=>({docs:[]}));
+      const merged=[...q1.docs,...q2.docs].sort((a,b)=>(b.data().createdAt?.toMillis?.()??0)-(a.data().createdAt?.toMillis?.()??0));
+      docs=merged;
     }
-    if(!snap.docs.length){
-      el.innerHTML='<div class="empty-st"><div class="ei">📂</div>Nenhum arquivo disponível.</div>';
-      return;
-    }
-    el.innerHTML='<div class="files-list">'+snap.docs.map(d=>{
-      const f=d.data();
-      const delBtn=isAdmin
-        ?`<button class="fr-del" onclick="openDel('${d.id}','${f.name.replace(/'/g,"\\'")}')">🗑</button>`
-        :'';
-      return`<div class="fr">
-        <span class="fr-ext">${ext(f.name)}</span>
-        <span class="fr-name">${f.name}</span>
-        <span class="fr-date">${fmtDate(f.createdAt)}</span>
-        <a class="fr-dl" href="${f.url}" target="_blank">⬇ Baixar</a>
-        ${delBtn}
-      </div>`;
-    }).join('')+'</div>';
+    allFiles=docs.map(d=>({id:d.id,...d.data()}));
+    renderFiles(allFiles);
   }catch(e){
     el.innerHTML='<div class="empty-st"><div class="ei">⚠️</div>Erro ao carregar arquivos.</div>';
     console.error(e);
   }
 }
+
+function renderFiles(list) {
+  const el=document.getElementById('files-list');
+  const cnt=document.getElementById('files-count');
+  if(!list.length){
+    el.innerHTML='<div class="empty-st"><div class="ei">📂</div>Nenhum arquivo encontrado.</div>';
+    cnt.style.display='none';
+    return;
+  }
+  const oneWeekAgo=new Date(); oneWeekAgo.setDate(oneWeekAgo.getDate()-7);
+  el.innerHTML='<div class="files-list">'+list.map(f=>{
+    const isNew=f.createdAt?.toDate&&f.createdAt.toDate()>oneWeekAgo;
+    const delBtn=isAdmin?`<button class="fr-del" onclick="openDel('${f.id}','${(f.name||'').replace(/'/g,"\\'")}')">🗑</button>`:'';
+    const newBadge=isNew?`<span style="background:rgba(40,167,69,.1);color:var(--success);font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:5px;flex-shrink:0">NOVO</span>`:'';
+    return`<div class="fr">
+      <span class="fr-ext">${ext(f.name||'')}</span>
+      <span class="fr-name">${f.name||'–'}</span>
+      ${newBadge}
+      <span class="fr-date">${fmtDate(f.createdAt)}</span>
+      <a class="fr-dl" href="${f.url}" target="_blank" rel="noopener">⬇ Baixar</a>
+      ${delBtn}
+    </div>`;
+  }).join('')+'</div>';
+  cnt.textContent=list.length+' arquivo'+(list.length!==1?'s':'')+' encontrado'+(list.length!==1?'s':'');
+  cnt.style.display='block';
+}
+
+window.filterFiles = () => {
+  const q=(document.getElementById('search-files').value||'').toLowerCase();
+  const e=(document.getElementById('filter-ext').value||'').toUpperCase();
+  const filtered=allFiles.filter(f=>{
+    const name=(f.name||'').toLowerCase();
+    const fext=ext(f.name||'');
+    return(!q||name.includes(q))&&(!e||fext===e);
+  });
+  renderFiles(filtered);
+};
 
 // ─── ADD FILE (link Drive) ────────────────────────────────────────────
 window.addFile = async () => {
