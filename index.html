@@ -1044,11 +1044,9 @@ footer{
               <input class="form-input" id="f-name" type="text" placeholder="Ex: XMLs Outubro 2025.zip">
             </div>
             <div class="form-group" style="margin-bottom:0">
-              <label class="form-label">Disponibilizar para</label>
-              <select class="form-input" id="f-target">
-                <option value="all">Todos os usuários</option>
-                <option value="client">Somente clientes</option>
-                <option value="accountant">Somente contadores</option>
+              <label class="form-label">Destinatário (CNPJ/Usuário) *</label>
+              <select class="form-input" id="f-target-uid">
+                <option value="">Carregando usuários...</option>
               </select>
             </div>
           </div>
@@ -1161,7 +1159,7 @@ let isAdmin  = false;
 let userRole = 'client'; // 'client' | 'accountant' | 'admin'
 let uQueue   = [];
 let delTarget= null;
-const ADMIN_EMAILS = ["admin@innovadigital.com.br"]; // ← altere
+const ADMIN_EMAILS = ["lnrdlamarcal@gmail.com"];
 
 // ─── UI HELPERS ───────────────────────────────────────────────────────
 function showView(id) {
@@ -1281,6 +1279,7 @@ onAuthStateChanged(auth, async (user) => {
   showPanel('overview');
   loadOverview();
   loadFiles();
+  if(isAdmin) loadUsersDropdown();
 });
 
 // ─── PORTAL PANELS ────────────────────────────────────────────────────
@@ -1297,37 +1296,41 @@ window.showPanel = (id) => {
 
 // ─── OVERVIEW ─────────────────────────────────────────────────────────
 async function loadOverview() {
-  let snap;
-  if(isAdmin){
-    snap=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc'))).catch(()=>({docs:[]}));
-  } else {
-    const q1=await getDocs(query(collection(db,'files'),where('target','==','all'))).catch(()=>({docs:[]}));
-    const q2=await getDocs(query(collection(db,'files'),where('target','==',userRole))).catch(()=>({docs:[]}));
-    snap={docs:[...q1.docs,...q2.docs]};
-  }
-  const docs=snap.docs||[];
+  let docs=[];
+  try{
+    if(isAdmin){
+      const snap=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc')));
+      docs=snap.docs;
+    } else {
+      const snap=await getDocs(query(
+        collection(db,'files'),
+        where('targetUid','==',CU.uid),
+        orderBy('createdAt','desc')
+      ));
+      docs=snap.docs;
+    }
+  }catch(e){docs=[]}
   document.getElementById('m-total').textContent=docs.length;
   document.getElementById('m-uploads').textContent=docs.length;
   const wk=new Date(); wk.setDate(wk.getDate()-7);
   document.getElementById('m-new').textContent=docs.filter(d=>{
-    const ts=d.data().createdAt;
-    return ts&&ts.toDate&&ts.toDate()>wk;
+    const ts=d.data().createdAt; return ts&&ts.toDate&&ts.toDate()>wk;
   }).length;
   const al=document.getElementById('ov-activity');
   if(!docs.length){al.innerHTML='<div style="color:var(--muted);font-size:.85rem;text-align:center;padding:20px">Nenhuma atividade ainda.</div>';return}
-  const sorted=[...docs].sort((a,b)=>(b.data().createdAt?.toMillis?.()??0)-(a.data().createdAt?.toMillis?.()??0));
-  al.innerHTML=sorted.slice(0,5).map(d=>{
+  al.innerHTML=docs.slice(0,5).map(d=>{
     const f=d.data();
+    const empresa=isAdmin&&f.targetEmpresa?` → <strong>${f.targetEmpresa}</strong>`:'';
     return`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
       <div style="width:7px;height:7px;border-radius:50%;background:var(--blue2);flex-shrink:0"></div>
-      <div style="flex:1;font-size:.84rem;color:var(--text2)"><strong style="color:var(--navy)">${f.name}</strong> disponibilizado</div>
+      <div style="flex:1;font-size:.84rem;color:var(--text2)"><strong style="color:var(--navy)">${f.name}</strong>${empresa} disponibilizado</div>
       <div style="color:var(--muted);font-size:.74rem">${fmtDate(f.createdAt)}</div>
     </div>`;
   }).join('');
 }
 
 // ─── FILES ────────────────────────────────────────────────────────────
-let allFiles = []; // cache para filtro client-side
+let allFiles = [];
 
 async function loadFiles() {
   const el=document.getElementById('files-list');
@@ -1338,10 +1341,12 @@ async function loadFiles() {
       const snap=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc')));
       docs=snap.docs;
     } else {
-      const q1=await getDocs(query(collection(db,'files'),where('target','==','all'),orderBy('createdAt','desc'))).catch(()=>({docs:[]}));
-      const q2=await getDocs(query(collection(db,'files'),where('target','==',userRole),orderBy('createdAt','desc'))).catch(()=>({docs:[]}));
-      const merged=[...q1.docs,...q2.docs].sort((a,b)=>(b.data().createdAt?.toMillis?.()??0)-(a.data().createdAt?.toMillis?.()??0));
-      docs=merged;
+      const snap=await getDocs(query(
+        collection(db,'files'),
+        where('targetUid','==',CU.uid),
+        orderBy('createdAt','desc')
+      ));
+      docs=snap.docs;
     }
     allFiles=docs.map(d=>({id:d.id,...d.data()}));
     renderFiles(allFiles);
@@ -1355,19 +1360,21 @@ function renderFiles(list) {
   const el=document.getElementById('files-list');
   const cnt=document.getElementById('files-count');
   if(!list.length){
-    el.innerHTML='<div class="empty-st"><div class="ei">📂</div>Nenhum arquivo encontrado.</div>';
+    el.innerHTML='<div class="empty-st"><div class="ei">📂</div>Nenhum arquivo disponível para sua conta.</div>';
     cnt.style.display='none';
     return;
   }
   const oneWeekAgo=new Date(); oneWeekAgo.setDate(oneWeekAgo.getDate()-7);
   el.innerHTML='<div class="files-list">'+list.map(f=>{
     const isNew=f.createdAt?.toDate&&f.createdAt.toDate()>oneWeekAgo;
-    const delBtn=isAdmin?`<button class="fr-del" onclick="openDel('${f.id}','${(f.name||'').replace(/'/g,"\\'")}')">🗑</button>`:'';
     const newBadge=isNew?`<span style="background:rgba(40,167,69,.1);color:var(--success);font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:5px;flex-shrink:0">NOVO</span>`:'';
+    const empresaTag=isAdmin&&f.targetEmpresa
+      ?`<span style="background:rgba(27,63,171,.07);color:var(--blue2);font-size:.68rem;font-weight:600;padding:2px 7px;border-radius:5px;flex-shrink:0">${f.targetEmpresa}</span>`:'';
+    const delBtn=isAdmin?`<button class="fr-del" onclick="openDel('${f.id}','${(f.name||'').replace(/'/g,"\\'")}')">🗑</button>`:'';
     return`<div class="fr">
       <span class="fr-ext">${ext(f.name||'')}</span>
       <span class="fr-name">${f.name||'–'}</span>
-      ${newBadge}
+      ${newBadge}${empresaTag}
       <span class="fr-date">${fmtDate(f.createdAt)}</span>
       <a class="fr-dl" href="${f.url}" target="_blank" rel="noopener">⬇ Baixar</a>
       ${delBtn}
@@ -1390,24 +1397,49 @@ window.filterFiles = () => {
 
 // ─── ADD FILE (link Drive) ────────────────────────────────────────────
 window.addFile = async () => {
-  const name   = document.getElementById('f-name').value.trim();
-  const url    = document.getElementById('f-url').value.trim();
-  const target = document.getElementById('f-target').value;
+  const name     = document.getElementById('f-name').value.trim();
+  const url      = document.getElementById('f-url').value.trim();
+  const targetUid= document.getElementById('f-target-uid').value;
   if(!name||!url){toast('Preencha nome e link do arquivo.','err');return}
+  if(!targetUid){toast('Selecione o destinatário.','err');return}
   if(!url.startsWith('http')){toast('Link inválido.','err');return}
   loading(true,'Salvando...');
   try{
+    const uSnap=await getDoc(doc(db,'users',targetUid));
+    const uData=uSnap.exists()?uSnap.data():{};
     await addDoc(collection(db,'files'),{
-      uid:CU.uid, name, url, target,
-      size:0, createdAt:serverTimestamp()
+      targetUid,
+      targetName:    uData.name||uData.email||targetUid,
+      targetEmpresa: uData.empresa||'',
+      name, url,
+      addedBy:   CU.uid,
+      createdAt: serverTimestamp()
     });
     document.getElementById('f-name').value='';
     document.getElementById('f-url').value='';
+    document.getElementById('f-target-uid').value='';
     toast('Arquivo adicionado!','ok');
     loadFiles(); loadOverview();
-  }catch(e){toast('Erro ao salvar.','err')}
+  }catch(e){toast('Erro ao salvar: '+e.message,'err')}
   loading(false);
 };
+
+// Popula dropdown de usuários para o admin
+async function loadUsersDropdown() {
+  if(!isAdmin) return;
+  const sel=document.getElementById('f-target-uid');
+  if(!sel) return;
+  try{
+    const snap=await getDocs(query(collection(db,'users'),orderBy('name')));
+    if(snap.empty){sel.innerHTML='<option value="">Nenhum usuário cadastrado</option>';return}
+    sel.innerHTML='<option value="">Selecione o destinatário...</option>'+
+      snap.docs.map(d=>{
+        const u=d.data();
+        const label=[u.empresa,u.name].filter(Boolean).join(' — ');
+        return`<option value="${d.id}">${label||u.email}</option>`;
+      }).join('');
+  }catch(e){sel.innerHTML='<option value="">Erro ao carregar</option>'}
+}
 
 // ─── DELETE ───────────────────────────────────────────────────────────
 window.openDel = (id,name) => {
