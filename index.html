@@ -6,211 +6,66 @@
 <title>Innova Digital — Portal do Cliente</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --navy:    #0B1D4E;
-  --navy2:   #112260;
-  --blue:    #1B3FAB;
-  --blue2:   #2952CC;
-  --sky:     #4A90E2;
-  --cyan:    #5BA4F5;
-  --white:   #FFFFFF;
-  --off:     #F7F6F2;
-  --off2:    #EFEDE8;
-  --muted:   #8896B3;
-  --border:  #E2E0D8;
-  --text:    #1A2240;
-  --text2:   #4A5270;
-  --danger:  #DC3545;
-  --success: #28A745;
-  --warn:    #F59E0B;
-
-  --font-h: 'Syne', sans-serif;
-  --font-b: 'DM Sans', sans-serif;
-  --r:  10px;
-  --rl: 16px;
-  --sh: 0 2px 16px rgba(11,29,78,.08);
-  --sh2:0 8px 40px rgba(11,29,78,.16);
-}
+:root{--navy:#0B1D4E;--navy2:#112260;--blue:#1B3FAB;--blue2:#2952CC;--sky:#4A90E2;--cyan:#5BA4F5;--white:#FFFFFF;--off:#F7F6F2;--off2:#EFEDE8;--muted:#8896B3;--border:#E2E0D8;--text:#1A2240;--text2:#4A5270;--danger:#DC3545;--success:#28A745;--warn:#F59E0B;--font-h:'Cabinet Grotesk',sans-serif;--font-b:'Outfit',sans-serif;--r:10px;--rl:16px;--sh:0 2px 16px rgba(11,29,78,.08);--sh2:0 8px 40px rgba(11,29,78,.16)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:var(--font-b);background:var(--off);color:var(--text);overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 button{cursor:pointer;font-family:var(--font-b);border:none;background:none}
 input,textarea,select{font-family:var(--font-b)}
-
-/* ── VIEWS ── */
-.view{display:none}
-.view.active{display:block}
-
-/* ══════════════════════════════════════
-   LANDING
-══════════════════════════════════════ */
-#landing{display:none}
-#landing.active{display:block}
-
-/* TOPBAR */
-.ln-bar{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  background:rgba(11,29,78,.97);backdrop-filter:blur(14px);
-  border-bottom:1px solid rgba(255,255,255,.07);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 48px;height:64px;
-}
+.view{display:none}.view.active{display:block}
+#landing{display:none}#landing.active{display:block}
+.ln-bar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(11,29,78,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px}
 .ln-logo{display:flex;align-items:center;gap:10px;cursor:pointer}
-.ln-logo-icon{
-  width:32px;height:32px;border-radius:8px;
-  background:linear-gradient(135deg,var(--blue2),var(--sky));
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-h);font-size:.95rem;font-weight:800;color:#fff;
-}
-.ln-logo-text{font-family:var(--font-h);font-weight:800;font-size:1rem;color:#fff;letter-spacing:.5px}
+.ln-logo-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--blue2),var(--sky));display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:.95rem;font-weight:800;color:#fff}
+.ln-logo-text{font-family:var(--font-h);font-weight:800;font-size:1.05rem;color:#fff;letter-spacing:.3px}
 .ln-logo-text span{color:var(--cyan)}
 .ln-nav{display:flex;gap:32px}
-.ln-nav a{color:rgba(255,255,255,.65);font-size:.88rem;transition:color .2s}
+.ln-nav a{color:rgba(255,255,255,.65);font-size:.9rem;transition:color .2s}
 .ln-nav a:hover{color:var(--cyan)}
-.ln-btns{display:flex;gap:10px}
-.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 20px;border-radius:8px;font-size:.85rem;transition:all .2s}
-.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
-.btn-portal{background:var(--blue2);color:#fff;padding:8px 20px;border-radius:8px;font-size:.85rem;font-weight:600;transition:all .2s}
-.btn-portal:hover{background:var(--sky);box-shadow:0 0 20px rgba(74,144,226,.4)}
-
-/* HERO */
-.hero{
-  min-height:100vh;
-  background:#040c1e;
-  display:flex;align-items:center;padding-top:64px;
-  position:relative;overflow:hidden;
-}
-/* Camada SVG de curvas e luz — fundo total */
+.btn-portal{background:var(--blue2);color:#fff;padding:8px 20px;border-radius:8px;font-size:.88rem;font-weight:600;transition:all .2s}
+.btn-portal:hover{background:var(--sky)}
+.hero{min-height:100vh;background:#040c1e;display:flex;align-items:center;padding-top:64px;position:relative;overflow:hidden}
 .hero-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-/* Grid diagonal sutil */
-.hero-grid{
-  position:absolute;inset:0;pointer-events:none;
-  background-image:
-    linear-gradient(rgba(91,164,245,.022) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(91,164,245,.022) 1px,transparent 1px);
-  background-size:52px 52px;
-}
-/* Foto bomba — ocupa fundo inteiro, sem corte duro */
-.hero-photo-wrap{
-  position:absolute;inset:0;
-  overflow:hidden;pointer-events:none;
-}
-.hero-photo-wrap::before{
-  content:'';position:absolute;inset:0;z-index:2;
-  background:
-    linear-gradient(90deg, #040c1e 0%, #040c1e 28%, rgba(4,12,30,.88) 45%, rgba(4,12,30,.5) 65%, rgba(4,12,30,.2) 85%, rgba(4,12,30,.4) 100%),
-    linear-gradient(180deg, rgba(4,12,30,.7) 0%, transparent 15%, transparent 78%, #040c1e 100%);
-}
-.hero-photo{
-  width:100%;height:100%;
-  background:url('https://images.unsplash.com/photo-1586953983027-d5c4e2b9b54b?w=1600&q=90') right center/cover no-repeat;
-  filter:brightness(.38) saturate(.6) hue-rotate(200deg) sepia(.55);
-}
-/* Bokeh dots flutuantes */
-.hero-bokeh{position:absolute;inset:0;pointer-events:none;z-index:4}
-.bk{
-  position:absolute;border-radius:50%;
-  background:radial-gradient(circle,rgba(120,190,255,.9) 0%,transparent 70%);
-  animation:bkFloat ease-in-out infinite;
-}
-@keyframes bkFloat{
-  0%,100%{transform:translateY(0) scale(1);opacity:.7}
-  50%{transform:translateY(-18px) scale(1.15);opacity:.2}
-}
-/* Conteúdo hero */
-.hero-inner{
-  position:relative;z-index:10;max-width:1200px;margin:0 auto;
-  padding:90px 48px;width:100%;
-}
-.hero-pill{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(91,164,245,.1);border:1px solid rgba(91,164,245,.22);
-  color:var(--cyan);font-size:.75rem;font-weight:700;letter-spacing:1px;
-  padding:5px 14px;border-radius:100px;margin-bottom:28px;text-transform:uppercase;
-}
+.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(91,164,245,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(91,164,245,.022) 1px,transparent 1px);background-size:52px 52px}
+.hero-photo-wrap{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.hero-photo-wrap::before{content:'';position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,#040c1e 0%,#040c1e 28%,rgba(4,12,30,.88) 45%,rgba(4,12,30,.5) 65%,rgba(4,12,30,.2) 85%,rgba(4,12,30,.4) 100%),linear-gradient(180deg,rgba(4,12,30,.7) 0%,transparent 15%,transparent 78%,#040c1e 100%)}
+.hero-photo{width:100%;height:100%;background:url('https://images.unsplash.com/photo-1586953983027-d5c4e2b9b54b?w=1600&q=90') right center/cover no-repeat;filter:brightness(.38) saturate(.6) hue-rotate(200deg) sepia(.55)}
+.bk{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(120,190,255,.9) 0%,transparent 70%);animation:bkFloat ease-in-out infinite}
+@keyframes bkFloat{0%,100%{transform:translateY(0) scale(1);opacity:.7}50%{transform:translateY(-18px) scale(1.15);opacity:.2}}
+.hero-inner{position:relative;z-index:10;max-width:1200px;margin:0 auto;padding:90px 48px;width:100%}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(91,164,245,.1);border:1px solid rgba(91,164,245,.22);color:var(--cyan);font-size:.75rem;font-weight:700;letter-spacing:1px;padding:5px 14px;border-radius:100px;margin-bottom:28px;text-transform:uppercase}
 .hero-pill::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:blink 2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.hero-h1{
-  font-family:var(--font-h);
-  font-size:clamp(2.8rem,5.5vw,4.4rem);
-  font-weight:800;line-height:1.06;color:#fff;margin-bottom:24px;
-  max-width:600px;
-  text-shadow:0 2px 40px rgba(0,0,0,.7);
-}
-.hero-h1 em{
-  font-style:normal;
-  background:linear-gradient(100deg,#6ec6ff 0%,#a8e0ff 50%,#6ec6ff 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.hero-sub{
-  color:rgba(255,255,255,.5);font-size:1.05rem;line-height:1.78;
-  margin-bottom:44px;max-width:480px;
-}
+.hero-h1{font-family:var(--font-h);font-size:clamp(2.8rem,5.5vw,4.4rem);font-weight:900;line-height:1.06;color:#fff;margin-bottom:24px;max-width:600px;text-shadow:0 2px 40px rgba(0,0,0,.7)}
+.hero-h1 em{font-style:normal;background:linear-gradient(100deg,#6ec6ff 0%,#a8e0ff 50%,#6ec6ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{color:rgba(255,255,255,.5);font-size:1.05rem;line-height:1.78;margin-bottom:44px;max-width:480px}
 .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:60px}
-.btn-hero{
-  background:linear-gradient(135deg,#1a3faa,#3d82d8);color:#fff;
-  padding:15px 36px;border-radius:var(--r);font-size:.95rem;font-weight:700;
-  font-family:var(--font-h);transition:all .25s;
-  box-shadow:0 4px 28px rgba(74,144,226,.4),inset 0 1px 0 rgba(255,255,255,.1);
-  letter-spacing:.3px;
-}
+.btn-hero{background:linear-gradient(135deg,#1a3faa,#3d82d8);color:#fff;padding:15px 36px;border-radius:var(--r);font-size:.95rem;font-weight:700;font-family:var(--font-h);transition:all .25s;box-shadow:0 4px 28px rgba(74,144,226,.4)}
 .btn-hero:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(74,144,226,.6)}
-.btn-hero-sec{
-  background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.14);color:rgba(255,255,255,.82);
-  padding:15px 36px;border-radius:var(--r);font-size:.95rem;font-weight:500;
-  transition:all .25s;backdrop-filter:blur(8px);
-}
-.btn-hero-sec:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(91,164,245,.07)}
-/* Stats bar */
-.hero-stats{
-  display:flex;gap:0;
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:var(--rl);overflow:hidden;max-width:480px;
-  backdrop-filter:blur(10px);
-}
+.btn-hero-sec{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.14);color:rgba(255,255,255,.82);padding:15px 36px;border-radius:var(--r);font-size:.95rem;font-weight:500;transition:all .25s}
+.btn-hero-sec:hover{border-color:var(--cyan);color:var(--cyan)}
+.hero-stats{display:flex;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:var(--rl);overflow:hidden;max-width:480px}
 .hs-item{flex:1;padding:18px 20px;text-align:center;border-right:1px solid rgba(255,255,255,.06)}
 .hs-item:last-child{border-right:none}
 .hs-val{font-family:var(--font-h);font-size:1.6rem;font-weight:800;color:#fff;line-height:1}
 .hs-val span{font-size:1rem;color:var(--cyan)}
-.hs-label{color:rgba(255,255,255,.35);font-size:.7rem;margin-top:5px;letter-spacing:.3px;text-transform:uppercase}
-.hero-right{display:none}
-
-/* SERVICES */
+.hs-label{color:rgba(255,255,255,.35);font-size:.7rem;margin-top:5px;text-transform:uppercase}
 .sec{padding:96px 48px;max-width:1200px;margin:0 auto}
 .sec-label{font-size:.75rem;font-weight:700;letter-spacing:2.5px;color:var(--sky);text-transform:uppercase;margin-bottom:12px}
 .sec-title{font-family:var(--font-h);font-size:clamp(2rem,4vw,2.8rem);font-weight:800;color:var(--navy);line-height:1.15;margin-bottom:14px}
 .sec-sub{color:var(--text2);font-size:1.02rem;line-height:1.75;max-width:500px;margin-bottom:56px}
 .srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.srv-card{
-  background:#fff;border:1px solid var(--border);border-radius:var(--rl);padding:30px;
-  position:relative;overflow:hidden;transition:all .3s;
-}
-.srv-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--blue2),var(--sky));
-  transform:scaleX(0);transform-origin:left;transition:transform .3s;
-}
+.srv-card{background:#fff;border:1px solid var(--border);border-radius:var(--rl);padding:30px;position:relative;overflow:hidden;transition:all .3s}
+.srv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue2),var(--sky));transform:scaleX(0);transform-origin:left;transition:transform .3s}
 .srv-card:hover{transform:translateY(-4px);box-shadow:var(--sh2);border-color:var(--sky)}
 .srv-card:hover::before{transform:scaleX(1)}
-.srv-icon{
-  width:50px;height:50px;border-radius:12px;
-  background:linear-gradient(135deg,rgba(27,63,171,.08),rgba(74,144,226,.12));
-  border:1px solid rgba(27,63,171,.12);
-  display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:18px;
-}
+.srv-icon{width:50px;height:50px;border-radius:12px;background:linear-gradient(135deg,rgba(27,63,171,.08),rgba(74,144,226,.12));border:1px solid rgba(27,63,171,.12);display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:18px}
 .srv-title{font-family:var(--font-h);font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:9px}
 .srv-desc{color:var(--text2);font-size:.87rem;line-height:1.65}
-.srv-tag{
-  display:inline-block;margin-top:14px;
-  background:rgba(27,63,171,.07);color:var(--blue2);
-  font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:6px;letter-spacing:.3px;
-}
-
-/* CONTACT */
+.srv-tag{display:inline-block;margin-top:14px;background:rgba(27,63,171,.07);color:var(--blue2);font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:6px}
 .ctt-sec{background:#fff;padding:96px 48px}
 .ctt-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
 .ctt-info-item{display:flex;gap:14px;margin-bottom:22px}
@@ -220,28 +75,16 @@ input,textarea,select{font-family:var(--font-b)}
 .form-card{background:var(--off);border:1px solid var(--border);border-radius:var(--rl);padding:28px}
 .fc-title{font-family:var(--font-h);font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:18px}
 .form-group{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:0}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .form-row .form-group{margin-bottom:12px}
-.form-label{font-size:.8rem;font-weight:600;color:var(--text2);letter-spacing:.2px}
-.form-input{
-  padding:10px 13px;border:1.5px solid var(--border);border-radius:9px;
-  font-size:.88rem;color:var(--navy);background:#fff;transition:all .2s;outline:none;
-}
+.form-label{font-size:.8rem;font-weight:600;color:var(--text2)}
+.form-input{padding:10px 13px;border:1.5px solid var(--border);border-radius:9px;font-size:.88rem;color:var(--navy);background:#fff;transition:all .2s;outline:none}
 .form-input:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(74,144,226,.12)}
 textarea.form-input{resize:vertical;min-height:100px}
-.btn-submit{
-  background:linear-gradient(135deg,var(--blue2),var(--sky));color:#fff;
-  padding:12px 26px;border-radius:9px;font-weight:600;font-size:.9rem;
-  transition:all .2s;box-shadow:0 4px 14px rgba(27,63,171,.25);
-}
-.btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(27,63,171,.35)}
-#ctt-ok{display:none;background:rgba(40,167,69,.08);border:1px solid rgba(40,167,69,.25);border-radius:9px;padding:11px 14px;color:var(--success);font-size:.87rem;font-weight:500;margin-top:10px}
-
-/* FOOTER */
-footer{
-  background:var(--navy);padding:36px 48px;
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
-}
+.btn-submit{background:linear-gradient(135deg,var(--blue2),var(--sky));color:#fff;padding:12px 26px;border-radius:9px;font-weight:600;font-size:.9rem;transition:all .2s;box-shadow:0 4px 14px rgba(27,63,171,.25)}
+.btn-submit:hover{transform:translateY(-2px)}
+#ctt-ok{display:none;background:rgba(40,167,69,.08);border:1px solid rgba(40,167,69,.25);border-radius:9px;padding:11px 14px;color:var(--success);font-size:.87rem;margin-top:10px}
+footer{background:var(--navy);padding:36px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .ft-logo{display:flex;align-items:center;gap:9px}
 .ft-logo-icon{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,var(--blue2),var(--sky));display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:.8rem;font-weight:800;color:#fff}
 .ft-logo-text{font-family:var(--font-h);font-size:.9rem;font-weight:800;color:#fff}
@@ -251,301 +94,117 @@ footer{
 .ft-links{display:flex;gap:22px}
 .ft-links a{color:var(--muted);font-size:.8rem;transition:color .2s}
 .ft-links a:hover{color:var(--cyan)}
-
-/* ══════════════════════════════════════
-   LOGIN — SPLIT LAYOUT
-══════════════════════════════════════ */
-#login-view{display:none}
-#login-view.active{display:flex;min-height:100vh}
-
-.login-left{
-  flex:0 0 560px;background:var(--off);
-  display:flex;flex-direction:column;padding:40px 52px;
-  position:relative;
-}
+#login-view{display:none}#login-view.active{display:flex;min-height:100vh}
+.login-left{flex:0 0 560px;background:var(--off);display:flex;flex-direction:column;padding:40px 52px}
 .login-logo{display:flex;align-items:center;gap:10px;margin-bottom:auto}
-.login-logo-icon{
-  width:34px;height:34px;border-radius:9px;
-  background:linear-gradient(135deg,var(--blue2),var(--sky));
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-h);font-size:1rem;font-weight:800;color:#fff;
-}
+.login-logo-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--blue2),var(--sky));display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:1rem;font-weight:800;color:#fff}
 .login-logo-name{font-family:var(--font-h);font-size:.95rem;font-weight:800;color:var(--navy);line-height:1.1}
 .login-logo-name span{display:block;color:var(--sky);font-size:.7rem;font-weight:600;letter-spacing:1px}
-.login-site-link{
-  margin-left:auto;color:var(--text2);font-size:.82rem;
-  display:flex;align-items:center;gap:5px;transition:color .2s;
-}
+.login-site-link{margin-left:auto;color:var(--text2);font-size:.82rem;display:flex;align-items:center;gap:5px}
 .login-site-link:hover{color:var(--navy)}
-
-.login-form-area{
-  flex:1;display:flex;flex-direction:column;justify-content:center;
-  padding:40px 0;max-width:380px;
-}
-.login-badge{
-  display:inline-flex;align-items:center;gap:7px;
-  background:rgba(27,63,171,.08);color:var(--blue2);
-  font-size:.75rem;font-weight:600;padding:5px 12px;border-radius:100px;
-  margin-bottom:28px;
-}
+.login-form-area{flex:1;display:flex;flex-direction:column;justify-content:center;padding:40px 0;max-width:380px}
+.login-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(27,63,171,.08);color:var(--blue2);font-size:.75rem;font-weight:600;padding:5px 12px;border-radius:100px;margin-bottom:28px}
 .login-badge::before{content:'🔒';font-size:.75rem}
-.login-h1{font-family:var(--font-h);font-size:2.1rem;font-weight:800;color:var(--navy);line-height:1.1;margin-bottom:8px}
+.login-h1{font-family:var(--font-h);font-size:2.1rem;font-weight:900;color:var(--navy);line-height:1.1;margin-bottom:8px}
 .login-h1 em{font-style:italic;color:var(--blue2)}
 .login-sub{color:var(--text2);font-size:.88rem;line-height:1.65;margin-bottom:32px}
-
-.role-tabs{display:flex;gap:0;background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:4px;margin-bottom:28px}
-.role-tab{
-  flex:1;padding:9px;text-align:center;border-radius:7px;
-  font-size:.85rem;font-weight:500;color:var(--text2);cursor:pointer;transition:all .2s;
-}
-.role-tab.active{background:var(--navy);color:#fff;box-shadow:0 2px 8px rgba(11,29,78,.2)}
-
 .login-field{margin-bottom:14px}
 .login-field-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
 .login-field-label{font-size:.75rem;font-weight:700;color:var(--text2);letter-spacing:.8px;text-transform:uppercase}
-.login-forgot{font-size:.75rem;color:var(--sky);cursor:pointer;transition:color .2s}
-.login-forgot:hover{color:var(--blue2)}
+.login-forgot{font-size:.75rem;color:var(--sky);cursor:pointer}
 .login-input-wrap{position:relative}
-.login-input{
-  width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;
-  font-size:.92rem;color:var(--navy);background:#fff;outline:none;transition:all .2s;
-}
+.login-input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:.92rem;color:var(--navy);background:#fff;outline:none;transition:all .2s}
 .login-input:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(74,144,226,.12)}
 .login-input::placeholder{color:#b0b8cc}
-.btn-eye{
-  position:absolute;right:13px;top:50%;transform:translateY(-50%);
-  color:var(--muted);font-size:.95rem;padding:4px;transition:color .2s;
-}
-.btn-eye:hover{color:var(--navy)}
-
+.btn-eye{position:absolute;right:13px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.95rem;padding:4px}
 .login-remember{display:flex;align-items:center;gap:8px;margin-bottom:24px}
 .login-remember input{width:15px;height:15px;accent-color:var(--blue2);cursor:pointer}
 .login-remember label{font-size:.83rem;color:var(--text2);cursor:pointer}
-
-.btn-login{
-  width:100%;padding:14px;border-radius:10px;
-  background:linear-gradient(135deg,var(--navy),var(--blue2));
-  color:#fff;font-weight:700;font-size:.95rem;letter-spacing:.3px;
-  transition:all .25s;box-shadow:0 4px 18px rgba(11,29,78,.25);
-  display:flex;align-items:center;justify-content:center;gap:8px;
-}
+.btn-login{width:100%;padding:14px;border-radius:10px;background:linear-gradient(135deg,var(--navy),var(--blue2));color:#fff;font-weight:700;font-size:.95rem;transition:all .25s;box-shadow:0 4px 18px rgba(11,29,78,.25);display:flex;align-items:center;justify-content:center;gap:8px}
 .btn-login:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(11,29,78,.35)}
-
 .login-footer{margin-top:24px;text-align:center;font-size:.8rem;color:var(--text2)}
 .login-footer a{color:var(--blue2);font-weight:600;cursor:pointer}
-.login-footer a:hover{text-decoration:underline}
-
-.login-error{
-  background:rgba(220,53,69,.07);border:1px solid rgba(220,53,69,.25);
-  color:var(--danger);border-radius:9px;padding:10px 14px;font-size:.83rem;
-  margin-bottom:14px;display:none;
-}
-
-.login-left-foot{
-  padding-top:24px;border-top:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  margin-top:auto;
-}
-.login-left-copy{color:var(--muted);font-size:.73rem}
-.login-left-loc{color:var(--muted);font-size:.73rem;font-weight:500}
-
-/* RIGHT PANEL */
-.login-right{
-  flex:1;background:var(--navy);position:relative;overflow:hidden;
-  display:flex;flex-direction:column;justify-content:flex-end;padding:52px;
-}
-.login-right::before{
-  content:'';position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 80% 60% at 70% 30%, rgba(74,144,226,.25) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 80% at 20% 80%, rgba(27,63,171,.3) 0%, transparent 60%);
-}
-.login-right-grid{
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
-  background-size:48px 48px;
-}
-.login-right-lines{
-  position:absolute;top:0;right:0;width:65%;height:100%;
-  background:linear-gradient(135deg,transparent 30%,rgba(91,164,245,.08) 50%,transparent 70%);
-}
+.login-error{background:rgba(220,53,69,.07);border:1px solid rgba(220,53,69,.25);color:var(--danger);border-radius:9px;padding:10px 14px;font-size:.83rem;margin-bottom:14px;display:none}
+.login-left-foot{padding-top:24px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+.login-left-copy,.login-left-loc{color:var(--muted);font-size:.73rem}
+.login-right{flex:1;background:var(--navy);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:52px}
+.login-right::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 30%,rgba(74,144,226,.25) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 20% 80%,rgba(27,63,171,.3) 0%,transparent 60%)}
+.login-right-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:48px 48px}
+.login-right-lines{position:absolute;top:0;right:0;width:65%;height:100%;background:linear-gradient(135deg,transparent 30%,rgba(91,164,245,.08) 50%,transparent 70%)}
 .login-right-content{position:relative;z-index:2}
-.login-right-quote{
-  font-family:var(--font-h);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;
-  color:#fff;line-height:1.25;margin-bottom:32px;
-}
+.login-right-quote{font-family:var(--font-h);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:#fff;line-height:1.25;margin-bottom:32px}
 .login-right-quote em{font-style:italic;color:var(--cyan)}
 .login-right-creds{display:flex;flex-wrap:wrap;gap:8px}
-.login-cred{
-  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
-  color:rgba(255,255,255,.7);font-size:.75rem;font-weight:500;
-  padding:5px 12px;border-radius:100px;
-}
-.login-right-brand{
-  position:absolute;top:40px;left:52px;z-index:2;
-  display:flex;align-items:center;gap:10px;
-}
+.login-cred{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.7);font-size:.75rem;padding:5px 12px;border-radius:100px}
+.login-right-brand{position:absolute;top:40px;left:52px;z-index:2;display:flex;align-items:center;gap:10px}
 .lrb-icon{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:.9rem;font-weight:800;color:#fff}
 .lrb-name{font-family:var(--font-h);font-size:.85rem;font-weight:800;color:rgba(255,255,255,.8);letter-spacing:.5px}
-
-/* ══════════════════════════════════════
-   PORTAL — SIDEBAR LAYOUT
-══════════════════════════════════════ */
-#portal-view{display:none}
-#portal-view.active{display:flex;min-height:100vh}
-
-.sb{
-  width:236px;flex-shrink:0;background:var(--navy);
-  display:flex;flex-direction:column;padding:0;
-  position:sticky;top:0;height:100vh;overflow-y:auto;
-}
-.sb-head{
-  padding:24px 20px;border-bottom:1px solid rgba(255,255,255,.07);
-  display:flex;align-items:center;gap:10px;
-}
+#pending-view{display:none}
+#pending-view.active{display:flex;min-height:100vh;align-items:center;justify-content:center;background:var(--off)}
+.pending-card{background:#fff;border:1px solid var(--border);border-radius:var(--rl);padding:48px;max-width:480px;width:90%;text-align:center;box-shadow:var(--sh2)}
+.pending-icon{font-size:3rem;margin-bottom:20px}
+.pending-title{font-family:var(--font-h);font-size:1.6rem;font-weight:800;color:var(--navy);margin-bottom:12px}
+.pending-sub{color:var(--text2);font-size:.92rem;line-height:1.7;margin-bottom:28px}
+.pending-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:var(--warn);font-size:.82rem;font-weight:600;padding:8px 16px;border-radius:8px;margin-bottom:28px}
+.btn-pending-logout{background:var(--off);border:1px solid var(--border);color:var(--text2);padding:11px 24px;border-radius:9px;font-size:.88rem;font-weight:500;transition:all .2s}
+.btn-pending-logout:hover{border-color:var(--danger);color:var(--danger)}
+#portal-view{display:none}#portal-view.active{display:flex;min-height:100vh}
+.sb{width:240px;flex-shrink:0;background:var(--navy);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sb-head{padding:24px 20px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px}
 .sb-logo-icon{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,var(--blue2),var(--sky));display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:.85rem;font-weight:800;color:#fff;flex-shrink:0}
 .sb-logo-text{font-family:var(--font-h);font-size:.88rem;font-weight:800;color:#fff}
 .sb-logo-text span{color:var(--cyan)}
-
 .sb-section{font-size:.67rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);padding:20px 20px 6px}
-.sb-item{
-  display:flex;align-items:center;gap:11px;
-  padding:10px 20px;color:rgba(255,255,255,.55);font-size:.85rem;font-weight:500;
-  cursor:pointer;transition:all .2s;position:relative;border-radius:0;
-}
+.sb-item{display:flex;align-items:center;gap:11px;padding:10px 20px;color:rgba(255,255,255,.55);font-size:.88rem;cursor:pointer;transition:all .2s;position:relative}
 .sb-item:hover{color:rgba(255,255,255,.9);background:rgba(255,255,255,.04)}
 .sb-item.active{color:#fff;background:rgba(255,255,255,.08)}
 .sb-item.active::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:3px;background:var(--cyan);border-radius:0 3px 3px 0}
 .sb-item .si-icon{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
 .sb-item.disabled{opacity:.35;pointer-events:none}
-.sb-badge{
-  margin-left:auto;background:var(--sky);color:#fff;
-  font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:100px;
-}
-
-.sb-user{
-  margin-top:auto;padding:16px 20px;
-  border-top:1px solid rgba(255,255,255,.07);
-  display:flex;align-items:center;gap:10px;
-}
-.sb-user-av{
-  width:32px;height:32px;border-radius:50%;
-  background:linear-gradient(135deg,var(--blue2),var(--sky));
-  display:flex;align-items:center;justify-content:center;
-  color:#fff;font-size:.85rem;font-weight:700;flex-shrink:0;
-}
+.sb-badge{margin-left:auto;background:var(--warn);color:#fff;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:100px}
+.sb-user{margin-top:auto;padding:16px 20px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px}
+.sb-user-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue2),var(--sky));display:flex;align-items:center;justify-content:center;color:#fff;font-size:.85rem;font-weight:700;flex-shrink:0}
 .sb-user-name{color:rgba(255,255,255,.75);font-size:.82rem;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sb-user-role{color:rgba(255,255,255,.35);font-size:.7rem}
 .btn-sb-logout{color:rgba(255,255,255,.35);font-size:.85rem;padding:4px;transition:color .2s}
 .btn-sb-logout:hover{color:var(--danger)}
-
-/* PORTAL MAIN */
 .pm{flex:1;display:flex;flex-direction:column;min-height:100vh;overflow-x:hidden}
-.pm-topbar{
-  background:#fff;border-bottom:1px solid var(--border);
-  padding:0 36px;height:60px;display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:50;
-}
+.pm-topbar{background:#fff;border-bottom:1px solid var(--border);padding:0 36px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
 .pm-breadcrumb{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.82rem}
 .pm-breadcrumb span{color:var(--navy);font-weight:600}
-.pm-topbar-right{display:flex;align-items:center;gap:14px}
-.pm-empresa{
-  background:var(--off);border:1px solid var(--border);
-  border-radius:8px;padding:6px 14px;font-size:.82rem;color:var(--text2);font-weight:500;
-}
-
+.pm-empresa{background:var(--off);border:1px solid var(--border);border-radius:8px;padding:6px 14px;font-size:.82rem;color:var(--text2);font-weight:500}
 .pm-body{flex:1;padding:32px 36px}
 .pm-title{font-family:var(--font-h);font-size:1.7rem;font-weight:800;color:var(--navy);margin-bottom:4px}
 .pm-sub{color:var(--text2);font-size:.88rem;margin-bottom:28px}
 .pm-divider{height:3px;width:40px;background:linear-gradient(90deg,var(--blue2),var(--sky));border-radius:2px;margin-bottom:32px}
-
-/* PANEL */
-.panel{display:none}
-.panel.active{display:block}
-
-/* ── VISÃO GERAL ── */
-.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+.panel{display:none}.panel.active{display:block}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
 .mc{background:#fff;border:1px solid var(--border);border-radius:var(--rl);padding:22px;box-shadow:var(--sh)}
 .mc-icon{font-size:1.4rem;margin-bottom:10px}
 .mc-val{font-family:var(--font-h);font-size:1.9rem;font-weight:800;color:var(--navy);margin-bottom:2px}
 .mc-label{color:var(--text2);font-size:.78rem}
-
 .cards-row{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .card{background:#fff;border:1px solid var(--border);border-radius:var(--rl);padding:24px;box-shadow:var(--sh)}
 .card-title{font-family:var(--font-h);font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:18px;display:flex;align-items:center;gap:8px}
-
-/* ── ARQUIVOS FISCAIS ── */
-.af-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.drop-zone{
-  border:2px dashed var(--border);border-radius:var(--r);
-  padding:44px 20px;text-align:center;cursor:pointer;transition:all .2s;
-}
-.drop-zone:hover,.drop-zone.drag-over{border-color:var(--sky);background:rgba(74,144,226,.04)}
-.drop-zone input{display:none}
-.dz-icon{font-size:2.6rem;margin-bottom:12px}
-.dz-title{font-weight:600;color:var(--navy);margin-bottom:6px;font-size:.93rem}
-.dz-sub{color:var(--text2);font-size:.82rem;line-height:1.6}
-.dz-sub strong{color:var(--blue2);cursor:pointer}
-.dz-types{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin-top:12px}
-.dz-type{background:var(--off);border:1px solid var(--border);color:var(--text2);font-size:.7rem;padding:3px 8px;border-radius:5px}
-
-.upload-queue{display:flex;flex-direction:column;gap:8px;margin-top:14px}
-.qi{
-  display:flex;align-items:center;gap:10px;
-  border:1px solid var(--border);border-radius:9px;padding:10px 13px;
-  background:var(--off);position:relative;overflow:hidden;
-}
-.qi-ext{background:var(--blue2);color:#fff;font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:4px;flex-shrink:0;text-transform:uppercase}
-.qi-name{flex:1;font-size:.82rem;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.qi-size{color:var(--muted);font-size:.75rem;flex-shrink:0}
-.qi-st{font-size:.9rem;flex-shrink:0}
-.qi-rm{color:var(--muted);font-size:.9rem;padding:2px;flex-shrink:0;transition:color .2s}
-.qi-rm:hover{color:var(--danger)}
-.qi-bar{position:absolute;bottom:0;left:0;height:2px;background:linear-gradient(90deg,var(--blue2),var(--sky));transition:width .3s;border-radius:0 1px 1px 0}
-
-.upload-actions{display:flex;gap:9px;margin-top:13px}
-.btn-upload{
-  background:linear-gradient(135deg,var(--blue2),var(--sky));color:#fff;
-  padding:10px 22px;border-radius:9px;font-weight:600;font-size:.85rem;
-  transition:all .2s;box-shadow:0 3px 12px rgba(27,63,171,.22);
-  display:flex;align-items:center;gap:7px;
-}
-.btn-upload:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(27,63,171,.3)}
-.btn-upload:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.btn-clear{background:#fff;border:1px solid var(--border);color:var(--text2);padding:10px 14px;border-radius:9px;font-size:.85rem;transition:all .2s}
-.btn-clear:hover{border-color:var(--danger);color:var(--danger)}
-
 .files-list{display:flex;flex-direction:column;gap:7px}
-.fr{
-  display:flex;align-items:center;gap:11px;
-  border:1px solid var(--border);border-radius:9px;padding:11px 13px;
-  transition:all .2s;background:#fff;
-}
-.fr:hover{border-color:var(--sky);background:rgba(74,144,226,.02)}
+.fr{display:flex;align-items:center;gap:11px;border:1px solid var(--border);border-radius:9px;padding:11px 13px;transition:all .2s;background:#fff}
+.fr:hover{border-color:var(--sky)}
 .fr-ext{background:var(--off);border:1px solid var(--border);color:var(--blue2);font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:4px;flex-shrink:0;text-transform:uppercase}
 .fr-name{flex:1;font-size:.85rem;color:var(--navy)}
 .fr-date{color:var(--muted);font-size:.75rem;flex-shrink:0}
-.fr-size{color:var(--muted);font-size:.75rem;flex-shrink:0;width:58px;text-align:right}
 .fr-dl{background:rgba(27,63,171,.07);color:var(--blue2);border:1px solid rgba(27,63,171,.12);padding:5px 11px;border-radius:7px;font-size:.75rem;font-weight:600;transition:all .2s;flex-shrink:0}
 .fr-dl:hover{background:var(--blue2);color:#fff}
 .fr-del{color:var(--muted);font-size:.88rem;padding:3px;flex-shrink:0;transition:color .2s}
 .fr-del:hover{color:var(--danger)}
-
 .empty-st{text-align:center;padding:48px 20px;color:var(--muted);font-size:.88rem}
 .empty-st .ei{font-size:2.4rem;margin-bottom:10px;opacity:.5}
-
-/* ── ADMIN ── */
-.admin-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:22px}
-.atab{padding:10px 18px;color:var(--text2);font-size:.85rem;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s}
+.admin-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:22px;flex-wrap:wrap}
+.atab{padding:10px 16px;color:var(--text2);font-size:.85rem;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap}
 .atab.active{color:var(--blue2);border-bottom-color:var(--blue2)}
-.ap{display:none}
-.ap.active{display:block}
-
+.ap{display:none}.ap.active{display:block}
 .tbl{width:100%;border-collapse:collapse;font-size:.83rem}
 .tbl th{text-align:left;padding:9px 13px;background:var(--off);color:var(--text2);font-weight:600;font-size:.75rem;border-bottom:1px solid var(--border);white-space:nowrap}
-.tbl td{padding:11px 13px;border-bottom:1px solid var(--border);color:var(--text)}
+.tbl td{padding:11px 13px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle}
 .tbl tr:hover td{background:rgba(74,144,226,.02)}
 .badge{display:inline-block;padding:3px 9px;border-radius:5px;font-size:.71rem;font-weight:700}
 .bg-green{background:rgba(40,167,69,.1);color:var(--success)}
@@ -554,10 +213,18 @@ footer{
 .bg-red{background:rgba(220,53,69,.1);color:var(--danger)}
 .btn-tbl{background:var(--off);border:1px solid var(--border);color:var(--text2);padding:4px 11px;border-radius:6px;font-size:.75rem;transition:all .2s}
 .btn-tbl:hover{border-color:var(--sky);color:var(--blue2)}
+.btn-tbl-ok{background:rgba(40,167,69,.08);border:1px solid rgba(40,167,69,.25);color:var(--success);padding:4px 11px;border-radius:6px;font-size:.75rem;transition:all .2s}
+.btn-tbl-ok:hover{background:var(--success);color:#fff}
 .btn-tbl-del{background:rgba(220,53,69,.06);border:1px solid rgba(220,53,69,.18);color:var(--danger);padding:4px 11px;border-radius:6px;font-size:.75rem;transition:all .2s}
 .btn-tbl-del:hover{background:var(--danger);color:#fff}
-
-/* MODAL */
+.inline-select{padding:5px 9px;border:1.5px solid var(--border);border-radius:7px;font-size:.78rem;color:var(--navy);background:#fff;outline:none}
+.inline-select:focus{border-color:var(--sky)}
+.action-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.emp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+.emp-card{background:var(--off);border:1px solid var(--border);border-radius:var(--r);padding:16px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.emp-card-name{font-family:var(--font-h);font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:4px}
+.emp-card-cnpj{color:var(--muted);font-size:.75rem}
+.emp-card-actions{display:flex;gap:5px;flex-shrink:0}
 .modal-ov{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.5);align-items:center;justify-content:center;backdrop-filter:blur(4px)}
 .modal-ov.open{display:flex}
 .modal{background:#fff;border-radius:var(--rl);padding:30px;width:90%;max-width:460px;box-shadow:var(--sh2)}
@@ -565,197 +232,57 @@ footer{
 .modal-foot{display:flex;gap:9px;justify-content:flex-end;margin-top:22px}
 .btn-mc{background:var(--off);border:1px solid var(--border);color:var(--text2);padding:9px 18px;border-radius:8px;font-size:.85rem}
 .btn-mx{background:var(--danger);color:#fff;padding:9px 20px;border-radius:8px;font-size:.85rem;font-weight:600}
-
-/* LOADING / TOAST */
 #lov{display:none;position:fixed;inset:0;z-index:500;background:rgba(11,29,78,.88);align-items:center;justify-content:center;flex-direction:column;gap:14px}
 #lov.show{display:flex}
 .sp{width:42px;height:42px;border:3px solid rgba(91,164,245,.2);border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .sp-txt{color:var(--cyan);font-size:.88rem}
-
-#toast{
-  position:fixed;bottom:24px;right:24px;z-index:400;
-  background:var(--navy);color:#fff;padding:12px 18px;
-  border-radius:9px;font-size:.85rem;box-shadow:var(--sh2);
-  transform:translateY(70px);opacity:0;transition:all .3s;
-  display:flex;align-items:center;gap:9px;border-left:3px solid var(--cyan);
-}
+#toast{position:fixed;bottom:24px;right:24px;z-index:400;background:var(--navy);color:#fff;padding:12px 18px;border-radius:9px;font-size:.85rem;box-shadow:var(--sh2);transform:translateY(70px);opacity:0;transition:all .3s;display:flex;align-items:center;gap:9px;border-left:3px solid var(--cyan)}
 #toast.show{transform:translateY(0);opacity:1}
 #toast.err{border-left-color:var(--danger)}
 #toast.ok{border-left-color:var(--success)}
-
-/* RESPONSIVE */
-@media(max-width:1024px){
-  .hero-inner{grid-template-columns:1fr;gap:40px}
-  .hero-right{display:none}
-  .srv-grid{grid-template-columns:1fr 1fr}
-  .ctt-inner{grid-template-columns:1fr}
-  .login-right{display:none}
-  .login-left{flex:1;max-width:100%}
-  .af-layout{grid-template-columns:1fr}
-  .cards-row{grid-template-columns:1fr}
-  .metrics-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:768px){
-  .ln-nav{display:none}
-  .sec{padding:56px 20px}
-  .srv-grid{grid-template-columns:1fr}
-  .sb{display:none}
-  .pm-body{padding:20px}
-  .metrics-grid{grid-template-columns:1fr 1fr}
-  .ln-bar{padding:0 20px}
-  .ctt-sec{padding:64px 20px}
-}
+@media(max-width:1024px){.srv-grid{grid-template-columns:1fr 1fr}.ctt-inner{grid-template-columns:1fr}.login-right{display:none}.login-left{flex:1;max-width:100%}.cards-row{grid-template-columns:1fr}.metrics-grid{grid-template-columns:1fr 1fr}.emp-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.ln-nav{display:none}.sec{padding:56px 20px}.srv-grid{grid-template-columns:1fr}.sb{display:none}.pm-body{padding:20px}.metrics-grid{grid-template-columns:1fr 1fr}.ln-bar{padding:0 20px}.ctt-sec{padding:64px 20px}.emp-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
-<!-- ════════ LOADING ════════ -->
 <div id="lov"><div class="sp"></div><div class="sp-txt" id="sp-txt">Carregando...</div></div>
 <div id="toast"></div>
 
-<!-- ════════ VIEW: LANDING ════════ -->
+<!-- LANDING -->
 <div id="landing" class="view">
   <header class="ln-bar">
-    <div class="ln-logo" onclick="showLanding()">
-      <div class="ln-logo-icon">D</div>
-      <div class="ln-logo-text">INNOVA <span>DIGITAL</span></div>
-    </div>
+    <div class="ln-logo" onclick="showLanding()"><div class="ln-logo-icon">D</div><div class="ln-logo-text">INNOVA <span>DIGITAL</span></div></div>
     <nav class="ln-nav">
       <a href="#" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'});return false">Serviços</a>
       <a href="#" onclick="document.getElementById('contato').scrollIntoView({behavior:'smooth'});return false">Contato</a>
     </nav>
-    <div class="ln-btns">
-      <button class="btn-portal" onclick="showLogin()">Portal do Cliente</button>
-    </div>
+    <div><button class="btn-portal" onclick="showLogin()">Portal do Cliente</button></div>
   </header>
-
   <section class="hero">
-    <!-- Grid -->
     <div class="hero-grid"></div>
-
-    <!-- Foto bomba de gasolina colorizada -->
     <div class="hero-photo-wrap"><div class="hero-photo"></div></div>
-
-    <!-- SVG curvas de luz — arcos dramáticos estilo referência -->
     <svg class="hero-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="arcA" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"   stop-color="transparent"/>
-          <stop offset="25%"  stop-color="#1a5fff" stop-opacity=".5"/>
-          <stop offset="50%"  stop-color="#50b8ff" stop-opacity="1"/>
-          <stop offset="65%"  stop-color="#ffffff" stop-opacity=".95"/>
-          <stop offset="80%"  stop-color="#50b8ff" stop-opacity=".6"/>
-          <stop offset="100%" stop-color="transparent"/>
-        </linearGradient>
-        <linearGradient id="arcB" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"   stop-color="transparent"/>
-          <stop offset="30%"  stop-color="#1040cc" stop-opacity=".4"/>
-          <stop offset="55%"  stop-color="#3a8fff" stop-opacity=".85"/>
-          <stop offset="75%"  stop-color="#88d0ff" stop-opacity=".7"/>
-          <stop offset="100%" stop-color="transparent"/>
-        </linearGradient>
-        <linearGradient id="arcC" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"   stop-color="transparent"/>
-          <stop offset="35%"  stop-color="#0d30a0" stop-opacity=".3"/>
-          <stop offset="60%"  stop-color="#2060d0" stop-opacity=".6"/>
-          <stop offset="85%"  stop-color="#5090e0" stop-opacity=".4"/>
-          <stop offset="100%" stop-color="transparent"/>
-        </linearGradient>
-        <linearGradient id="streakG" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%"   stop-color="transparent"/>
-          <stop offset="30%"  stop-color="#90d0ff" stop-opacity=".4"/>
-          <stop offset="50%"  stop-color="#ffffff" stop-opacity=".98"/>
-          <stop offset="70%"  stop-color="#90d0ff" stop-opacity=".4"/>
-          <stop offset="100%" stop-color="transparent"/>
-        </linearGradient>
+        <linearGradient id="arcA" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="transparent"/><stop offset="25%" stop-color="#1a5fff" stop-opacity=".5"/><stop offset="50%" stop-color="#50b8ff" stop-opacity="1"/><stop offset="65%" stop-color="#ffffff" stop-opacity=".95"/><stop offset="80%" stop-color="#50b8ff" stop-opacity=".6"/><stop offset="100%" stop-color="transparent"/></linearGradient>
+        <linearGradient id="streakG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="transparent"/><stop offset="50%" stop-color="#ffffff" stop-opacity=".98"/><stop offset="100%" stop-color="transparent"/></linearGradient>
         <filter id="gB4"><feGaussianBlur stdDeviation="4"/></filter>
-        <filter id="gB10"><feGaussianBlur stdDeviation="10"/></filter>
         <filter id="gB20"><feGaussianBlur stdDeviation="20"/></filter>
         <filter id="gB1"><feGaussianBlur stdDeviation="1"/></filter>
       </defs>
-
-      <!-- Glow de fundo difuso — atmosfera azul -->
       <ellipse cx="1150" cy="300" rx="580" ry="380" fill="#0d2a80" opacity=".18" filter="url(#gB20)"/>
-      <ellipse cx="900"  cy="580" rx="420" ry="280" fill="#081850" opacity=".15" filter="url(#gB20)"/>
-
-      <!-- ARCO 1 — grande curva principal -->
-      <path d="M -200,1000 C 200,600 500,200 900,150 S 1350,300 1700,100"
-        stroke="#2060e0" stroke-width="60" fill="none" opacity=".12" filter="url(#gB20)"/>
-      <path d="M -200,1000 C 200,600 500,200 900,150 S 1350,300 1700,100"
-        stroke="url(#arcA)" stroke-width="2.5" fill="none" opacity=".95"/>
-      <path d="M -200,1000 C 200,600 500,200 900,150 S 1350,300 1700,100"
-        stroke="#a0d8ff" stroke-width="8" fill="none" opacity=".2" filter="url(#gB4)"/>
-
-      <!-- ARCO 2 — paralelo ligeiramente abaixo -->
-      <path d="M -200,1050 C 250,650 550,280 950,230 S 1380,370 1700,180"
-        stroke="#1a60e0" stroke-width="40" fill="none" opacity=".1" filter="url(#gB20)"/>
-      <path d="M -200,1050 C 250,650 550,280 950,230 S 1380,370 1700,180"
-        stroke="url(#arcB)" stroke-width="1.5" fill="none" opacity=".85"/>
-      <path d="M -200,1050 C 250,650 550,280 950,230 S 1380,370 1700,180"
-        stroke="#60a0ff" stroke-width="6" fill="none" opacity=".15" filter="url(#gB4)"/>
-
-      <!-- ARCO 3 — curva mais suave -->
-      <path d="M -100,1100 C 300,700 700,400 1100,320 S 1500,400 1700,280"
-        stroke="#0830a0" stroke-width="25" fill="none" opacity=".1" filter="url(#gB10)"/>
-      <path d="M -100,1100 C 300,700 700,400 1100,320 S 1500,400 1700,280"
-        stroke="url(#arcC)" stroke-width="1" fill="none" opacity=".7"/>
-
-      <!-- ARCO 4 — curva menor central-alta -->
-      <path d="M 300,900 C 500,500 800,280 1200,240 S 1550,350 1700,260"
-        stroke="#4488dd" stroke-width="1" fill="none" opacity=".45"/>
-
-      <!-- TRAÇO DE LUZ DIAGONAL -->
-      <line x1="560" y1="-50" x2="1180" y2="950"
-        stroke="white" stroke-width="30" opacity=".05" filter="url(#gB20)"/>
-      <line x1="560" y1="-50" x2="1180" y2="950"
-        stroke="#b0dcff" stroke-width="6" opacity=".18" filter="url(#gB4)"/>
-      <line x1="560" y1="-50" x2="1180" y2="950"
-        stroke="url(#streakG)" stroke-width="1.2" opacity=".95"/>
-
-      <!-- PONTO DE BRILHO — pico do arco principal -->
-      <circle cx="880" cy="158" r="3"  fill="white"   opacity=".95"/>
-      <circle cx="880" cy="158" r="12" fill="#80c8ff" opacity=".5"  filter="url(#gB4)"/>
-      <circle cx="880" cy="158" r="30" fill="#4090ff" opacity=".2"  filter="url(#gB10)"/>
-      <circle cx="880" cy="158" r="60" fill="#2060d0" opacity=".1"  filter="url(#gB20)"/>
-
-      <!-- Segundo brilho no traço diagonal -->
-      <circle cx="870" cy="450" r="2"  fill="white"   opacity=".85"/>
-      <circle cx="870" cy="450" r="8"  fill="#a0d8ff" opacity=".4"  filter="url(#gB4)"/>
-
-      <!-- Partículas animadas -->
-      <circle cx="320" cy="690" r="2" fill="#60aaff" opacity=".8" filter="url(#gB1)">
-        <animate attributeName="opacity" values=".8;.15;.8" dur="3.2s" repeatCount="indefinite"/>
-        <animate attributeName="r" values="2;3;2" dur="3.2s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="580" cy="420" r="1.5" fill="white" opacity=".7" filter="url(#gB1)">
-        <animate attributeName="opacity" values=".7;.1;.7" dur="4.5s" begin=".8s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="780" cy="270" r="2.5" fill="#90d0ff" opacity=".75" filter="url(#gB1)">
-        <animate attributeName="opacity" values=".75;.1;.75" dur="5s" begin="1.5s" repeatCount="indefinite"/>
-        <animate attributeName="r" values="2.5;4;2.5" dur="5s" begin="1.5s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="1050" cy="230" r="2" fill="#c0e8ff" opacity=".6" filter="url(#gB1)">
-        <animate attributeName="opacity" values=".6;.1;.6" dur="3.8s" begin="2.2s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="440" cy="570" r="1.5" fill="#4499ff" opacity=".65" filter="url(#gB1)">
-        <animate attributeName="opacity" values=".65;.08;.65" dur="6s" begin=".3s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="1200" cy="290" r="2" fill="white" opacity=".5" filter="url(#gB1)">
-        <animate attributeName="opacity" values=".5;.08;.5" dur="4s" begin="3s" repeatCount="indefinite"/>
-      </circle>
+      <path d="M -200,1000 C 200,600 500,200 900,150 S 1350,300 1700,100" stroke="#2060e0" stroke-width="60" fill="none" opacity=".12" filter="url(#gB20)"/>
+      <path d="M -200,1000 C 200,600 500,200 900,150 S 1350,300 1700,100" stroke="url(#arcA)" stroke-width="2.5" fill="none" opacity=".95"/>
+      <line x1="560" y1="-50" x2="1180" y2="950" stroke="url(#streakG)" stroke-width="1.2" opacity=".95"/>
+      <circle cx="880" cy="158" r="3" fill="white" opacity=".95"/>
+      <circle cx="880" cy="158" r="12" fill="#80c8ff" opacity=".5" filter="url(#gB4)"/>
+      <circle cx="320" cy="690" r="2" fill="#60aaff" opacity=".8" filter="url(#gB1)"><animate attributeName="opacity" values=".8;.15;.8" dur="3.2s" repeatCount="indefinite"/></circle>
+      <circle cx="780" cy="270" r="2.5" fill="#90d0ff" opacity=".75" filter="url(#gB1)"><animate attributeName="opacity" values=".75;.1;.75" dur="5s" begin="1.5s" repeatCount="indefinite"/></circle>
     </svg>
-
-    <!-- Bokeh dots flutuantes -->
-    <div class="hero-bokeh">
+    <div style="position:absolute;inset:0;pointer-events:none;z-index:4">
       <div class="bk" style="width:7px;height:7px;top:22%;left:46%;animation-duration:4s"></div>
-      <div class="bk" style="width:4px;height:4px;top:38%;left:54%;animation-duration:5.5s;animation-delay:1s"></div>
       <div class="bk" style="width:9px;height:9px;top:58%;left:49%;animation-duration:6s;animation-delay:.5s"></div>
-      <div class="bk" style="width:5px;height:5px;top:70%;left:57%;animation-duration:4.5s;animation-delay:2s"></div>
-      <div class="bk" style="width:6px;height:6px;top:44%;left:41%;animation-duration:5s;animation-delay:1.5s"></div>
-      <div class="bk" style="width:11px;height:11px;top:16%;left:62%;animation-duration:7s;animation-delay:.8s"></div>
     </div>
-
     <div class="hero-inner">
       <div>
         <div class="hero-pill">Distribuidor Autorizado Adaptive</div>
@@ -773,148 +300,85 @@ footer{
       </div>
     </div>
   </section>
-
-  <div id="services">
-    <div class="sec">
-      <div class="sec-label">O que fazemos</div>
-      <h2 class="sec-title">Soluções completas<br>sobre o Adaptive</h2>
-      <p class="sec-sub">Do zero ao avançado — implantação, customizações, treinamentos e suporte técnico especializado.</p>
-      <div class="srv-grid">
-        <div class="srv-card"><div class="srv-icon">🚀</div><div class="srv-title">Implantação Adaptive</div><div class="srv-desc">Configuração completa do sistema, migração de dados legados e parametrização de acordo com a operação do cliente.</div><span class="srv-tag">Implantação</span></div>
-        <div class="srv-card"><div class="srv-icon">🔄</div><div class="srv-title">Migração de Dados</div><div class="srv-desc">Transferência estruturada de dados do sistema legado para o Adaptive, com validação e integridade garantida.</div><span class="srv-tag">Migração</span></div>
-        <div class="srv-card"><div class="srv-icon">🔧</div><div class="srv-title">Parametrização</div><div class="srv-desc">Configuração fiscal, financeira e operacional do sistema de acordo com a realidade de cada empresa.</div><span class="srv-tag">Configuração</span></div>
-        <div class="srv-card"><div class="srv-icon">🛡️</div><div class="srv-title">Suporte Técnico</div><div class="srv-desc">Atendimento especializado com SLA definido. Acompanhamento de atualizações e resolução de incidentes.</div><span class="srv-tag">Suporte</span></div>
-        <div class="srv-card"><div class="srv-icon">🎓</div><div class="srv-title">Treinamentos</div><div class="srv-desc">Capacitação da equipe operacional e fiscal para uso completo das funcionalidades do sistema.</div><span class="srv-tag">Educação</span></div>
-        <div class="srv-card"><div class="srv-icon">📂</div><div class="srv-title">Portal do Cliente</div><div class="srv-desc">Acesso centralizado a documentos, scripts, relatórios e arquivos entregues — com upload e histórico completo.</div><span class="srv-tag">Portal</span></div>
-      </div>
+  <div id="services"><div class="sec">
+    <div class="sec-label">O que fazemos</div>
+    <h2 class="sec-title">Soluções completas<br>sobre o Adaptive</h2>
+    <p class="sec-sub">Do zero ao avançado — implantação, customizações, treinamentos e suporte técnico especializado.</p>
+    <div class="srv-grid">
+      <div class="srv-card"><div class="srv-icon">🚀</div><div class="srv-title">Implantação Adaptive</div><div class="srv-desc">Configuração completa do sistema, migração de dados legados e parametrização de acordo com a operação do cliente.</div><span class="srv-tag">Implantação</span></div>
+      <div class="srv-card"><div class="srv-icon">🔄</div><div class="srv-title">Migração de Dados</div><div class="srv-desc">Transferência estruturada de dados do sistema legado para o Adaptive, com validação e integridade garantida.</div><span class="srv-tag">Migração</span></div>
+      <div class="srv-card"><div class="srv-icon">🔧</div><div class="srv-title">Parametrização</div><div class="srv-desc">Configuração fiscal, financeira e operacional do sistema de acordo com a realidade de cada empresa.</div><span class="srv-tag">Configuração</span></div>
+      <div class="srv-card"><div class="srv-icon">🛡️</div><div class="srv-title">Suporte Técnico</div><div class="srv-desc">Atendimento especializado com SLA definido. Acompanhamento de atualizações e resolução de incidentes.</div><span class="srv-tag">Suporte</span></div>
+      <div class="srv-card"><div class="srv-icon">🎓</div><div class="srv-title">Treinamentos</div><div class="srv-desc">Capacitação da equipe operacional e fiscal para uso completo das funcionalidades do sistema.</div><span class="srv-tag">Educação</span></div>
+      <div class="srv-card"><div class="srv-icon">📂</div><div class="srv-title">Portal do Cliente</div><div class="srv-desc">Acesso centralizado a documentos, scripts, relatórios e arquivos entregues — com upload e histórico completo.</div><span class="srv-tag">Portal</span></div>
     </div>
-  </div>
-
-  <div id="contato">
-    <div class="ctt-sec">
-      <div class="ctt-inner">
-        <div>
-          <div class="sec-label">Entre em contato</div>
-          <h2 class="sec-title">Vamos conversar sobre sua operação</h2>
-          <p class="sec-sub">Conte como funciona seu negócio e entendemos juntos como o Adaptive pode ser configurado para você.</p>
-          <div class="ctt-info-item"><div class="ctt-icon">📧</div><div><div class="ctt-label">E-mail</div><div class="ctt-val">contato@innovadigital.com.br</div></div></div>
-          <div class="ctt-info-item"><div class="ctt-icon">📱</div><div><div class="ctt-label">WhatsApp</div><div class="ctt-val">(XX) 9 XXXX-XXXX</div></div></div>
-          <div class="ctt-info-item"><div class="ctt-icon">📍</div><div><div class="ctt-label">Localização</div><div class="ctt-val">Maceió, AL — Brasil</div></div></div>
-        </div>
-        <div class="form-card">
-          <div class="fc-title">Enviar mensagem</div>
-          <div class="form-row">
-            <div class="form-group"><label class="form-label">Nome *</label><input class="form-input" id="cf-nome" type="text" placeholder="Seu nome"></div>
-            <div class="form-group"><label class="form-label">Empresa</label><input class="form-input" id="cf-empresa" type="text" placeholder="Nome da empresa"></div>
-          </div>
-          <div class="form-group"><label class="form-label">E-mail *</label><input class="form-input" id="cf-email" type="email" placeholder="seu@email.com"></div>
-          <div class="form-group">
-            <label class="form-label">Assunto</label>
-            <select class="form-input" id="cf-assunto">
-              <option value="">Selecione...</option>
-              <option>Implantação Adaptive</option>
-              <option>Suporte Técnico</option>
-              <option>Portal do Cliente</option>
-              <option>Treinamento</option>
-              <option>Outro</option>
-            </select>
-          </div>
-          <div class="form-group"><label class="form-label">Mensagem *</label><textarea class="form-input" id="cf-msg" placeholder="Descreva sua necessidade..."></textarea></div>
-          <button class="btn-submit" onclick="submitContact()">Enviar mensagem →</button>
-          <div id="ctt-ok">✅ Mensagem enviada! Retornaremos em breve.</div>
-        </div>
-      </div>
+  </div></div>
+  <div id="contato"><div class="ctt-sec"><div class="ctt-inner">
+    <div>
+      <div class="sec-label">Entre em contato</div>
+      <h2 class="sec-title">Vamos conversar sobre sua operação</h2>
+      <p class="sec-sub">Conte como funciona seu negócio e entendemos juntos como o Adaptive pode ser configurado para você.</p>
+      <div class="ctt-info-item"><div class="ctt-icon">📧</div><div><div class="ctt-label">E-mail</div><div class="ctt-val">contato@innovadigital.com.br</div></div></div>
+      <div class="ctt-info-item"><div class="ctt-icon">📱</div><div><div class="ctt-label">WhatsApp</div><div class="ctt-val">(XX) 9 XXXX-XXXX</div></div></div>
+      <div class="ctt-info-item"><div class="ctt-icon">📍</div><div><div class="ctt-label">Localização</div><div class="ctt-val">Maceió, AL — Brasil</div></div></div>
     </div>
-  </div>
-
+    <div class="form-card">
+      <div class="fc-title">Enviar mensagem</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Nome *</label><input class="form-input" id="cf-nome" type="text" placeholder="Seu nome"></div>
+        <div class="form-group"><label class="form-label">Empresa</label><input class="form-input" id="cf-empresa" type="text" placeholder="Nome da empresa"></div>
+      </div>
+      <div class="form-group"><label class="form-label">E-mail *</label><input class="form-input" id="cf-email" type="email" placeholder="seu@email.com"></div>
+      <div class="form-group"><label class="form-label">Assunto</label><select class="form-input" id="cf-assunto"><option value="">Selecione...</option><option>Implantação Adaptive</option><option>Suporte Técnico</option><option>Portal do Cliente</option><option>Treinamento</option><option>Outro</option></select></div>
+      <div class="form-group"><label class="form-label">Mensagem *</label><textarea class="form-input" id="cf-msg" placeholder="Descreva sua necessidade..."></textarea></div>
+      <button class="btn-submit" onclick="submitContact()">Enviar mensagem →</button>
+      <div id="ctt-ok">✅ Mensagem enviada! Retornaremos em breve.</div>
+    </div>
+  </div></div></div>
   <footer>
     <div class="ft-logo"><div class="ft-logo-icon">D</div><div class="ft-logo-text">INNOVA <span>DIGITAL</span></div></div>
     <div class="ft-copy">© 2025 Innova Digital — Distribuidor Adaptive</div>
     <div class="ft-dev">Desenvolvido por Nexus Data Engenharia</div>
-    <div class="ft-links">
-      <a href="#" onclick="showLogin();return false">Portal do Cliente</a>
-      <a href="#" onclick="document.getElementById('contato').scrollIntoView({behavior:'smooth'});return false">Contato</a>
-    </div>
+    <div class="ft-links"><a href="#" onclick="showLogin();return false">Portal</a><a href="#" onclick="document.getElementById('contato').scrollIntoView({behavior:'smooth'});return false">Contato</a></div>
   </footer>
 </div>
 
-<!-- ════════ VIEW: LOGIN ════════ -->
+<!-- LOGIN -->
 <div id="login-view" class="view">
-  <!-- ESQUERDA -->
   <div class="login-left">
     <div style="display:flex;align-items:center;margin-bottom:auto">
-      <div class="login-logo">
-        <div class="login-logo-icon">D</div>
-        <div class="login-logo-name">INNOVA DIGITAL<span>Portal do Cliente</span></div>
-      </div>
-      <a class="login-site-link" href="#" onclick="showLanding();return false">Site institucional →</a>
+      <div class="login-logo"><div class="login-logo-icon">D</div><div class="login-logo-name">INNOVA DIGITAL<span>Portal do Cliente</span></div></div>
+      <a class="login-site-link" href="#" onclick="showLanding();return false">Site →</a>
     </div>
-
     <div class="login-form-area">
       <div class="login-badge">Ambiente seguro</div>
       <h1 class="login-h1">Bem-vindo ao<br><em>Portal do Cliente</em></h1>
-      <p class="login-sub">Acesse arquivos fiscais e o histórico completo dos seus postos em um só lugar — com a segurança da Innova Digital.</p>
-
-      <div class="role-tabs">
-        <div class="role-tab active" id="rtab-client" onclick="switchRole('client')">Sou Cliente</div>
-        <div class="role-tab" id="rtab-accountant" onclick="switchRole('accountant')">Sou Contador</div>
-      </div>
-
+      <p class="login-sub">Acesse arquivos fiscais e o histórico completo dos seus postos em um só lugar.</p>
       <div class="login-error" id="login-err"></div>
-
       <div class="login-field">
         <div class="login-field-head"><label class="login-field-label">E-mail</label></div>
         <input class="login-input" id="l-email" type="email" placeholder="responsavel@seuposto.com.br">
       </div>
       <div class="login-field">
-        <div class="login-field-head">
-          <label class="login-field-label">Senha</label>
-          <span class="login-forgot">Esqueci minha senha</span>
-        </div>
+        <div class="login-field-head"><label class="login-field-label">Senha</label><span class="login-forgot">Esqueci minha senha</span></div>
         <div class="login-input-wrap">
           <input class="login-input" id="l-pass" type="password" placeholder="••••••••••" style="padding-right:42px">
           <button class="btn-eye" onclick="togglePass()">👁</button>
         </div>
       </div>
-
-      <div class="login-remember">
-        <input type="checkbox" id="l-remember">
-        <label for="l-remember">Manter conectado</label>
-      </div>
-
+      <div class="login-remember"><input type="checkbox" id="l-remember"><label for="l-remember">Manter conectado</label></div>
       <button class="btn-login" onclick="doLogin()">Entrar no portal →</button>
-
-      <div class="login-footer">
-        Primeiro acesso? <a onclick="showRegister()">Solicite seu cadastro</a>
-        &nbsp;·&nbsp; Suporte 24h: suporte@innova.digital
-      </div>
+      <div class="login-footer">Primeiro acesso? <a onclick="showRegister()">Criar conta</a> &nbsp;·&nbsp; suporte@innova.digital</div>
     </div>
-
-    <div class="login-left-foot">
-      <div class="login-left-copy">© 2025 Innova Digital</div>
-      <div class="login-left-loc">Maceió · Alagoas · Brasil</div>
-    </div>
+    <div class="login-left-foot"><div class="login-left-copy">© 2025 Innova Digital</div><div class="login-left-loc">Maceió · Alagoas · Brasil</div></div>
   </div>
-
-  <!-- DIREITA -->
   <div class="login-right">
     <div class="login-right-grid"></div>
     <div class="login-right-lines"></div>
-    <div class="login-right-brand">
-      <div class="lrb-icon">D</div>
-      <div class="lrb-name">INNOVA DIGITAL</div>
-    </div>
+    <div class="login-right-brand"><div class="lrb-icon">D</div><div class="lrb-name">INNOVA DIGITAL</div></div>
     <div class="login-right-content">
-      <div class="login-right-quote">
-        "A automação que<br><em>movimenta postos de combustíveis</em><br>em toda Alagoas e no Brasil."
-      </div>
-      <div class="login-right-creds">
-        <span class="login-cred">· Credenciada INMETRO</span>
-        <span class="login-cred">· Convênio SEFAZ-AL</span>
-        <span class="login-cred">· Gilbarco · Veeder-Root</span>
-        <span class="login-cred">· Hiro Automação</span>
-        <span class="login-cred">· Vibra BR</span>
-      </div>
+      <div class="login-right-quote">"A automação que<br><em>movimenta postos de combustíveis</em><br>em toda Alagoas e no Brasil."</div>
+      <div class="login-right-creds"><span class="login-cred">· Credenciada INMETRO</span><span class="login-cred">· Convênio SEFAZ-AL</span><span class="login-cred">· Gilbarco · Veeder-Root</span><span class="login-cred">· Hiro Automação</span></div>
     </div>
   </div>
 </div>
@@ -922,85 +386,68 @@ footer{
 <!-- MODAL CADASTRO -->
 <div class="modal-ov" id="modal-reg">
   <div class="modal">
-    <div class="modal-title">Solicitar Cadastro</div>
-    <div class="form-group"><label class="form-label">Nome completo *</label><input class="form-input" id="r-name" type="text" placeholder="Seu nome"></div>
-    <div class="form-group"><label class="form-label">Empresa *</label><input class="form-input" id="r-empresa" type="text" placeholder="Nome da empresa"></div>
+    <div class="modal-title">✨ Criar Conta</div>
+    <p style="color:var(--text2);font-size:.85rem;margin-bottom:18px;line-height:1.6">Após o cadastro, a Innova Digital irá ativar seu acesso e vincular sua empresa.</p>
+    <div class="form-group"><label class="form-label">Nome completo *</label><input class="form-input" id="r-name" type="text" placeholder="Seu nome completo"></div>
     <div class="form-group"><label class="form-label">E-mail *</label><input class="form-input" id="r-email" type="email" placeholder="seu@email.com"></div>
     <div class="form-group"><label class="form-label">Senha *</label><input class="form-input" id="r-pass" type="password" placeholder="Mínimo 6 caracteres"></div>
-    <div class="form-group">
-      <label class="form-label">Perfil</label>
-      <select class="form-input" id="r-role">
-        <option value="client">Cliente</option>
-        <option value="accountant">Contador</option>
-      </select>
-    </div>
-    <div class="modal-foot">
-      <button class="btn-mc" onclick="closeModal('modal-reg')">Cancelar</button>
-      <button class="btn-login" style="width:auto;padding:9px 22px" onclick="doRegister()">Criar conta</button>
-    </div>
+    <div class="modal-foot"><button class="btn-mc" onclick="closeModal('modal-reg')">Cancelar</button><button class="btn-login" style="width:auto;padding:9px 22px" onclick="doRegister()">Criar conta</button></div>
   </div>
 </div>
 
-<!-- ════════ VIEW: PORTAL ════════ -->
+<!-- MODAL EMPRESA -->
+<div class="modal-ov" id="modal-empresa">
+  <div class="modal">
+    <div class="modal-title" id="modal-emp-title">🏢 Nova Empresa</div>
+    <div class="form-group"><label class="form-label">Nome da Empresa *</label><input class="form-input" id="emp-nome" type="text" placeholder="Razão social ou nome fantasia"></div>
+    <div class="form-group"><label class="form-label">CNPJ</label><input class="form-input" id="emp-cnpj" type="text" placeholder="00.000.000/0000-00"></div>
+    <div class="form-group"><label class="form-label">Observação</label><input class="form-input" id="emp-obs" type="text" placeholder="Campo livre"></div>
+    <input type="hidden" id="emp-edit-id">
+    <div class="modal-foot"><button class="btn-mc" onclick="closeModal('modal-empresa')">Cancelar</button><button class="btn-login" style="width:auto;padding:9px 22px" onclick="saveEmpresa()">Salvar empresa</button></div>
+  </div>
+</div>
+
+<!-- PENDING -->
+<div id="pending-view" class="view">
+  <div class="pending-card">
+    <div class="pending-icon">⏳</div>
+    <h2 class="pending-title">Cadastro em análise</h2>
+    <div class="pending-badge">🔔 Aguardando ativação pelo administrador</div>
+    <p class="pending-sub">Seu cadastro foi recebido com sucesso!<br>A equipe Innova Digital irá revisar e ativar seu acesso em breve.</p>
+    <button class="btn-pending-logout" onclick="doLogout()">Sair da conta</button>
+  </div>
+</div>
+
+<!-- PORTAL -->
 <div id="portal-view" class="view">
-  <!-- SIDEBAR -->
   <aside class="sb">
-    <div class="sb-head">
-      <div class="sb-logo-icon">D</div>
-      <div class="sb-logo-text">INNOVA <span>DIGITAL</span></div>
-    </div>
-
+    <div class="sb-head"><div class="sb-logo-icon">D</div><div class="sb-logo-text">INNOVA <span>DIGITAL</span></div></div>
     <div class="sb-section">Navegação</div>
-    <div class="sb-item" id="sbi-overview" onclick="showPanel('overview')">
-      <span class="si-icon">🏠</span> Visão Geral
-    </div>
-    <div class="sb-item" id="sbi-fiscal" onclick="showPanel('fiscal')">
-      <span class="si-icon">📄</span> Arquivos Fiscais
-    </div>
-    <div class="sb-item disabled">
-      <span class="si-icon">💰</span> Financeiro
-    </div>
-    <div class="sb-item disabled">
-      <span class="si-icon">🏪</span> Postos &amp; Contratos
-    </div>
-    <div class="sb-item disabled">
-      <span class="si-icon">🎧</span> Suporte
-    </div>
-
+    <div class="sb-item" id="sbi-overview" onclick="showPanel('overview')"><span class="si-icon">🏠</span> Visão Geral</div>
+    <div class="sb-item" id="sbi-fiscal" onclick="showPanel('fiscal')"><span class="si-icon">📄</span> Arquivos Fiscais</div>
+    <div class="sb-item disabled"><span class="si-icon">💰</span> Financeiro</div>
+    <div class="sb-item disabled"><span class="si-icon">🏪</span> Postos &amp; Contratos</div>
+    <div class="sb-item disabled"><span class="si-icon">🎧</span> Suporte</div>
     <div id="sb-admin-sec" style="display:none">
       <div class="sb-section">Administração</div>
       <div class="sb-item" id="sbi-admin" onclick="showPanel('admin')">
         <span class="si-icon">⚙️</span> Painel Admin
+        <span class="sb-badge" id="sb-pending-badge" style="display:none">0</span>
       </div>
     </div>
-
     <div style="flex:1"></div>
-
-    <div class="sb-item" onclick="showLanding()">
-      <span class="si-icon">🌐</span> Site institucional
-    </div>
-
+    <div class="sb-item" onclick="showLanding()"><span class="si-icon">🌐</span> Site institucional</div>
     <div class="sb-user">
       <div class="sb-user-av" id="sb-av">?</div>
-      <div>
-        <div class="sb-user-name" id="sb-name">–</div>
-        <div class="sb-user-role" id="sb-role">–</div>
-      </div>
-      <button class="btn-sb-logout" onclick="doLogout()" title="Sair">⏻</button>
+      <div><div class="sb-user-name" id="sb-name">–</div><div class="sb-user-role" id="sb-role">–</div></div>
+      <button class="btn-sb-logout" onclick="doLogout()">⏻</button>
     </div>
   </aside>
-
-  <!-- MAIN -->
   <div class="pm">
     <div class="pm-topbar">
-      <div class="pm-breadcrumb">
-        Portal &rsaquo; <span id="pm-bc">Visão Geral</span>
-      </div>
-      <div class="pm-topbar-right">
-        <div class="pm-empresa" id="pm-empresa">–</div>
-      </div>
+      <div class="pm-breadcrumb">Portal &rsaquo; <span id="pm-bc">Visão Geral</span></div>
+      <div class="pm-empresa" id="pm-empresa">–</div>
     </div>
-
     <div class="pm-body">
 
       <!-- OVERVIEW -->
@@ -1010,79 +457,43 @@ footer{
         <div class="pm-divider"></div>
         <div class="metrics-grid">
           <div class="mc"><div class="mc-icon">📁</div><div class="mc-val" id="m-total">–</div><div class="mc-label">Arquivos disponíveis</div></div>
-          <div class="mc"><div class="mc-icon">📤</div><div class="mc-val" id="m-uploads">–</div><div class="mc-label">Enviados por você</div></div>
           <div class="mc"><div class="mc-icon">🔔</div><div class="mc-val" id="m-new">–</div><div class="mc-label">Novos esta semana</div></div>
+          <div class="mc" id="mc-empresas" style="display:none"><div class="mc-icon">🏢</div><div class="mc-val" id="m-empresas">–</div><div class="mc-label">Empresas cadastradas</div></div>
+          <div class="mc" id="mc-pending" style="display:none"><div class="mc-icon">⏳</div><div class="mc-val" id="m-pending">–</div><div class="mc-label">Cadastros pendentes</div></div>
         </div>
         <div class="cards-row">
-          <div class="card">
-            <div class="card-title">📋 Atividade Recente</div>
-            <div id="ov-activity"><div style="color:var(--muted);font-size:.85rem;text-align:center;padding:20px">Carregando...</div></div>
-          </div>
-          <div class="card">
-            <div class="card-title">🚀 Acesso Rápido</div>
-            <div style="display:flex;flex-direction:column;gap:9px;margin-top:4px">
-              <button class="btn-tbl" style="text-align:left;padding:11px 14px" onclick="showPanel('fiscal')">📄 Arquivos Fiscais</button>
-              <button class="btn-tbl" style="text-align:left;padding:11px 14px;opacity:.4;cursor:default">💰 Financeiro (em breve)</button>
-              <button class="btn-tbl" style="text-align:left;padding:11px 14px;opacity:.4;cursor:default">🎧 Suporte (em breve)</button>
-            </div>
-          </div>
+          <div class="card"><div class="card-title">📋 Atividade Recente</div><div id="ov-activity"><div style="color:var(--muted);font-size:.85rem;text-align:center;padding:20px">Carregando...</div></div></div>
+          <div class="card"><div class="card-title">🚀 Acesso Rápido</div><div style="display:flex;flex-direction:column;gap:9px;margin-top:4px">
+            <button class="btn-tbl" style="text-align:left;padding:11px 14px" onclick="showPanel('fiscal')">📄 Arquivos Fiscais</button>
+            <button class="btn-tbl" style="text-align:left;padding:11px 14px;opacity:.4;cursor:default">💰 Financeiro (em breve)</button>
+            <button class="btn-tbl" style="text-align:left;padding:11px 14px;opacity:.4;cursor:default">🎧 Suporte (em breve)</button>
+          </div></div>
         </div>
       </div>
 
-      <!-- ARQUIVOS FISCAIS -->
+      <!-- ARQUIVOS -->
       <div id="panel-fiscal" class="panel">
         <div class="pm-title">Arquivos Fiscais</div>
         <p class="pm-sub">Documentos disponibilizados pela Innova Digital para sua empresa</p>
         <div class="pm-divider"></div>
-
-        <!-- Card admin: adicionar arquivo -->
-        <div class="card" id="upload-card" style="margin-bottom:24px">
+        <div class="card" id="upload-card" style="display:none;margin-bottom:24px">
           <div class="card-title">📎 Adicionar Arquivo</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-            <div class="form-group" style="margin-bottom:0">
-              <label class="form-label">Nome do arquivo *</label>
-              <input class="form-input" id="f-name" type="text" placeholder="Ex: XMLs Outubro 2025.zip">
-            </div>
-            <div class="form-group" style="margin-bottom:0">
-              <label class="form-label">Destinatário (CNPJ/Usuário) *</label>
-              <select class="form-input" id="f-target-uid">
-                <option value="">Carregando usuários...</option>
-              </select>
-            </div>
+            <div class="form-group" style="margin-bottom:0"><label class="form-label">Nome do arquivo *</label><input class="form-input" id="f-name" type="text" placeholder="Ex: XMLs Outubro 2025.zip"></div>
+            <div class="form-group" style="margin-bottom:0"><label class="form-label">Empresa destinatária *</label><select class="form-input" id="f-target-emp"><option value="">Carregando...</option></select></div>
           </div>
-          <div class="form-group" style="margin-bottom:14px">
-            <label class="form-label">Link do Google Drive *</label>
-            <input class="form-input" id="f-url" type="url" placeholder="https://drive.google.com/file/d/...">
-          </div>
+          <div class="form-group" style="margin-bottom:14px"><label class="form-label">Link do Google Drive *</label><input class="form-input" id="f-url" type="url" placeholder="https://drive.google.com/file/d/..."></div>
           <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-            <button class="btn-upload" onclick="addFile()">➕ Adicionar arquivo</button>
-            <div style="font-size:.75rem;color:var(--muted)">
-              💡 No Drive: Compartilhar → "Qualquer pessoa com o link" → Copiar link
-            </div>
+            <button class="btn-tbl-ok" style="padding:9px 18px;font-size:.85rem" onclick="addFile()">➕ Adicionar arquivo</button>
+            <div style="font-size:.75rem;color:var(--muted)">💡 Drive: Compartilhar → "Qualquer pessoa com o link"</div>
           </div>
         </div>
-
-        <!-- Lista de arquivos -->
         <div class="card">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px">
             <div class="card-title" style="margin-bottom:0">📥 Documentos Disponíveis</div>
             <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-              <div style="position:relative">
-                <input class="form-input" id="search-files" type="text" placeholder="Buscar..."
-                  style="padding-left:30px;width:180px;font-size:.82rem;padding-top:7px;padding-bottom:7px"
-                  oninput="filterFiles()">
-                <span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.82rem;pointer-events:none">🔍</span>
-              </div>
-              <select class="form-input" id="filter-ext" style="font-size:.82rem;padding:7px 10px;width:auto" onchange="filterFiles()">
-                <option value="">Todos os tipos</option>
-                <option value="PDF">PDF</option>
-                <option value="XML">XML</option>
-                <option value="ZIP">ZIP</option>
-                <option value="XLSX">Excel</option>
-                <option value="CSV">CSV</option>
-                <option value="TXT">TXT</option>
-                <option value="LAY">LAY</option>
-              </select>
+              <div style="position:relative"><input class="form-input" id="search-files" type="text" placeholder="Buscar..." style="padding-left:30px;width:180px;font-size:.82rem;padding-top:7px;padding-bottom:7px" oninput="filterFiles()"><span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.82rem;pointer-events:none">🔍</span></div>
+              <select class="form-input" id="filter-ext" style="font-size:.82rem;padding:7px 10px;width:auto" onchange="filterFiles()"><option value="">Todos os tipos</option><option value="PDF">PDF</option><option value="XML">XML</option><option value="ZIP">ZIP</option><option value="XLSX">Excel</option><option value="CSV">CSV</option><option value="TXT">TXT</option><option value="LAY">LAY</option></select>
             </div>
           </div>
           <div id="files-list"><div class="empty-st"><div class="ei">📂</div>Carregando arquivos...</div></div>
@@ -1093,22 +504,28 @@ footer{
       <!-- ADMIN -->
       <div id="panel-admin" class="panel">
         <div class="pm-title">Painel Administrativo</div>
-        <p class="pm-sub">Gerencie usuários, arquivos e contatos</p>
+        <p class="pm-sub">Gerencie empresas, usuários, arquivos e contatos</p>
         <div class="pm-divider"></div>
         <div class="admin-tabs">
-          <div class="atab active" onclick="switchAdminTab('contacts')">📬 Contatos</div>
+          <div class="atab active" onclick="switchAdminTab('empresas')">🏢 Empresas</div>
+          <div class="atab" onclick="switchAdminTab('pending')">⏳ Pendentes <span id="adm-pending-count" style="background:var(--warn);color:#fff;font-size:.65rem;font-weight:700;padding:1px 6px;border-radius:100px;margin-left:4px;display:none"></span></div>
           <div class="atab" onclick="switchAdminTab('users')">👥 Usuários</div>
-          <div class="atab" onclick="switchAdminTab('allfiles')">📁 Todos os Arquivos</div>
+          <div class="atab" onclick="switchAdminTab('allfiles')">📁 Arquivos</div>
+          <div class="atab" onclick="switchAdminTab('contacts')">📬 Contatos</div>
         </div>
-        <div id="ap-contacts" class="ap active">
-          <div class="card"><div class="card-title">📬 Mensagens Recebidas</div><div id="adm-contacts">Carregando...</div></div>
+        <div id="ap-empresas" class="ap active">
+          <div class="card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+              <div class="card-title" style="margin-bottom:0">🏢 Empresas Cadastradas</div>
+              <button class="btn-tbl-ok" style="padding:7px 14px" onclick="openNovaEmpresa()">+ Nova Empresa</button>
+            </div>
+            <div id="emp-grid-container"><div class="empty-st"><div class="ei">🏢</div>Carregando...</div></div>
+          </div>
         </div>
-        <div id="ap-users" class="ap">
-          <div class="card"><div class="card-title">👥 Usuários Cadastrados</div><div id="adm-users">Carregando...</div></div>
-        </div>
-        <div id="ap-allfiles" class="ap">
-          <div class="card"><div class="card-title">📁 Todos os Arquivos</div><div id="adm-files">Carregando...</div></div>
-        </div>
+        <div id="ap-pending" class="ap"><div class="card"><div class="card-title">⏳ Aguardando Ativação</div><div id="adm-pending">Carregando...</div></div></div>
+        <div id="ap-users" class="ap"><div class="card"><div class="card-title">👥 Usuários Ativos</div><div id="adm-users">Carregando...</div></div></div>
+        <div id="ap-allfiles" class="ap"><div class="card"><div class="card-title">📁 Todos os Arquivos</div><div id="adm-files">Carregando...</div></div></div>
+        <div id="ap-contacts" class="ap"><div class="card"><div class="card-title">📬 Mensagens Recebidas</div><div id="adm-contacts">Carregando...</div></div></div>
       </div>
 
     </div>
@@ -1118,471 +535,321 @@ footer{
 <!-- MODAL DELETE -->
 <div class="modal-ov" id="modal-del">
   <div class="modal">
-    <div class="modal-title">🗑️ Excluir arquivo</div>
-    <p style="color:var(--text2);font-size:.88rem">Tem certeza que deseja excluir <strong id="del-name"></strong>? Esta ação não pode ser desfeita.</p>
-    <div class="modal-foot">
-      <button class="btn-mc" onclick="closeModal('modal-del')">Cancelar</button>
-      <button class="btn-mx" onclick="confirmDelete()">Excluir</button>
-    </div>
+    <div class="modal-title">🗑️ Confirmar exclusão</div>
+    <p style="color:var(--text2);font-size:.88rem">Tem certeza que deseja excluir <strong id="del-name"></strong>?</p>
+    <div class="modal-foot"><button class="btn-mc" onclick="closeModal('modal-del')">Cancelar</button><button class="btn-mx" onclick="confirmDelete()">Excluir</button></div>
   </div>
 </div>
 
-<!-- ════════ FIREBASE + LÓGICA ════════ -->
 <script type="module">
-// ─── FIREBASE CONFIG ───────────────────────────────────────────────────
-// ⚠️ Substitua pelos valores do seu projeto Firebase
-import { initializeApp }
-  from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-         signOut, onAuthStateChanged }
-  from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, doc, getDoc,
-         setDoc, updateDoc, deleteDoc, query, where, orderBy, serverTimestamp }
-  from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import{initializeApp}from"https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+import{getFirestore,collection,addDoc,getDocs,doc,getDoc,setDoc,updateDoc,deleteDoc,query,where,orderBy,serverTimestamp}from"https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+const FC={apiKey:"AIzaSyDj2pX7I6RpaVYL3mZNaswi9JAihu1th-U",authDomain:"innovadigital-46bc6.firebaseapp.com",projectId:"innovadigital-46bc6",storageBucket:"innovadigital-46bc6.firebasestorage.app",messagingSenderId:"775648507820",appId:"1:775648507820:web:0cdaae28e6e3a020deac09"};
+const app=initializeApp(FC);const auth=getAuth(app);const db=getFirestore(app);
+const ADMIN_EMAILS=["lnrdlamarcal@gmail.com"];
+let CU=null,isAdmin=false,userData={},allFiles=[],delTarget=null;
 
-const firebaseConfig = {
-  apiKey:            "AIzaSyDj2pX7I6RpaVYL3mZNaswi9JAihu1th-U",
-  authDomain:        "innovadigital-46bc6.firebaseapp.com",
-  projectId:         "innovadigital-46bc6",
-  storageBucket:     "innovadigital-46bc6.firebasestorage.app",
-  messagingSenderId: "775648507820",
-  appId:             "1:775648507820:web:0cdaae28e6e3a020deac09"
-};
-
-const app  = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db   = getFirestore(app);
-
-// ─── ESTADO ───────────────────────────────────────────────────────────
-let CU       = null; // currentUser
-let isAdmin  = false;
-let userRole = 'client'; // 'client' | 'accountant' | 'admin'
-let uQueue   = [];
-let delTarget= null;
-const ADMIN_EMAILS = ["lnrdlamarcal@gmail.com"];
-
-// ─── UI HELPERS ───────────────────────────────────────────────────────
-function showView(id) {
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
-}
-function loading(s,t='Carregando...') {
-  document.getElementById('sp-txt').textContent=t;
-  document.getElementById('lov').classList.toggle('show',s);
-}
-function toast(msg,type='info') {
-  const el=document.getElementById('toast');
-  el.textContent=msg; el.className='show '+type;
-  setTimeout(()=>el.classList.remove('show'),3500);
-}
-function fmtDate(ts) {
-  if(!ts)return'–';
-  const d=ts.toDate?ts.toDate():new Date(ts);
-  return d.toLocaleDateString('pt-BR')+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-}
-function fmtSize(b) {
-  if(b<1024)return b+' B';
-  if(b<1024*1024)return(b/1024).toFixed(1)+' KB';
-  return(b/(1024*1024)).toFixed(1)+' MB';
-}
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+function loading(s,t='Carregando...'){document.getElementById('sp-txt').textContent=t;document.getElementById('lov').classList.toggle('show',s)}
+function toast(msg,type='info'){const el=document.getElementById('toast');el.textContent=msg;el.className='show '+type;setTimeout(()=>el.classList.remove('show'),3500)}
+function fmtDate(ts){if(!ts)return'–';const d=ts.toDate?ts.toDate():new Date(ts);return d.toLocaleDateString('pt-BR')+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}
 function ext(n){return(n.split('.').pop()||'FILE').toUpperCase()}
 function initials(n){return(n||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase()}
 
-// ─── NAVEGAÇÃO ────────────────────────────────────────────────────────
-window.showLanding = ()=>showView('landing');
-window.showLogin   = ()=>showView('login-view');
-window.showRegister= ()=>{ closeModal('modal-reg'); document.getElementById('modal-reg').classList.add('open'); };
+window.showLanding=()=>showView('landing');
+window.showLogin=()=>showView('login-view');
+window.showRegister=()=>document.getElementById('modal-reg').classList.add('open');
+window.togglePass=()=>{const i=document.getElementById('l-pass');i.type=i.type==='password'?'text':'password'};
 
-window.switchRole = (role) => {
-  document.getElementById('rtab-client').classList.toggle('active', role==='client');
-  document.getElementById('rtab-accountant').classList.toggle('active', role==='accountant');
-};
-
-window.togglePass = () => {
-  const i=document.getElementById('l-pass');
-  i.type=i.type==='password'?'text':'password';
-};
-
-// ─── AUTH ─────────────────────────────────────────────────────────────
-window.doLogin = async () => {
-  const email = document.getElementById('l-email').value.trim();
-  const pass  = document.getElementById('l-pass').value;
+window.doLogin=async()=>{
+  const email=document.getElementById('l-email').value.trim();
+  const pass=document.getElementById('l-pass').value;
   if(!email||!pass){showLoginErr('Preencha e-mail e senha.');return}
-
-  const btn = document.querySelector('.btn-login');
-  const originalText = btn.innerHTML;
-  btn.disabled = true;
-  btn.innerHTML = '⏳ Entrando...';
-  document.getElementById('login-err').style.display = 'none';
-
-  const timeout = new Promise((_,reject) =>
-    setTimeout(() => reject(new Error('timeout')), 10000)
-  );
-
-  try{
-    await Promise.race([
-      signInWithEmailAndPassword(auth, email, pass),
-      timeout
-    ]);
-  }catch(e){
-    btn.disabled = false;
-    btn.innerHTML = originalText;
-    if(e.message === 'timeout'){
-      showLoginErr('Tempo esgotado. Verifique sua conexão ou abra o arquivo via servidor HTTP (não file://).');
-    } else if(e.code==='auth/invalid-credential'||e.code==='auth/wrong-password'){
-      showLoginErr('E-mail ou senha incorretos.');
-    } else if(e.code==='auth/user-not-found'){
-      showLoginErr('Usuário não encontrado.');
-    } else if(e.code==='auth/network-request-failed'){
-      showLoginErr('Erro de conexão. O arquivo precisa ser aberto via servidor HTTP, não file://.');
-    } else {
-      showLoginErr(e.message);
-    }
-  }
+  const btn=document.querySelector('.btn-login');const orig=btn.innerHTML;
+  btn.disabled=true;btn.innerHTML='⏳ Entrando...';
+  document.getElementById('login-err').style.display='none';
+  try{await Promise.race([signInWithEmailAndPassword(auth,email,pass),new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),10000))]);}
+  catch(e){btn.disabled=false;btn.innerHTML=orig;
+    if(e.message==='timeout')showLoginErr('Tempo esgotado.');
+    else if(e.code==='auth/invalid-credential'||e.code==='auth/wrong-password')showLoginErr('E-mail ou senha incorretos.');
+    else showLoginErr(e.message);}
 };
 
-window.doRegister = async () => {
-  const name   =document.getElementById('r-name').value.trim();
-  const empresa=document.getElementById('r-empresa').value.trim();
-  const email  =document.getElementById('r-email').value.trim();
-  const pass   =document.getElementById('r-pass').value;
-  const role   =document.getElementById('r-role').value;
+window.doRegister=async()=>{
+  const name=document.getElementById('r-name').value.trim();
+  const email=document.getElementById('r-email').value.trim();
+  const pass=document.getElementById('r-pass').value;
   if(!name||!email||!pass){toast('Preencha todos os campos.','err');return}
-  if(pass.length<6){toast('Senha deve ter no mínimo 6 caracteres.','err');return}
-
+  if(pass.length<6){toast('Senha mínimo 6 caracteres.','err');return}
   const btn=document.querySelector('#modal-reg .btn-login');
-  if(btn){btn.disabled=true;btn.innerHTML='⏳ Criando...';}
+  if(btn){btn.disabled=true;btn.innerHTML='⏳ Criando...'}
   try{
     const uc=await createUserWithEmailAndPassword(auth,email,pass);
-    await setDoc(doc(db,'users',uc.user.uid),{
-      name,empresa,email,
-      role: ADMIN_EMAILS.includes(email)?'admin':role,
-      createdAt:serverTimestamp()
-    });
-    closeModal('modal-reg');
-  }catch(e){
-    if(btn){btn.disabled=false;btn.innerHTML='Criar conta';}
-    toast(e.code==='auth/email-already-in-use'?'E-mail já cadastrado.':e.message,'err');
-  }
+    const isAdm=ADMIN_EMAILS.includes(email);
+    await setDoc(doc(db,'users',uc.user.uid),{name,email,id_empresa:'',empresa_nome:'',role:isAdm?'admin':'client',status:isAdm?'ativo':'pendente',isAdmin:false,createdAt:serverTimestamp()});
+    closeModal('modal-reg');toast('Cadastro realizado! Aguarde a ativação.','ok');
+  }catch(e){if(btn){btn.disabled=false;btn.innerHTML='Criar conta'}toast(e.code==='auth/email-already-in-use'?'E-mail já cadastrado.':e.message,'err');}
 };
 
-window.doLogout = async () => {
-  await signOut(auth);
-  showLanding();
-  toast('Você saiu da conta.');
-};
+window.doLogout=async()=>{await signOut(auth);showLanding();toast('Você saiu da conta.')};
+function showLoginErr(msg){const el=document.getElementById('login-err');el.textContent=msg;el.style.display='block'}
 
-function showLoginErr(msg){
-  const el=document.getElementById('login-err');
-  el.textContent=msg; el.style.display='block';
-}
-
-// ─── AUTH STATE ───────────────────────────────────────────────────────
-onAuthStateChanged(auth, async (user) => {
-  loading(false); // Sempre esconde o spinner imediatamente
-  if(!user) return;
-
-  CU = user;
-
-  // Busca dados do usuário — com fallback se falhar
-  let data = {};
-  try{
-    const snap = await getDoc(doc(db,'users',user.uid));
-    if(snap.exists()) data = snap.data();
-  }catch(e){
-    console.warn('Não foi possível ler dados do usuário:', e.message);
+onAuthStateChanged(auth,async(user)=>{
+  loading(false);if(!user)return;CU=user;
+  try{const snap=await getDoc(doc(db,'users',user.uid));if(snap.exists())userData=snap.data();}catch(e){}
+  isAdmin=ADMIN_EMAILS.includes(user.email)||userData.role==='admin';
+  if(!userData.email){
+    try{await setDoc(doc(db,'users',user.uid),{name:'',email:user.email,id_empresa:'',empresa_nome:'',role:isAdmin?'admin':'client',status:isAdmin?'ativo':'pendente',isAdmin:false,createdAt:serverTimestamp()},{merge:true});
+    userData={...userData,status:isAdmin?'ativo':'pendente'};}catch(e){}
   }
-
-  isAdmin  = ADMIN_EMAILS.includes(user.email) || data.role === 'admin';
-  userRole = isAdmin ? 'admin' : (data.role || 'client');
-
-  // Se documento não existe ainda, cria automaticamente
-  if(!data.email){
-    try{
-      await setDoc(doc(db,'users',user.uid), {
-        name:      '',
-        empresa:   '',
-        email:     user.email,
-        role:      isAdmin ? 'admin' : 'client',
-        createdAt: serverTimestamp()
-      }, { merge: true });
-    }catch(e){ console.warn('Erro ao criar doc usuário:', e.message) }
-  }
-
-  // Sidebar
-  document.getElementById('sb-name').textContent = data.name || user.email;
-  document.getElementById('sb-role').textContent =
-    userRole==='admin' ? 'Administrador' : userRole==='accountant' ? 'Contador' : 'Cliente';
-  document.getElementById('sb-av').textContent = initials(data.name || user.email);
-  document.getElementById('pm-empresa').textContent = data.empresa || '–';
-  document.getElementById('p-welcome').textContent =
-    'Bem-vindo' + (data.name ? ', ' + data.name : '') + (data.empresa ? ' — ' + data.empresa : '');
-  document.getElementById('sb-admin-sec').style.display = isAdmin ? 'block' : 'none';
-  document.getElementById('upload-card').style.display  = isAdmin ? 'block' : 'none';
-
-  showView('portal-view');
-  showPanel('overview');
-  loadOverview();
-  loadFiles();
-  if(isAdmin) loadUsersDropdown();
+  if(!isAdmin&&userData.status==='pendente'){showView('pending-view');return}
+  document.getElementById('sb-name').textContent=userData.name||user.email;
+  document.getElementById('sb-role').textContent=isAdmin?'Administrador':'Cliente';
+  document.getElementById('sb-av').textContent=initials(userData.name||user.email);
+  document.getElementById('pm-empresa').textContent=userData.empresa_nome||'–';
+  document.getElementById('p-welcome').textContent='Bem-vindo'+(userData.name?', '+userData.name:'')+(userData.empresa_nome?' — '+userData.empresa_nome:'');
+  document.getElementById('sb-admin-sec').style.display=isAdmin?'block':'none';
+  document.getElementById('upload-card').style.display=isAdmin?'block':'none';
+  if(isAdmin){document.getElementById('mc-empresas').style.display='block';document.getElementById('mc-pending').style.display='block';loadAdminMetrics();loadEmpresasDropdown();}
+  showView('portal-view');showPanel('overview');loadOverview();loadFiles();
 });
 
-// ─── PORTAL PANELS ────────────────────────────────────────────────────
-window.showPanel = (id) => {
+async function loadAdminMetrics(){
+  try{
+    const[es,ps]=await Promise.all([getDocs(collection(db,'empresas')),getDocs(query(collection(db,'users'),where('status','==','pendente')))]);
+    document.getElementById('m-empresas').textContent=es.size;
+    const n=ps.docs.filter(d=>!ADMIN_EMAILS.includes(d.data().email)).length;
+    document.getElementById('m-pending').textContent=n;
+    const badge=document.getElementById('sb-pending-badge');
+    if(n>0){badge.style.display='inline';badge.textContent=n;}else badge.style.display='none';
+  }catch(e){}
+}
+
+window.showPanel=(id)=>{
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(s=>s.classList.remove('active'));
   document.getElementById('panel-'+id).classList.add('active');
-  const sbi=document.getElementById('sbi-'+id);
-  if(sbi) sbi.classList.add('active');
+  const sbi=document.getElementById('sbi-'+id);if(sbi)sbi.classList.add('active');
   const labels={overview:'Visão Geral',fiscal:'Arquivos Fiscais',admin:'Painel Admin'};
   document.getElementById('pm-bc').textContent=labels[id]||id;
-  if(id==='admin'&&isAdmin) loadAdmin();
+  if(id==='admin'&&isAdmin)loadAdmin();
 };
 
-// ─── OVERVIEW ─────────────────────────────────────────────────────────
-async function loadOverview() {
+async function loadOverview(){
   let docs=[];
   try{
-    if(isAdmin){
-      const snap=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc')));
-      docs=snap.docs;
-    } else {
-      const snap=await getDocs(query(
-        collection(db,'files'),
-        where('targetUid','==',CU.uid),
-        orderBy('createdAt','desc')
-      ));
-      docs=snap.docs;
-    }
-  }catch(e){docs=[]}
+    if(isAdmin){const snap=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc')));docs=snap.docs;}
+    else if(userData.id_empresa){const snap=await getDocs(query(collection(db,'files'),where('id_empresa','==',userData.id_empresa),orderBy('createdAt','desc')));docs=snap.docs;}
+  }catch(e){}
   document.getElementById('m-total').textContent=docs.length;
-  document.getElementById('m-uploads').textContent=docs.length;
-  const wk=new Date(); wk.setDate(wk.getDate()-7);
-  document.getElementById('m-new').textContent=docs.filter(d=>{
-    const ts=d.data().createdAt; return ts&&ts.toDate&&ts.toDate()>wk;
-  }).length;
+  const wk=new Date();wk.setDate(wk.getDate()-7);
+  document.getElementById('m-new').textContent=docs.filter(d=>{const ts=d.data().createdAt;return ts&&ts.toDate&&ts.toDate()>wk}).length;
   const al=document.getElementById('ov-activity');
   if(!docs.length){al.innerHTML='<div style="color:var(--muted);font-size:.85rem;text-align:center;padding:20px">Nenhuma atividade ainda.</div>';return}
-  al.innerHTML=docs.slice(0,5).map(d=>{
-    const f=d.data();
-    const empresa=isAdmin&&f.targetEmpresa?` → <strong>${f.targetEmpresa}</strong>`:'';
-    return`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
-      <div style="width:7px;height:7px;border-radius:50%;background:var(--blue2);flex-shrink:0"></div>
-      <div style="flex:1;font-size:.84rem;color:var(--text2)"><strong style="color:var(--navy)">${f.name}</strong>${empresa} disponibilizado</div>
-      <div style="color:var(--muted);font-size:.74rem">${fmtDate(f.createdAt)}</div>
-    </div>`;
+  al.innerHTML=docs.slice(0,5).map(d=>{const f=d.data();const et=isAdmin&&f.empresa_nome?` → <strong>${f.empresa_nome}</strong>`:'';
+    return`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="width:7px;height:7px;border-radius:50%;background:var(--blue2);flex-shrink:0"></div><div style="flex:1;font-size:.84rem;color:var(--text2)"><strong style="color:var(--navy)">${f.name}</strong>${et}</div><div style="color:var(--muted);font-size:.74rem">${fmtDate(f.createdAt)}</div></div>`;
   }).join('');
 }
 
-// ─── FILES ────────────────────────────────────────────────────────────
-let allFiles = [];
-
-async function loadFiles() {
-  const el=document.getElementById('files-list');
-  el.innerHTML='<div class="empty-st"><div class="ei">⏳</div>Carregando...</div>';
+async function loadFiles(){
+  const el=document.getElementById('files-list');el.innerHTML='<div class="empty-st"><div class="ei">⏳</div>Carregando...</div>';
   try{
     let docs=[];
-    if(isAdmin){
-      const snap=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc')));
-      docs=snap.docs;
-    } else {
-      const snap=await getDocs(query(
-        collection(db,'files'),
-        where('targetUid','==',CU.uid),
-        orderBy('createdAt','desc')
-      ));
-      docs=snap.docs;
-    }
-    allFiles=docs.map(d=>({id:d.id,...d.data()}));
-    renderFiles(allFiles);
-  }catch(e){
-    el.innerHTML='<div class="empty-st"><div class="ei">⚠️</div>Erro ao carregar arquivos.</div>';
-    console.error(e);
-  }
+    if(isAdmin){const snap=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc')));docs=snap.docs;}
+    else if(userData.id_empresa){const snap=await getDocs(query(collection(db,'files'),where('id_empresa','==',userData.id_empresa),orderBy('createdAt','desc')));docs=snap.docs;}
+    allFiles=docs.map(d=>({id:d.id,...d.data()}));renderFiles(allFiles);
+  }catch(e){el.innerHTML='<div class="empty-st"><div class="ei">⚠️</div>Erro ao carregar.</div>';}
 }
 
-function renderFiles(list) {
-  const el=document.getElementById('files-list');
-  const cnt=document.getElementById('files-count');
-  if(!list.length){
-    el.innerHTML='<div class="empty-st"><div class="ei">📂</div>Nenhum arquivo disponível para sua conta.</div>';
-    cnt.style.display='none';
-    return;
-  }
-  const oneWeekAgo=new Date(); oneWeekAgo.setDate(oneWeekAgo.getDate()-7);
+function renderFiles(list){
+  const el=document.getElementById('files-list');const cnt=document.getElementById('files-count');
+  if(!list.length){el.innerHTML='<div class="empty-st"><div class="ei">📂</div>Nenhum arquivo disponível.</div>';cnt.style.display='none';return}
+  const wk=new Date();wk.setDate(wk.getDate()-7);
   el.innerHTML='<div class="files-list">'+list.map(f=>{
-    const isNew=f.createdAt?.toDate&&f.createdAt.toDate()>oneWeekAgo;
-    const newBadge=isNew?`<span style="background:rgba(40,167,69,.1);color:var(--success);font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:5px;flex-shrink:0">NOVO</span>`:'';
-    const empresaTag=isAdmin&&f.targetEmpresa
-      ?`<span style="background:rgba(27,63,171,.07);color:var(--blue2);font-size:.68rem;font-weight:600;padding:2px 7px;border-radius:5px;flex-shrink:0">${f.targetEmpresa}</span>`:'';
-    const delBtn=isAdmin?`<button class="fr-del" onclick="openDel('${f.id}','${(f.name||'').replace(/'/g,"\\'")}')">🗑</button>`:'';
-    return`<div class="fr">
-      <span class="fr-ext">${ext(f.name||'')}</span>
-      <span class="fr-name">${f.name||'–'}</span>
-      ${newBadge}${empresaTag}
-      <span class="fr-date">${fmtDate(f.createdAt)}</span>
-      <a class="fr-dl" href="${f.url}" target="_blank" rel="noopener">⬇ Baixar</a>
-      ${delBtn}
-    </div>`;
+    const isNew=f.createdAt?.toDate&&f.createdAt.toDate()>wk;
+    const nb=isNew?'<span style="background:rgba(40,167,69,.1);color:var(--success);font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:5px;flex-shrink:0">NOVO</span>':'';
+    const eb=isAdmin&&f.empresa_nome?`<span style="background:rgba(27,63,171,.07);color:var(--blue2);font-size:.68rem;font-weight:600;padding:2px 7px;border-radius:5px;flex-shrink:0">${f.empresa_nome}</span>`:'';
+    const db2=isAdmin?`<button class="fr-del" onclick="openDel('file','${f.id}','${(f.name||'').replace(/'/g,"\\'")}')">🗑</button>`:'';
+    return`<div class="fr"><span class="fr-ext">${ext(f.name||'')}</span><span class="fr-name">${f.name||'–'}</span>${nb}${eb}<span class="fr-date">${fmtDate(f.createdAt)}</span><a class="fr-dl" href="${f.url}" target="_blank" rel="noopener">⬇ Baixar</a>${db2}</div>`;
   }).join('')+'</div>';
-  cnt.textContent=list.length+' arquivo'+(list.length!==1?'s':'')+' encontrado'+(list.length!==1?'s':'');
-  cnt.style.display='block';
+  cnt.textContent=list.length+' arquivo'+(list.length!==1?'s':'');cnt.style.display='block';
 }
 
-window.filterFiles = () => {
+window.filterFiles=()=>{
   const q=(document.getElementById('search-files').value||'').toLowerCase();
   const e=(document.getElementById('filter-ext').value||'').toUpperCase();
-  const filtered=allFiles.filter(f=>{
-    const name=(f.name||'').toLowerCase();
-    const fext=ext(f.name||'');
-    return(!q||name.includes(q))&&(!e||fext===e);
-  });
-  renderFiles(filtered);
+  renderFiles(allFiles.filter(f=>(!q||(f.name||'').toLowerCase().includes(q))&&(!e||ext(f.name||'')===e)));
 };
 
-// ─── ADD FILE (link Drive) ────────────────────────────────────────────
-window.addFile = async () => {
-  const name     = document.getElementById('f-name').value.trim();
-  const url      = document.getElementById('f-url').value.trim();
-  const targetUid= document.getElementById('f-target-uid').value;
-  if(!name||!url){toast('Preencha nome e link do arquivo.','err');return}
-  if(!targetUid){toast('Selecione o destinatário.','err');return}
+window.addFile=async()=>{
+  const name=document.getElementById('f-name').value.trim();
+  const url=document.getElementById('f-url').value.trim();
+  const empSel=document.getElementById('f-target-emp');
+  const id_empresa=empSel.value;
+  const empresa_nome=empSel.options[empSel.selectedIndex]?.text||'';
+  if(!name||!url){toast('Preencha nome e link.','err');return}
+  if(!id_empresa){toast('Selecione a empresa.','err');return}
   if(!url.startsWith('http')){toast('Link inválido.','err');return}
   loading(true,'Salvando...');
   try{
-    const uSnap=await getDoc(doc(db,'users',targetUid));
-    const uData=uSnap.exists()?uSnap.data():{};
-    await addDoc(collection(db,'files'),{
-      targetUid,
-      targetName:    uData.name||uData.email||targetUid,
-      targetEmpresa: uData.empresa||'',
-      name, url,
-      addedBy:   CU.uid,
-      createdAt: serverTimestamp()
-    });
-    document.getElementById('f-name').value='';
-    document.getElementById('f-url').value='';
-    document.getElementById('f-target-uid').value='';
-    toast('Arquivo adicionado!','ok');
-    loadFiles(); loadOverview();
-  }catch(e){toast('Erro ao salvar: '+e.message,'err')}
+    await addDoc(collection(db,'files'),{id_empresa,empresa_nome,name,url,addedBy:CU.uid,createdAt:serverTimestamp()});
+    document.getElementById('f-name').value='';document.getElementById('f-url').value='';empSel.value='';
+    toast('Arquivo adicionado!','ok');loadFiles();loadOverview();
+  }catch(e){toast('Erro: '+e.message,'err')}
   loading(false);
 };
 
-// Popula dropdown de usuários para o admin
-async function loadUsersDropdown() {
-  if(!isAdmin) return;
-  const sel=document.getElementById('f-target-uid');
-  if(!sel) return;
+async function loadEmpresasDropdown(){
+  if(!isAdmin)return;
+  const sel=document.getElementById('f-target-emp');if(!sel)return;
   try{
-    const snap=await getDocs(query(collection(db,'users'),orderBy('name')));
-    if(snap.empty){sel.innerHTML='<option value="">Nenhum usuário cadastrado</option>';return}
-    sel.innerHTML='<option value="">Selecione o destinatário...</option>'+
-      snap.docs.map(d=>{
-        const u=d.data();
-        const label=[u.empresa,u.name].filter(Boolean).join(' — ');
-        return`<option value="${d.id}">${label||u.email}</option>`;
-      }).join('');
+    const snap=await getDocs(query(collection(db,'empresas'),orderBy('nome')));
+    if(snap.empty){sel.innerHTML='<option value="">Nenhuma empresa cadastrada</option>';return}
+    sel.innerHTML='<option value="">Selecione a empresa...</option>'+snap.docs.map(d=>`<option value="${d.id}">${d.data().nome}</option>`).join('');
   }catch(e){sel.innerHTML='<option value="">Erro ao carregar</option>'}
 }
 
-// ─── DELETE ───────────────────────────────────────────────────────────
-window.openDel = (id,name) => {
-  delTarget={id};
-  document.getElementById('del-name').textContent=name;
-  document.getElementById('modal-del').classList.add('open');
+window.openNovaEmpresa=()=>{
+  document.getElementById('modal-emp-title').textContent='🏢 Nova Empresa';
+  ['emp-nome','emp-cnpj','emp-obs'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('emp-edit-id').value='';
+  document.getElementById('modal-empresa').classList.add('open');
 };
-window.confirmDelete = async () => {
-  if(!delTarget)return;
-  loading(true,'Excluindo...');
-  closeModal('modal-del');
+
+window.openEditEmpresa=(id,nome,cnpj,obs)=>{
+  document.getElementById('modal-emp-title').textContent='✏️ Editar Empresa';
+  document.getElementById('emp-nome').value=nome;
+  document.getElementById('emp-cnpj').value=cnpj;
+  document.getElementById('emp-obs').value=obs;
+  document.getElementById('emp-edit-id').value=id;
+  document.getElementById('modal-empresa').classList.add('open');
+};
+
+window.saveEmpresa=async()=>{
+  const nome=document.getElementById('emp-nome').value.trim();
+  const cnpj=document.getElementById('emp-cnpj').value.trim();
+  const obs=document.getElementById('emp-obs').value.trim();
+  const editId=document.getElementById('emp-edit-id').value;
+  if(!nome){toast('Informe o nome da empresa.','err');return}
+  loading(true,editId?'Atualizando...':'Criando...');
   try{
-    await deleteDoc(doc(db,'files',delTarget.id));
-    toast('Arquivo excluído.','ok');
-    loadFiles(); loadOverview();
-  }catch(e){toast('Erro ao excluir.','err')}
+    if(editId){await updateDoc(doc(db,'empresas',editId),{nome,cnpj,obs,updatedAt:serverTimestamp()});toast('Empresa atualizada!','ok');}
+    else{await addDoc(collection(db,'empresas'),{nome,cnpj,obs,createdAt:serverTimestamp()});toast('Empresa criada!','ok');}
+    closeModal('modal-empresa');loadAdmin();loadEmpresasDropdown();loadAdminMetrics();
+  }catch(e){toast('Erro: '+e.message,'err')}
   loading(false);
 };
 
-// ─── CONTACT ──────────────────────────────────────────────────────────
-window.submitContact = async () => {
-  const nome   =document.getElementById('cf-nome').value.trim();
-  const email  =document.getElementById('cf-email').value.trim();
-  const empresa=document.getElementById('cf-empresa').value.trim();
-  const assunto=document.getElementById('cf-assunto').value;
-  const msg    =document.getElementById('cf-msg').value.trim();
-  if(!nome||!email||!msg){toast('Preencha os campos obrigatórios.','err');return}
+async function renderEmpresasGrid(){
+  const c=document.getElementById('emp-grid-container');
   try{
-    await addDoc(collection(db,'contacts'),{nome,email,empresa,assunto,msg,lido:false,createdAt:serverTimestamp()});
-    document.getElementById('ctt-ok').style.display='block';
-    ['cf-nome','cf-email','cf-empresa','cf-msg'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('cf-assunto').value='';
-  }catch(e){toast('Erro ao enviar mensagem.','err')}
-};
+    const snap=await getDocs(query(collection(db,'empresas'),orderBy('nome')));
+    if(snap.empty){c.innerHTML='<div class="empty-st"><div class="ei">🏢</div>Nenhuma empresa. Clique em "+ Nova Empresa".</div>';return}
+    c.innerHTML='<div class="emp-grid">'+snap.docs.map(d=>{
+      const e=d.data();
+      const ns=(e.nome||'').replace(/'/g,"\\'");const cs=(e.cnpj||'').replace(/'/g,"\\'");const os=(e.obs||'').replace(/'/g,"\\'");
+      return`<div class="emp-card"><div><div class="emp-card-name">${e.nome||'–'}</div>${e.cnpj?`<div class="emp-card-cnpj">CNPJ: ${e.cnpj}</div>`:''} ${e.obs?`<div class="emp-card-cnpj">${e.obs}</div>`:''}</div><div class="emp-card-actions"><button class="btn-tbl" onclick="openEditEmpresa('${d.id}','${ns}','${cs}','${os}')">✏️</button><button class="btn-tbl-del" onclick="openDel('empresa','${d.id}','${ns}')">🗑</button></div></div>`;
+    }).join('')+'</div>';
+  }catch(e){c.innerHTML='<div class="empty-st"><div class="ei">⚠️</div>Erro ao carregar empresas.</div>'}
+}
 
-// ─── ADMIN ────────────────────────────────────────────────────────────
-window.switchAdminTab = (tab) => {
-  document.querySelectorAll('.atab').forEach((t,i)=>{
-    t.classList.toggle('active',['contacts','users','allfiles'][i]===tab);
-  });
+window.switchAdminTab=(tab)=>{
+  const tabs=['empresas','pending','users','allfiles','contacts'];
+  document.querySelectorAll('.atab').forEach((t,i)=>t.classList.toggle('active',tabs[i]===tab));
   document.querySelectorAll('.ap').forEach(p=>p.classList.remove('active'));
   document.getElementById('ap-'+tab).classList.add('active');
 };
 
-async function loadAdmin() {
+async function loadAdmin(){
   if(!isAdmin)return;
-  // Contacts
+  renderEmpresasGrid();
+
+  const ps=await getDocs(query(collection(db,'users'),where('status','==','pendente'))).catch(()=>({docs:[]}));
+  const pendentes=(ps.docs||[]).filter(d=>!ADMIN_EMAILS.includes(d.data().email));
+  const cnt=document.getElementById('adm-pending-count');
+  if(cnt){cnt.textContent=pendentes.length||'';cnt.style.display=pendentes.length?'inline':'none'}
+
+  let empresasOpts='<option value="">Sem empresa</option>';
+  try{const es=await getDocs(query(collection(db,'empresas'),orderBy('nome')));empresasOpts+=es.docs.map(d=>`<option value="${d.id}">${d.data().nome}</option>`).join('');}catch(e){}
+
+  const pe=document.getElementById('adm-pending');
+  if(!pendentes.length){pe.innerHTML='<div class="empty-st"><div class="ei">✅</div>Nenhum cadastro pendente.</div>';}
+  else pe.innerHTML=`<table class="tbl"><thead><tr><th>Nome</th><th>E-mail</th><th>Cadastrado em</th><th>Empresa</th><th>Ação</th></tr></thead><tbody>`+
+    pendentes.map(d=>{const u=d.data();return`<tr><td>${u.name||'–'}</td><td>${u.email||'–'}</td><td>${fmtDate(u.createdAt)}</td><td><select class="inline-select" id="pend-emp-${d.id}">${empresasOpts}</select></td><td><div class="action-row"><button class="btn-tbl-ok" onclick="activateUser('${d.id}')">✓ Ativar</button><button class="btn-tbl-del" onclick="rejectUser('${d.id}')">✗ Rejeitar</button></div></td></tr>`}).join('')+'</tbody></table>';
+
+  const us=await getDocs(query(collection(db,'users'),where('status','==','ativo'))).catch(()=>({docs:[]}));
+  const ue=document.getElementById('adm-users');
+  const ativos=(us.docs||[]).filter(d=>!ADMIN_EMAILS.includes(d.data().email));
+  if(!ativos.length){ue.innerHTML='<div class="empty-st"><div class="ei">👥</div>Nenhum usuário ativo.</div>'}
+  else ue.innerHTML=`<table class="tbl"><thead><tr><th>Nome</th><th>E-mail</th><th>Empresa atual</th><th>Cadastrado</th><th>Alterar Empresa</th></tr></thead><tbody>`+
+    ativos.map(d=>{const u=d.data();const sel=empresasOpts.replace(`value="${u.id_empresa}"`,`value="${u.id_empresa}" selected`);
+      return`<tr><td>${u.name||'–'}</td><td>${u.email||'–'}</td><td>${u.empresa_nome||'–'}</td><td>${fmtDate(u.createdAt)}</td><td><div class="action-row"><select class="inline-select" id="usr-emp-${d.id}">${sel}</select><button class="btn-tbl" onclick="changeUserEmpresa('${d.id}')">Salvar</button></div></td></tr>`;
+    }).join('')+'</tbody></table>';
+
+  const fs=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc'))).catch(()=>({docs:[]}));
+  const fe=document.getElementById('adm-files');
+  if(!fs.docs?.length){fe.innerHTML='<div class="empty-st"><div class="ei">📁</div>Nenhum arquivo.</div>'}
+  else fe.innerHTML=`<table class="tbl"><thead><tr><th>Arquivo</th><th>Empresa</th><th>Data</th><th></th></tr></thead><tbody>`+
+    fs.docs.map(d=>{const f=d.data();return`<tr><td>${f.name||'–'}</td><td>${f.empresa_nome||'–'}</td><td>${fmtDate(f.createdAt)}</td><td style="display:flex;gap:6px"><a class="btn-tbl" href="${f.url}" target="_blank">⬇ Baixar</a><button class="btn-tbl-del" onclick="openDel('file','${d.id}','${(f.name||'').replace(/'/g,"\\'")}')">🗑</button></td></tr>`}).join('')+'</tbody></table>';
+
   const cs=await getDocs(query(collection(db,'contacts'),orderBy('createdAt','desc'))).catch(()=>({docs:[]}));
   const ce=document.getElementById('adm-contacts');
   if(!cs.docs?.length){ce.innerHTML='<div class="empty-st"><div class="ei">📬</div>Nenhuma mensagem.</div>'}
   else ce.innerHTML=`<table class="tbl"><thead><tr><th>Nome</th><th>E-mail</th><th>Empresa</th><th>Assunto</th><th>Data</th><th>Status</th><th></th></tr></thead><tbody>`+
-    cs.docs.map(d=>{const c=d.data();return`<tr>
-      <td>${c.nome||'–'}</td><td>${c.email||'–'}</td><td>${c.empresa||'–'}</td>
-      <td>${c.assunto||'–'}</td><td>${fmtDate(c.createdAt)}</td>
-      <td><span class="badge ${c.lido?'bg-green':'bg-warn'}">${c.lido?'Lido':'Novo'}</span></td>
-      <td><button class="btn-tbl" onclick="markRead('${d.id}')">✓ Marcar lido</button></td>
-    </tr>`}).join('')+'</tbody></table>';
-
-  // Users
-  const us=await getDocs(collection(db,'users')).catch(()=>({docs:[]}));
-  const ue=document.getElementById('adm-users');
-  if(!us.docs?.length){ue.innerHTML='<div class="empty-st"><div class="ei">👥</div>Nenhum usuário.</div>'}
-  else ue.innerHTML=`<table class="tbl"><thead><tr><th>Nome</th><th>E-mail</th><th>Empresa</th><th>Perfil</th><th>Cadastro</th></tr></thead><tbody>`+
-    us.docs.map(d=>{const u=d.data();return`<tr>
-      <td>${u.name||'–'}</td><td>${u.email||'–'}</td><td>${u.empresa||'–'}</td>
-      <td><span class="badge ${u.role==='admin'?'bg-blue':u.role==='accountant'?'bg-warn':'bg-green'}">${u.role==='admin'?'Admin':u.role==='accountant'?'Contador':'Cliente'}</span></td>
-      <td>${fmtDate(u.createdAt)}</td>
-    </tr>`}).join('')+'</tbody></table>';
-
-  // All Files
-  const fs=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc'))).catch(()=>({docs:[]}));
-  const fe=document.getElementById('adm-files');
-  if(!fs.docs?.length){fe.innerHTML='<div class="empty-st"><div class="ei">📁</div>Nenhum arquivo.</div>'}
-  else fe.innerHTML=`<table class="tbl"><thead><tr><th>Arquivo</th><th>Tamanho</th><th>Usuário</th><th>Data</th><th></th></tr></thead><tbody>`+
-    fs.docs.map(d=>{const f=d.data();return`<tr>
-      <td>${f.name||'–'}</td><td>${fmtSize(f.size||0)}</td>
-      <td>${f.uid||'–'}</td><td>${fmtDate(f.createdAt)}</td>
-      <td style="display:flex;gap:6px">
-        <a class="btn-tbl" href="${f.url}" target="_blank">⬇ Baixar</a>
-        <button class="btn-tbl-del" onclick="openDel('${d.id}','${(f.name||'').replace(/'/g,"\\'")}','${f.storagePath||''}')">🗑</button>
-      </td>
-    </tr>`}).join('')+'</tbody></table>';
+    cs.docs.map(d=>{const c=d.data();return`<tr><td>${c.nome||'–'}</td><td>${c.email||'–'}</td><td>${c.empresa||'–'}</td><td>${c.assunto||'–'}</td><td>${fmtDate(c.createdAt)}</td><td><span class="badge ${c.lido?'bg-green':'bg-warn'}">${c.lido?'Lido':'Novo'}</span></td><td><button class="btn-tbl" onclick="markRead('${d.id}')">✓ Lido</button></td></tr>`}).join('')+'</tbody></table>';
 }
 
-window.markRead = async (id) => {
-  await updateDoc(doc(db,'contacts',id),{lido:true}).catch(()=>{});
-  loadAdmin(); toast('Marcado como lido.','ok');
+window.activateUser=async(uid)=>{
+  const empSel=document.getElementById('pend-emp-'+uid);
+  const id_empresa=empSel?.value||'';const empresa_nome=id_empresa?(empSel?.options[empSel.selectedIndex]?.text||''):'';
+  loading(true,'Ativando...');
+  try{await updateDoc(doc(db,'users',uid),{status:'ativo',id_empresa,empresa_nome});toast('Usuário ativado!','ok');loadAdmin();loadAdminMetrics();loadEmpresasDropdown();}
+  catch(e){toast('Erro: '+e.message,'err')}
+  loading(false);
 };
 
-// ─── MODAL ────────────────────────────────────────────────────────────
-window.closeModal = (id) => {
-  document.getElementById(id).classList.remove('open');
+window.rejectUser=async(uid)=>{
+  if(!confirm('Rejeitar este cadastro?'))return;
+  loading(true,'Removendo...');
+  try{await deleteDoc(doc(db,'users',uid));toast('Cadastro removido.','ok');loadAdmin();loadAdminMetrics();}
+  catch(e){toast('Erro: '+e.message,'err')}
+  loading(false);
 };
-document.getElementById('modal-del').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal('modal-del')});
-document.getElementById('modal-reg').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal('modal-reg')});
 
-// ─── INIT ─────────────────────────────────────────────────────────────
+window.changeUserEmpresa=async(uid)=>{
+  const empSel=document.getElementById('usr-emp-'+uid);
+  const id_empresa=empSel?.value||'';const empresa_nome=id_empresa?(empSel?.options[empSel.selectedIndex]?.text||''):'';
+  loading(true,'Salvando...');
+  try{await updateDoc(doc(db,'users',uid),{id_empresa,empresa_nome});toast('Empresa atualizada!','ok');loadAdmin();}
+  catch(e){toast('Erro: '+e.message,'err')}
+  loading(false);
+};
+
+window.markRead=async(id)=>{await updateDoc(doc(db,'contacts',id),{lido:true}).catch(()=>{});loadAdmin();toast('Marcado como lido.','ok')};
+
+window.openDel=(type,id,name)=>{delTarget={type,id};document.getElementById('del-name').textContent=name;document.getElementById('modal-del').classList.add('open')};
+
+window.confirmDelete=async()=>{
+  if(!delTarget)return;loading(true,'Excluindo...');closeModal('modal-del');
+  try{
+    if(delTarget.type==='empresa'){await deleteDoc(doc(db,'empresas',delTarget.id));toast('Empresa excluída.','ok');loadAdmin();loadEmpresasDropdown();loadAdminMetrics();}
+    else{await deleteDoc(doc(db,'files',delTarget.id));toast('Arquivo excluído.','ok');loadFiles();loadOverview();if(isAdmin)loadAdmin();}
+  }catch(e){toast('Erro ao excluir.','err')}
+  loading(false);
+};
+
+window.submitContact=async()=>{
+  const nome=document.getElementById('cf-nome').value.trim();const email=document.getElementById('cf-email').value.trim();const msg=document.getElementById('cf-msg').value.trim();
+  if(!nome||!email||!msg){toast('Preencha os campos obrigatórios.','err');return}
+  try{await addDoc(collection(db,'contacts'),{nome,email,empresa:document.getElementById('cf-empresa').value.trim(),assunto:document.getElementById('cf-assunto').value,msg,lido:false,createdAt:serverTimestamp()});
+    document.getElementById('ctt-ok').style.display='block';['cf-nome','cf-email','cf-empresa','cf-msg'].forEach(id=>document.getElementById(id).value='');
+  }catch(e){toast('Erro ao enviar.','err')}
+};
+
+window.closeModal=(id)=>document.getElementById(id).classList.remove('open');
+['modal-del','modal-reg','modal-empresa'].forEach(id=>{document.getElementById(id).addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal(id)})});
+
 showView('landing');
 </script>
 </body>
