@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- EmailJS — preencha as constantes EMAILJS_* no topo do script -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 :root{--navy:#0B1D4E;--navy2:#112260;--blue:#1B3FAB;--blue2:#2952CC;--sky:#4A90E2;--cyan:#5BA4F5;--white:#FFFFFF;--off:#F7F6F2;--off2:#EFEDE8;--muted:#8896B3;--border:#E2E0D8;--text:#1A2240;--text2:#4A5270;--danger:#DC3545;--success:#28A745;--warn:#F59E0B;--font-h:'Cabinet Grotesk',sans-serif;--font-b:'Outfit',sans-serif;--r:10px;--rl:16px;--sh:0 2px 16px rgba(11,29,78,.08);--sh2:0 8px 40px rgba(11,29,78,.16)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -139,6 +141,11 @@ footer{background:var(--navy);padding:36px 48px;display:flex;align-items:center;
 .login-right-brand{position:absolute;top:40px;left:52px;z-index:2;display:flex;align-items:center;gap:10px}
 .lrb-icon{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:.9rem;font-weight:800;color:#fff}
 .lrb-name{font-family:var(--font-h);font-size:.85rem;font-weight:800;color:rgba(255,255,255,.8);letter-spacing:.5px}
+/* TIPO SELECTOR no cadastro */
+.tipo-selector{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.tipo-btn{border:1.5px solid var(--border);border-radius:9px;padding:10px 12px;font-size:.83rem;font-weight:600;color:var(--text2);background:#fff;transition:all .2s;text-align:center;cursor:pointer}
+.tipo-btn.active{border-color:var(--blue2);background:rgba(27,63,171,.06);color:var(--blue2)}
+.tipo-btn span{display:block;font-size:1.1rem;margin-bottom:3px}
 #pending-view{display:none}
 #pending-view.active{display:flex;min-height:100vh;align-items:center;justify-content:center;background:var(--off)}
 .pending-card{background:#fff;border:1px solid var(--border);border-radius:var(--rl);padding:48px;max-width:480px;width:90%;text-align:center;box-shadow:var(--sh2)}
@@ -211,6 +218,7 @@ footer{background:var(--navy);padding:36px 48px;display:flex;align-items:center;
 .bg-blue{background:rgba(27,63,171,.1);color:var(--blue2)}
 .bg-warn{background:rgba(245,158,11,.1);color:var(--warn)}
 .bg-red{background:rgba(220,53,69,.1);color:var(--danger)}
+.bg-purple{background:rgba(111,66,193,.1);color:#6f42c1}
 .btn-tbl{background:var(--off);border:1px solid var(--border);color:var(--text2);padding:4px 11px;border-radius:6px;font-size:.75rem;transition:all .2s}
 .btn-tbl:hover{border-color:var(--sky);color:var(--blue2)}
 .btn-tbl-ok{background:rgba(40,167,69,.08);border:1px solid rgba(40,167,69,.25);color:var(--success);padding:4px 11px;border-radius:6px;font-size:.75rem;transition:all .2s}
@@ -223,11 +231,11 @@ footer{background:var(--navy);padding:36px 48px;display:flex;align-items:center;
 .emp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
 .emp-card{background:var(--off);border:1px solid var(--border);border-radius:var(--r);padding:16px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .emp-card-name{font-family:var(--font-h);font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:4px}
-.emp-card-cnpj{color:var(--muted);font-size:.75rem}
+.emp-card-info{color:var(--muted);font-size:.75rem;margin-bottom:2px}
 .emp-card-actions{display:flex;gap:5px;flex-shrink:0}
 .modal-ov{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.5);align-items:center;justify-content:center;backdrop-filter:blur(4px)}
 .modal-ov.open{display:flex}
-.modal{background:#fff;border-radius:var(--rl);padding:30px;width:90%;max-width:460px;box-shadow:var(--sh2)}
+.modal{background:#fff;border-radius:var(--rl);padding:30px;width:90%;max-width:460px;box-shadow:var(--sh2);max-height:90vh;overflow-y:auto}
 .modal-title{font-family:var(--font-h);font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:14px}
 .modal-foot{display:flex;gap:9px;justify-content:flex-end;margin-top:22px}
 .btn-mc{background:var(--off);border:1px solid var(--border);color:var(--text2);padding:9px 18px;border-radius:8px;font-size:.85rem}
@@ -387,7 +395,20 @@ footer{background:var(--navy);padding:36px 48px;display:flex;align-items:center;
 <div class="modal-ov" id="modal-reg">
   <div class="modal">
     <div class="modal-title">✨ Criar Conta</div>
-    <p style="color:var(--text2);font-size:.85rem;margin-bottom:18px;line-height:1.6">Após o cadastro, a Innova Digital irá ativar seu acesso e vincular sua empresa.</p>
+    <p style="color:var(--text2);font-size:.85rem;margin-bottom:16px;line-height:1.6">Após o cadastro, a Innova Digital irá ativar seu acesso e vincular sua empresa.</p>
+    <!-- Tipo de acesso -->
+    <div style="margin-bottom:14px">
+      <div class="form-label" style="margin-bottom:8px">Tipo de acesso *</div>
+      <div class="tipo-selector">
+        <button type="button" class="tipo-btn active" id="tipo-cliente" onclick="selectTipo('client')">
+          <span>🏪</span>Cliente
+        </button>
+        <button type="button" class="tipo-btn" id="tipo-contador" onclick="selectTipo('contador')">
+          <span>📊</span>Contador
+        </button>
+      </div>
+    </div>
+    <input type="hidden" id="r-tipo" value="client">
     <div class="form-group"><label class="form-label">Nome completo *</label><input class="form-input" id="r-name" type="text" placeholder="Seu nome completo"></div>
     <div class="form-group"><label class="form-label">E-mail *</label><input class="form-input" id="r-email" type="email" placeholder="seu@email.com"></div>
     <div class="form-group"><label class="form-label">Senha *</label><input class="form-input" id="r-pass" type="password" placeholder="Mínimo 6 caracteres"></div>
@@ -401,6 +422,7 @@ footer{background:var(--navy);padding:36px 48px;display:flex;align-items:center;
     <div class="modal-title" id="modal-emp-title">🏢 Nova Empresa</div>
     <div class="form-group"><label class="form-label">Nome da Empresa *</label><input class="form-input" id="emp-nome" type="text" placeholder="Razão social ou nome fantasia"></div>
     <div class="form-group"><label class="form-label">CNPJ</label><input class="form-input" id="emp-cnpj" type="text" placeholder="00.000.000/0000-00"></div>
+    <div class="form-group"><label class="form-label">E-mail de notificação</label><input class="form-input" id="emp-email" type="email" placeholder="financeiro@empresa.com.br"><div style="font-size:.73rem;color:var(--muted);margin-top:4px">Este e-mail receberá alertas quando novos arquivos forem disponibilizados.</div></div>
     <div class="form-group"><label class="form-label">Observação</label><input class="form-input" id="emp-obs" type="text" placeholder="Campo livre"></div>
     <input type="hidden" id="emp-edit-id">
     <div class="modal-foot"><button class="btn-mc" onclick="closeModal('modal-empresa')">Cancelar</button><button class="btn-login" style="width:auto;padding:9px 22px" onclick="saveEmpresa()">Salvar empresa</button></div>
@@ -504,12 +526,13 @@ footer{background:var(--navy);padding:36px 48px;display:flex;align-items:center;
       <!-- ADMIN -->
       <div id="panel-admin" class="panel">
         <div class="pm-title">Painel Administrativo</div>
-        <p class="pm-sub">Gerencie empresas, usuários, arquivos e contatos</p>
+        <p class="pm-sub">Gerencie empresas, contadores, usuários, arquivos e contatos</p>
         <div class="pm-divider"></div>
         <div class="admin-tabs">
           <div class="atab active" onclick="switchAdminTab('empresas')">🏢 Empresas</div>
           <div class="atab" onclick="switchAdminTab('pending')">⏳ Pendentes <span id="adm-pending-count" style="background:var(--warn);color:#fff;font-size:.65rem;font-weight:700;padding:1px 6px;border-radius:100px;margin-left:4px;display:none"></span></div>
-          <div class="atab" onclick="switchAdminTab('users')">👥 Usuários</div>
+          <div class="atab" onclick="switchAdminTab('users')">👥 Clientes</div>
+          <div class="atab" onclick="switchAdminTab('contadores')">📊 Contadores</div>
           <div class="atab" onclick="switchAdminTab('allfiles')">📁 Arquivos</div>
           <div class="atab" onclick="switchAdminTab('contacts')">📬 Contatos</div>
         </div>
@@ -523,7 +546,8 @@ footer{background:var(--navy);padding:36px 48px;display:flex;align-items:center;
           </div>
         </div>
         <div id="ap-pending" class="ap"><div class="card"><div class="card-title">⏳ Aguardando Ativação</div><div id="adm-pending">Carregando...</div></div></div>
-        <div id="ap-users" class="ap"><div class="card"><div class="card-title">👥 Usuários Ativos</div><div id="adm-users">Carregando...</div></div></div>
+        <div id="ap-users" class="ap"><div class="card"><div class="card-title">👥 Clientes Ativos</div><div id="adm-users">Carregando...</div></div></div>
+        <div id="ap-contadores" class="ap"><div class="card"><div class="card-title">📊 Contadores Ativos</div><div id="adm-contadores">Carregando...</div></div></div>
         <div id="ap-allfiles" class="ap"><div class="card"><div class="card-title">📁 Todos os Arquivos</div><div id="adm-files">Carregando...</div></div></div>
         <div id="ap-contacts" class="ap"><div class="card"><div class="card-title">📬 Mensagens Recebidas</div><div id="adm-contacts">Carregando...</div></div></div>
       </div>
@@ -545,10 +569,38 @@ footer{background:var(--navy);padding:36px 48px;display:flex;align-items:center;
 import{initializeApp}from"https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
 import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 import{getFirestore,collection,addDoc,getDocs,doc,getDoc,setDoc,updateDoc,deleteDoc,query,where,orderBy,serverTimestamp}from"https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+/* ═══════════════════════════════════════════════
+   CONFIGURAÇÃO EMAILJS
+   1. Crie conta em https://www.emailjs.com (plano Free: 200 e-mails/mês)
+   2. Adicione um serviço (ex: Gmail) → anote o Service ID
+   3. Crie um template com as variáveis abaixo → anote o Template ID
+   4. Vá em Account → API Keys → copie a Public Key
+   Template sugerido:
+     Para: {{to_email}}
+     Assunto: Novo arquivo disponível — {{empresa_nome}}
+     Corpo: Olá! Um novo arquivo foi disponibilizado para {{empresa_nome}}:
+            📄 {{file_name}}
+            🔗 {{file_url}}
+            Acesse o portal: https://...
+═══════════════════════════════════════════════ */
+const EMAILJS_PUBLIC_KEY  = 'SUA_PUBLIC_KEY';   // ← preencher
+const EMAILJS_SERVICE_ID  = 'SUA_SERVICE_ID';   // ← preencher
+const EMAILJS_TEMPLATE_ID = 'SUA_TEMPLATE_ID';  // ← preencher
+const EMAILJS_ENABLED = EMAILJS_PUBLIC_KEY !== 'SUA_PUBLIC_KEY';
+
+if(EMAILJS_ENABLED){
+  // emailjs é carregado via CDN no <head> — inicializar após módulo carregar
+  setTimeout(()=>{ try{ window.emailjs?.init(EMAILJS_PUBLIC_KEY); }catch(e){} }, 200);
+}
+
 const FC={apiKey:"AIzaSyDj2pX7I6RpaVYL3mZNaswi9JAihu1th-U",authDomain:"innovadigital-46bc6.firebaseapp.com",projectId:"innovadigital-46bc6",storageBucket:"innovadigital-46bc6.firebasestorage.app",messagingSenderId:"775648507820",appId:"1:775648507820:web:0cdaae28e6e3a020deac09"};
 const app=initializeApp(FC);const auth=getAuth(app);const db=getFirestore(app);
 const ADMIN_EMAILS=["lnrdlamarcal@gmail.com"];
 let CU=null,isAdmin=false,userData={},allFiles=[],delTarget=null;
+
+// map em memória para edição de empresas sem JSON inline no onclick
+const empRef={};
 
 function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
 function loading(s,t='Carregando...'){document.getElementById('sp-txt').textContent=t;document.getElementById('lov').classList.toggle('show',s)}
@@ -556,17 +608,31 @@ function toast(msg,type='info'){const el=document.getElementById('toast');el.tex
 function fmtDate(ts){if(!ts)return'–';const d=ts.toDate?ts.toDate():new Date(ts);return d.toLocaleDateString('pt-BR')+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}
 function ext(n){return(n.split('.').pop()||'FILE').toUpperCase()}
 function initials(n){return(n||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase()}
+function roleLabel(role){return role==='admin'?'Administrador':role==='contador'?'Contador':'Cliente'}
+function roleBadgeClass(role){return role==='admin'?'bg-blue':role==='contador'?'bg-purple':'bg-green'}
+
+/* ── TIPO SELECTOR (cadastro) ── */
+window.selectTipo=(tipo)=>{
+  document.getElementById('r-tipo').value=tipo;
+  document.getElementById('tipo-cliente').classList.toggle('active',tipo==='client');
+  document.getElementById('tipo-contador').classList.toggle('active',tipo==='contador');
+};
 
 window.showLanding=()=>showView('landing');
-window.showLogin=()=>showView('login-view');
-window.showRegister=()=>document.getElementById('modal-reg').classList.add('open');
+window.showLogin=()=>{document.getElementById('login-err').style.display='none';showView('login-view')};
+window.showRegister=()=>{
+  document.getElementById('r-tipo').value='client';
+  selectTipo('client');
+  ['r-name','r-email','r-pass'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('modal-reg').classList.add('open');
+};
 window.togglePass=()=>{const i=document.getElementById('l-pass');i.type=i.type==='password'?'text':'password'};
 
 window.doLogin=async()=>{
   const email=document.getElementById('l-email').value.trim();
   const pass=document.getElementById('l-pass').value;
   if(!email||!pass){showLoginErr('Preencha e-mail e senha.');return}
-  const btn=document.querySelector('.btn-login');const orig=btn.innerHTML;
+  const btn=document.querySelector('#login-view .btn-login');const orig=btn.innerHTML;
   btn.disabled=true;btn.innerHTML='⏳ Entrando...';
   document.getElementById('login-err').style.display='none';
   try{await Promise.race([signInWithEmailAndPassword(auth,email,pass),new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),10000))]);}
@@ -580,6 +646,7 @@ window.doRegister=async()=>{
   const name=document.getElementById('r-name').value.trim();
   const email=document.getElementById('r-email').value.trim();
   const pass=document.getElementById('r-pass').value;
+  const tipo=document.getElementById('r-tipo').value; // 'client' | 'contador'
   if(!name||!email||!pass){toast('Preencha todos os campos.','err');return}
   if(pass.length<6){toast('Senha mínimo 6 caracteres.','err');return}
   const btn=document.querySelector('#modal-reg .btn-login');
@@ -587,8 +654,18 @@ window.doRegister=async()=>{
   try{
     const uc=await createUserWithEmailAndPassword(auth,email,pass);
     const isAdm=ADMIN_EMAILS.includes(email);
-    await setDoc(doc(db,'users',uc.user.uid),{name,email,id_empresa:'',empresa_nome:'',role:isAdm?'admin':'client',status:isAdm?'ativo':'pendente',isAdmin:false,createdAt:serverTimestamp()});
-    closeModal('modal-reg');toast('Cadastro realizado! Aguarde a ativação.','ok');
+    await setDoc(doc(db,'users',uc.user.uid),{
+      name,email,
+      id_empresa:'',empresa_nome:'',
+      role:isAdm?'admin':tipo,           // 'client' | 'contador' | 'admin'
+      status:isAdm?'ativo':'pendente',
+      isAdmin:false,
+      createdAt:serverTimestamp()
+    });
+    closeModal('modal-reg');
+    toast(tipo==='contador'
+      ?'Cadastro de contador enviado! Aguarde a ativação.'
+      :'Cadastro realizado! Aguarde a ativação.','ok');
   }catch(e){if(btn){btn.disabled=false;btn.innerHTML='Criar conta'}toast(e.code==='auth/email-already-in-use'?'E-mail já cadastrado.':e.message,'err');}
 };
 
@@ -605,7 +682,7 @@ onAuthStateChanged(auth,async(user)=>{
   }
   if(!isAdmin&&userData.status==='pendente'){showView('pending-view');return}
   document.getElementById('sb-name').textContent=userData.name||user.email;
-  document.getElementById('sb-role').textContent=isAdmin?'Administrador':'Cliente';
+  document.getElementById('sb-role').textContent=roleLabel(userData.role);
   document.getElementById('sb-av').textContent=initials(userData.name||user.email);
   document.getElementById('pm-empresa').textContent=userData.empresa_nome||'–';
   document.getElementById('p-welcome').textContent='Bem-vindo'+(userData.name?', '+userData.name:'')+(userData.empresa_nome?' — '+userData.empresa_nome:'');
@@ -682,6 +759,33 @@ window.filterFiles=()=>{
   renderFiles(allFiles.filter(f=>(!q||(f.name||'').toLowerCase().includes(q))&&(!e||ext(f.name||'')===e)));
 };
 
+/* ── ENVIO DE E-MAIL ── */
+async function sendFileAlert({empresa_nome,file_name,file_url,id_empresa}){
+  if(!EMAILJS_ENABLED)return;
+  try{
+    // busca e-mail da empresa
+    const empDoc=await getDoc(doc(db,'empresas',id_empresa));
+    const empEmail=(empDoc.exists()?empDoc.data().email:'')||'';
+
+    // busca contadores vinculados à empresa
+    const contSnap=await getDocs(query(collection(db,'users'),
+      where('id_empresa','==',id_empresa),
+      where('role','==','contador'),
+      where('status','==','ativo')));
+    const contEmails=contSnap.docs.map(d=>d.data().email).filter(Boolean);
+
+    // destinatários únicos
+    const recipients=[...new Set([empEmail,...contEmails].filter(Boolean))];
+    if(!recipients.length)return;
+
+    const templateParams={empresa_nome,file_name,file_url};
+    for(const to_email of recipients){
+      await window.emailjs.send(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,{...templateParams,to_email});
+    }
+    toast(`📧 Notificação enviada para ${recipients.length} destinatário(s).`,'ok');
+  }catch(e){console.warn('EmailJS:',e.message);}
+}
+
 window.addFile=async()=>{
   const name=document.getElementById('f-name').value.trim();
   const url=document.getElementById('f-url').value.trim();
@@ -695,7 +799,10 @@ window.addFile=async()=>{
   try{
     await addDoc(collection(db,'files'),{id_empresa,empresa_nome,name,url,addedBy:CU.uid,createdAt:serverTimestamp()});
     document.getElementById('f-name').value='';document.getElementById('f-url').value='';empSel.value='';
-    toast('Arquivo adicionado!','ok');loadFiles();loadOverview();
+    toast('Arquivo adicionado!','ok');
+    loadFiles();loadOverview();
+    // dispara alerta por e-mail de forma assíncrona (não bloqueia UI)
+    sendFileAlert({empresa_nome,file_name:name,file_url:url,id_empresa});
   }catch(e){toast('Erro: '+e.message,'err')}
   loading(false);
 };
@@ -710,18 +817,21 @@ async function loadEmpresasDropdown(){
   }catch(e){sel.innerHTML='<option value="">Erro ao carregar</option>'}
 }
 
+/* ── EMPRESAS ── */
 window.openNovaEmpresa=()=>{
   document.getElementById('modal-emp-title').textContent='🏢 Nova Empresa';
-  ['emp-nome','emp-cnpj','emp-obs'].forEach(id=>document.getElementById(id).value='');
+  ['emp-nome','emp-cnpj','emp-email','emp-obs'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('emp-edit-id').value='';
   document.getElementById('modal-empresa').classList.add('open');
 };
 
-window.openEditEmpresa=(id,nome,cnpj,obs)=>{
+window.openEditEmpresa=(id)=>{
+  const e=empRef[id];if(!e)return;
   document.getElementById('modal-emp-title').textContent='✏️ Editar Empresa';
-  document.getElementById('emp-nome').value=nome;
-  document.getElementById('emp-cnpj').value=cnpj;
-  document.getElementById('emp-obs').value=obs;
+  document.getElementById('emp-nome').value=e.nome||'';
+  document.getElementById('emp-cnpj').value=e.cnpj||'';
+  document.getElementById('emp-email').value=e.email||'';
+  document.getElementById('emp-obs').value=e.obs||'';
   document.getElementById('emp-edit-id').value=id;
   document.getElementById('modal-empresa').classList.add('open');
 };
@@ -729,13 +839,15 @@ window.openEditEmpresa=(id,nome,cnpj,obs)=>{
 window.saveEmpresa=async()=>{
   const nome=document.getElementById('emp-nome').value.trim();
   const cnpj=document.getElementById('emp-cnpj').value.trim();
+  const email=document.getElementById('emp-email').value.trim();
   const obs=document.getElementById('emp-obs').value.trim();
   const editId=document.getElementById('emp-edit-id').value;
   if(!nome){toast('Informe o nome da empresa.','err');return}
   loading(true,editId?'Atualizando...':'Criando...');
   try{
-    if(editId){await updateDoc(doc(db,'empresas',editId),{nome,cnpj,obs,updatedAt:serverTimestamp()});toast('Empresa atualizada!','ok');}
-    else{await addDoc(collection(db,'empresas'),{nome,cnpj,obs,createdAt:serverTimestamp()});toast('Empresa criada!','ok');}
+    const data={nome,cnpj,email,obs};
+    if(editId){await updateDoc(doc(db,'empresas',editId),{...data,updatedAt:serverTimestamp()});toast('Empresa atualizada!','ok');}
+    else{await addDoc(collection(db,'empresas'),{...data,createdAt:serverTimestamp()});toast('Empresa criada!','ok');}
     closeModal('modal-empresa');loadAdmin();loadEmpresasDropdown();loadAdminMetrics();
   }catch(e){toast('Erro: '+e.message,'err')}
   loading(false);
@@ -746,16 +858,28 @@ async function renderEmpresasGrid(){
   try{
     const snap=await getDocs(query(collection(db,'empresas'),orderBy('nome')));
     if(snap.empty){c.innerHTML='<div class="empty-st"><div class="ei">🏢</div>Nenhuma empresa. Clique em "+ Nova Empresa".</div>';return}
+    // popula mapa em memória
+    snap.docs.forEach(d=>empRef[d.id]=d.data());
     c.innerHTML='<div class="emp-grid">'+snap.docs.map(d=>{
       const e=d.data();
-      const ns=(e.nome||'').replace(/'/g,"\\'");const cs=(e.cnpj||'').replace(/'/g,"\\'");const os=(e.obs||'').replace(/'/g,"\\'");
-      return`<div class="emp-card"><div><div class="emp-card-name">${e.nome||'–'}</div>${e.cnpj?`<div class="emp-card-cnpj">CNPJ: ${e.cnpj}</div>`:''} ${e.obs?`<div class="emp-card-cnpj">${e.obs}</div>`:''}</div><div class="emp-card-actions"><button class="btn-tbl" onclick="openEditEmpresa('${d.id}','${ns}','${cs}','${os}')">✏️</button><button class="btn-tbl-del" onclick="openDel('empresa','${d.id}','${ns}')">🗑</button></div></div>`;
+      return`<div class="emp-card">
+        <div>
+          <div class="emp-card-name">${e.nome||'–'}</div>
+          ${e.cnpj?`<div class="emp-card-info">CNPJ: ${e.cnpj}</div>`:''}
+          ${e.email?`<div class="emp-card-info">📧 ${e.email}</div>`:''}
+          ${e.obs?`<div class="emp-card-info">${e.obs}</div>`:''}
+        </div>
+        <div class="emp-card-actions">
+          <button class="btn-tbl" onclick="openEditEmpresa('${d.id}')">✏️</button>
+          <button class="btn-tbl-del" onclick="openDel('empresa','${d.id}','${(e.nome||'').replace(/'/g,"\\'")}')">🗑</button>
+        </div>
+      </div>`;
     }).join('')+'</div>';
   }catch(e){c.innerHTML='<div class="empty-st"><div class="ei">⚠️</div>Erro ao carregar empresas.</div>'}
 }
 
 window.switchAdminTab=(tab)=>{
-  const tabs=['empresas','pending','users','allfiles','contacts'];
+  const tabs=['empresas','pending','users','contadores','allfiles','contacts'];
   document.querySelectorAll('.atab').forEach((t,i)=>t.classList.toggle('active',tabs[i]===tab));
   document.querySelectorAll('.ap').forEach(p=>p.classList.remove('active'));
   document.getElementById('ap-'+tab).classList.add('active');
@@ -765,44 +889,64 @@ async function loadAdmin(){
   if(!isAdmin)return;
   renderEmpresasGrid();
 
+  // opções de empresa para selects
+  let empresasOpts='<option value="">Sem empresa</option>';
+  try{const es=await getDocs(query(collection(db,'empresas'),orderBy('nome')));empresasOpts+=es.docs.map(d=>`<option value="${d.id}">${d.data().nome}</option>`).join('');}catch(e){}
+
+  // ── PENDENTES ──
   const ps=await getDocs(query(collection(db,'users'),where('status','==','pendente'))).catch(()=>({docs:[]}));
   const pendentes=(ps.docs||[]).filter(d=>!ADMIN_EMAILS.includes(d.data().email));
   const cnt=document.getElementById('adm-pending-count');
   if(cnt){cnt.textContent=pendentes.length||'';cnt.style.display=pendentes.length?'inline':'none'}
-
-  let empresasOpts='<option value="">Sem empresa</option>';
-  try{const es=await getDocs(query(collection(db,'empresas'),orderBy('nome')));empresasOpts+=es.docs.map(d=>`<option value="${d.id}">${d.data().nome}</option>`).join('');}catch(e){}
-
   const pe=document.getElementById('adm-pending');
   if(!pendentes.length){pe.innerHTML='<div class="empty-st"><div class="ei">✅</div>Nenhum cadastro pendente.</div>';}
-  else pe.innerHTML=`<table class="tbl"><thead><tr><th>Nome</th><th>E-mail</th><th>Cadastrado em</th><th>Empresa</th><th>Ação</th></tr></thead><tbody>`+
-    pendentes.map(d=>{const u=d.data();return`<tr><td>${u.name||'–'}</td><td>${u.email||'–'}</td><td>${fmtDate(u.createdAt)}</td><td><select class="inline-select" id="pend-emp-${d.id}">${empresasOpts}</select></td><td><div class="action-row"><button class="btn-tbl-ok" onclick="activateUser('${d.id}')">✓ Ativar</button><button class="btn-tbl-del" onclick="rejectUser('${d.id}')">✗ Rejeitar</button></div></td></tr>`}).join('')+'</tbody></table>';
+  else pe.innerHTML=`<table class="tbl"><thead><tr><th>Nome</th><th>E-mail</th><th>Tipo</th><th>Cadastrado em</th><th>Empresa</th><th>Ação</th></tr></thead><tbody>`+
+    pendentes.map(d=>{const u=d.data();
+      const rolebadge=`<span class="badge ${roleBadgeClass(u.role)}">${roleLabel(u.role)}</span>`;
+      const empSelect=u.role==='contador'
+        ?`<select class="inline-select" id="pend-emp-${d.id}">${empresasOpts}</select>`
+        :`<select class="inline-select" id="pend-emp-${d.id}">${empresasOpts}</select>`;
+      return`<tr><td>${u.name||'–'}</td><td>${u.email||'–'}</td><td>${rolebadge}</td><td>${fmtDate(u.createdAt)}</td><td>${empSelect}</td><td><div class="action-row"><button class="btn-tbl-ok" onclick="activateUser('${d.id}')">✓ Ativar</button><button class="btn-tbl-del" onclick="rejectUser('${d.id}')">✗ Rejeitar</button></div></td></tr>`;
+    }).join('')+'</tbody></table>';
 
-  const us=await getDocs(query(collection(db,'users'),where('status','==','ativo'))).catch(()=>({docs:[]}));
+  // ── CLIENTES ──
+  const us=await getDocs(query(collection(db,'users'),where('status','==','ativo'),where('role','==','client'))).catch(()=>({docs:[]}));
   const ue=document.getElementById('adm-users');
-  const ativos=(us.docs||[]).filter(d=>!ADMIN_EMAILS.includes(d.data().email));
-  if(!ativos.length){ue.innerHTML='<div class="empty-st"><div class="ei">👥</div>Nenhum usuário ativo.</div>'}
+  const clientes=(us.docs||[]).filter(d=>!ADMIN_EMAILS.includes(d.data().email));
+  if(!clientes.length){ue.innerHTML='<div class="empty-st"><div class="ei">👥</div>Nenhum cliente ativo.</div>'}
   else ue.innerHTML=`<table class="tbl"><thead><tr><th>Nome</th><th>E-mail</th><th>Empresa atual</th><th>Cadastrado</th><th>Alterar Empresa</th></tr></thead><tbody>`+
-    ativos.map(d=>{const u=d.data();const sel=empresasOpts.replace(`value="${u.id_empresa}"`,`value="${u.id_empresa}" selected`);
+    clientes.map(d=>{const u=d.data();const sel=empresasOpts.replace(`value="${u.id_empresa}"`,`value="${u.id_empresa}" selected`);
       return`<tr><td>${u.name||'–'}</td><td>${u.email||'–'}</td><td>${u.empresa_nome||'–'}</td><td>${fmtDate(u.createdAt)}</td><td><div class="action-row"><select class="inline-select" id="usr-emp-${d.id}">${sel}</select><button class="btn-tbl" onclick="changeUserEmpresa('${d.id}')">Salvar</button></div></td></tr>`;
     }).join('')+'</tbody></table>';
 
+  // ── CONTADORES ──
+  const cs2=await getDocs(query(collection(db,'users'),where('status','==','ativo'),where('role','==','contador'))).catch(()=>({docs:[]}));
+  const contEl=document.getElementById('adm-contadores');
+  if(!cs2.docs?.length){contEl.innerHTML='<div class="empty-st"><div class="ei">📊</div>Nenhum contador ativo.</div>'}
+  else contEl.innerHTML=`<table class="tbl"><thead><tr><th>Nome</th><th>E-mail</th><th>Empresa vinculada</th><th>Cadastrado</th><th>Alterar Empresa</th></tr></thead><tbody>`+
+    cs2.docs.map(d=>{const u=d.data();const sel=empresasOpts.replace(`value="${u.id_empresa}"`,`value="${u.id_empresa}" selected`);
+      return`<tr><td>${u.name||'–'}</td><td>${u.email||'–'}</td><td>${u.empresa_nome||'–'}</td><td>${fmtDate(u.createdAt)}</td><td><div class="action-row"><select class="inline-select" id="usr-emp-${d.id}">${sel}</select><button class="btn-tbl" onclick="changeUserEmpresa('${d.id}')">Salvar</button></div></td></tr>`;
+    }).join('')+'</tbody></table>';
+
+  // ── TODOS OS ARQUIVOS ──
   const fs=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc'))).catch(()=>({docs:[]}));
   const fe=document.getElementById('adm-files');
   if(!fs.docs?.length){fe.innerHTML='<div class="empty-st"><div class="ei">📁</div>Nenhum arquivo.</div>'}
   else fe.innerHTML=`<table class="tbl"><thead><tr><th>Arquivo</th><th>Empresa</th><th>Data</th><th></th></tr></thead><tbody>`+
     fs.docs.map(d=>{const f=d.data();return`<tr><td>${f.name||'–'}</td><td>${f.empresa_nome||'–'}</td><td>${fmtDate(f.createdAt)}</td><td style="display:flex;gap:6px"><a class="btn-tbl" href="${f.url}" target="_blank">⬇ Baixar</a><button class="btn-tbl-del" onclick="openDel('file','${d.id}','${(f.name||'').replace(/'/g,"\\'")}')">🗑</button></td></tr>`}).join('')+'</tbody></table>';
 
-  const cs=await getDocs(query(collection(db,'contacts'),orderBy('createdAt','desc'))).catch(()=>({docs:[]}));
+  // ── CONTATOS ──
+  const contacts=await getDocs(query(collection(db,'contacts'),orderBy('createdAt','desc'))).catch(()=>({docs:[]}));
   const ce=document.getElementById('adm-contacts');
-  if(!cs.docs?.length){ce.innerHTML='<div class="empty-st"><div class="ei">📬</div>Nenhuma mensagem.</div>'}
+  if(!contacts.docs?.length){ce.innerHTML='<div class="empty-st"><div class="ei">📬</div>Nenhuma mensagem.</div>'}
   else ce.innerHTML=`<table class="tbl"><thead><tr><th>Nome</th><th>E-mail</th><th>Empresa</th><th>Assunto</th><th>Data</th><th>Status</th><th></th></tr></thead><tbody>`+
-    cs.docs.map(d=>{const c=d.data();return`<tr><td>${c.nome||'–'}</td><td>${c.email||'–'}</td><td>${c.empresa||'–'}</td><td>${c.assunto||'–'}</td><td>${fmtDate(c.createdAt)}</td><td><span class="badge ${c.lido?'bg-green':'bg-warn'}">${c.lido?'Lido':'Novo'}</span></td><td><button class="btn-tbl" onclick="markRead('${d.id}')">✓ Lido</button></td></tr>`}).join('')+'</tbody></table>';
+    contacts.docs.map(d=>{const c=d.data();return`<tr><td>${c.nome||'–'}</td><td>${c.email||'–'}</td><td>${c.empresa||'–'}</td><td>${c.assunto||'–'}</td><td>${fmtDate(c.createdAt)}</td><td><span class="badge ${c.lido?'bg-green':'bg-warn'}">${c.lido?'Lido':'Novo'}</span></td><td><button class="btn-tbl" onclick="markRead('${d.id}')">✓ Lido</button></td></tr>`}).join('')+'</tbody></table>';
 }
 
 window.activateUser=async(uid)=>{
   const empSel=document.getElementById('pend-emp-'+uid);
-  const id_empresa=empSel?.value||'';const empresa_nome=id_empresa?(empSel?.options[empSel.selectedIndex]?.text||''):'';
+  const id_empresa=empSel?.value||'';
+  const empresa_nome=id_empresa?(empSel?.options[empSel.selectedIndex]?.text||''):'';
   loading(true,'Ativando...');
   try{await updateDoc(doc(db,'users',uid),{status:'ativo',id_empresa,empresa_nome});toast('Usuário ativado!','ok');loadAdmin();loadAdminMetrics();loadEmpresasDropdown();}
   catch(e){toast('Erro: '+e.message,'err')}
@@ -819,7 +963,8 @@ window.rejectUser=async(uid)=>{
 
 window.changeUserEmpresa=async(uid)=>{
   const empSel=document.getElementById('usr-emp-'+uid);
-  const id_empresa=empSel?.value||'';const empresa_nome=id_empresa?(empSel?.options[empSel.selectedIndex]?.text||''):'';
+  const id_empresa=empSel?.value||'';
+  const empresa_nome=id_empresa?(empSel?.options[empSel.selectedIndex]?.text||''):'';
   loading(true,'Salvando...');
   try{await updateDoc(doc(db,'users',uid),{id_empresa,empresa_nome});toast('Empresa atualizada!','ok');loadAdmin();}
   catch(e){toast('Erro: '+e.message,'err')}
