@@ -717,8 +717,14 @@ window.showPanel=(id)=>{
 async function loadOverview(){
   let docs=[];
   try{
-    if(isAdmin){const snap=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc')));docs=snap.docs;}
-    else if(userData.id_empresa){const snap=await getDocs(query(collection(db,'files'),where('id_empresa','==',userData.id_empresa),orderBy('createdAt','desc')));docs=snap.docs;}
+    if(isAdmin){
+      const snap=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc')));docs=snap.docs;
+    } else if(userData.role==='contador'&&userData.empresas_ids?.length){
+      const snap=await getDocs(query(collection(db,'files'),where('id_empresa','in',userData.empresas_ids)));
+      docs=snap.docs.sort((a,b)=>(b.data().createdAt?.seconds||0)-(a.data().createdAt?.seconds||0));
+    } else if(userData.id_empresa){
+      const snap=await getDocs(query(collection(db,'files'),where('id_empresa','==',userData.id_empresa),orderBy('createdAt','desc')));docs=snap.docs;
+    }
   }catch(e){}
   document.getElementById('m-total').textContent=docs.length;
   const wk=new Date();wk.setDate(wk.getDate()-7);
@@ -734,8 +740,14 @@ async function loadFiles(){
   const el=document.getElementById('files-list');el.innerHTML='<div class="empty-st"><div class="ei">⏳</div>Carregando...</div>';
   try{
     let docs=[];
-    if(isAdmin){const snap=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc')));docs=snap.docs;}
-    else if(userData.id_empresa){const snap=await getDocs(query(collection(db,'files'),where('id_empresa','==',userData.id_empresa),orderBy('createdAt','desc')));docs=snap.docs;}
+    if(isAdmin){
+      const snap=await getDocs(query(collection(db,'files'),orderBy('createdAt','desc')));docs=snap.docs;
+    } else if(userData.role==='contador'&&userData.empresas_ids?.length){
+      const snap=await getDocs(query(collection(db,'files'),where('id_empresa','in',userData.empresas_ids)));
+      docs=snap.docs.sort((a,b)=>(b.data().createdAt?.seconds||0)-(a.data().createdAt?.seconds||0));
+    } else if(userData.id_empresa){
+      const snap=await getDocs(query(collection(db,'files'),where('id_empresa','==',userData.id_empresa),orderBy('createdAt','desc')));docs=snap.docs;
+    }
     allFiles=docs.map(d=>({id:d.id,...d.data()}));renderFiles(allFiles);
   }catch(e){el.innerHTML='<div class="empty-st"><div class="ei">⚠️</div>Erro ao carregar.</div>';}
 }
@@ -778,9 +790,9 @@ async function sendFileAlert({empresa_nome,file_name,file_url,id_empresa}){
     const empDoc=await getDoc(doc(db,'empresas',id_empresa));
     const empEmail=(empDoc.exists()?empDoc.data().email:'')||'';
 
-    // busca contadores vinculados à empresa
+    // busca contadores vinculados à empresa (via empresas_ids para suporte a multi-empresa)
     const contSnap=await getDocs(query(collection(db,'users'),
-      where('id_empresa','==',id_empresa),
+      where('empresas_ids','array-contains',id_empresa),
       where('role','==','contador'),
       where('status','==','ativo')));
     const contEmails=contSnap.docs.map(d=>d.data().email).filter(Boolean);
@@ -900,7 +912,8 @@ async function loadAdmin(){
 
   // opções de empresa para selects
   let empresasOpts='<option value="">Sem empresa</option>';
-  try{const es=await getDocs(query(collection(db,'empresas'),orderBy('nome')));empresasOpts+=es.docs.map(d=>`<option value="${d.id}">${d.data().nome}</option>`).join('');}catch(e){}
+  let empresasList=[];
+  try{const es=await getDocs(query(collection(db,'empresas'),orderBy('nome')));empresasList=es.docs.map(d=>({id:d.id,nome:d.data().nome}));empresasOpts+=empresasList.map(e=>`<option value="${e.id}">${e.nome}</option>`).join('');}catch(e){}
 
   // ── PENDENTES ──
   const ps=await getDocs(query(collection(db,'users'),where('status','==','pendente'))).catch(()=>({docs:[]}));
@@ -912,10 +925,10 @@ async function loadAdmin(){
   else pe.innerHTML=`<table class="tbl"><thead><tr><th>Nome</th><th>E-mail</th><th>Tipo</th><th>Cadastrado em</th><th>Empresa</th><th>Ação</th></tr></thead><tbody>`+
     pendentes.map(d=>{const u=d.data();
       const rolebadge=`<span class="badge ${roleBadgeClass(u.role)}">${roleLabel(u.role)}</span>`;
-      const empSelect=u.role==='contador'
-        ?`<select class="inline-select" id="pend-emp-${d.id}">${empresasOpts}</select>`
-        :`<select class="inline-select" id="pend-emp-${d.id}">${empresasOpts}</select>`;
-      return`<tr><td>${u.name||'–'}</td><td>${u.email||'–'}</td><td>${rolebadge}</td><td>${fmtDate(u.createdAt)}</td><td>${empSelect}</td><td><div class="action-row"><button class="btn-tbl-ok" onclick="activateUser('${d.id}')">✓ Ativar</button><button class="btn-tbl-del" onclick="rejectUser('${d.id}')">✗ Rejeitar</button></div></td></tr>`;
+      const empSelect= u.role==='contador'
+        ? buildMultiEmpresaSelect('pend-emp-'+d.id, empresasList, [])
+        : `<select class="inline-select" id="pend-emp-${d.id}">${empresasOpts}</select>`;
+      return`<tr><td>${u.name||'–'}</td><td>${u.email||'–'}</td><td>${rolebadge}</td><td>${fmtDate(u.createdAt)}</td><td>${empSelect}</td><td><div class="action-row"><button class="btn-tbl-ok" onclick="activateUser('${d.id}','${u.role||'client'}')">✓ Ativar</button><button class="btn-tbl-del" onclick="rejectUser('${d.id}')">✗ Rejeitar</button></div></td></tr>`;
     }).join('')+'</tbody></table>';
 
   // ── CLIENTES ──
@@ -933,8 +946,10 @@ async function loadAdmin(){
   const contEl=document.getElementById('adm-contadores');
   if(!cs2.docs?.length){contEl.innerHTML='<div class="empty-st"><div class="ei">📊</div>Nenhum contador ativo.</div>'}
   else contEl.innerHTML=`<table class="tbl"><thead><tr><th>Nome</th><th>E-mail</th><th>Empresa vinculada</th><th>Cadastrado</th><th>Alterar Empresa</th></tr></thead><tbody>`+
-    cs2.docs.map(d=>{const u=d.data();const sel=empresasOpts.replace(`value="${u.id_empresa}"`,`value="${u.id_empresa}" selected`);
-      return`<tr><td>${u.name||'–'}</td><td>${u.email||'–'}</td><td>${u.empresa_nome||'–'}</td><td>${fmtDate(u.createdAt)}</td><td><div class="action-row"><select class="inline-select" id="usr-emp-${d.id}">${sel}</select><button class="btn-tbl" onclick="changeUserEmpresa('${d.id}')">Salvar</button></div></td></tr>`;
+    cs2.docs.map(d=>{const u=d.data();
+      const empSelecionadas=(u.empresas||[]).map(e=>e.nome).join(', ')||'–';
+      const multiSel=buildMultiEmpresaSelect('usr-emp-'+d.id, empresasList, u.empresas_ids||[]);
+      return`<tr><td>${u.name||'–'}</td><td>${u.email||'–'}</td><td>${empSelecionadas}</td><td>${fmtDate(u.createdAt)}</td><td><div class="action-row">${multiSel}<button class="btn-tbl" onclick="saveContadorEmpresas('${d.id}')">Salvar</button></div></td></tr>`;
     }).join('')+'</tbody></table>';
 
   // ── TODOS OS ARQUIVOS ──
@@ -952,13 +967,48 @@ async function loadAdmin(){
     contacts.docs.map(d=>{const c=d.data();return`<tr><td>${c.nome||'–'}</td><td>${c.email||'–'}</td><td>${c.empresa||'–'}</td><td>${c.assunto||'–'}</td><td>${fmtDate(c.createdAt)}</td><td><span class="badge ${c.lido?'bg-green':'bg-warn'}">${c.lido?'Lido':'Novo'}</span></td><td><button class="btn-tbl" onclick="markRead('${d.id}')">✓ Lido</button></td></tr>`}).join('')+'</tbody></table>';
 }
 
-window.activateUser=async(uid)=>{
-  const empSel=document.getElementById('pend-emp-'+uid);
-  const id_empresa=empSel?.value||'';
-  const empresa_nome=id_empresa?(empSel?.options[empSel.selectedIndex]?.text||''):'';
+/* ── MULTI-EMPRESA (contadores) ── */
+function buildMultiEmpresaSelect(name, empresasList, selecionadas){
+  const checks=empresasList.map(e=>`
+    <label style="display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--text);padding:3px 0;cursor:pointer">
+      <input type="checkbox" name="${name}" value="${e.id}" data-nome="${e.nome}"
+        ${selecionadas.includes(e.id)?'checked':''} style="accent-color:var(--blue2)">
+      ${e.nome}
+    </label>`).join('');
+  return`<div style="border:1.5px solid var(--border);border-radius:8px;padding:7px 10px;min-width:180px;max-height:110px;overflow-y:auto;background:#fff">${checks||'<span style="color:var(--muted);font-size:.75rem">Nenhuma empresa</span>'}</div>`;
+}
+
+window.saveContadorEmpresas=async(uid)=>{
+  const checked=[...document.querySelectorAll(`input[name="usr-emp-${uid}"]:checked`)];
+  const empresas=checked.map(cb=>({id:cb.value,nome:cb.dataset.nome}));
+  const empresas_ids=empresas.map(e=>e.id);
+  loading(true,'Salvando...');
+  try{
+    await updateDoc(doc(db,'users',uid),{empresas,empresas_ids,id_empresa:'',empresa_nome:''});
+    toast('Empresas do contador atualizadas!','ok');loadAdmin();
+  }catch(e){toast('Erro: '+e.message,'err');}
+  loading(false);
+};
+
+window.activateUser=async(uid, role)=>{
   loading(true,'Ativando...');
-  try{await updateDoc(doc(db,'users',uid),{status:'ativo',id_empresa,empresa_nome});toast('Usuário ativado!','ok');loadAdmin();loadAdminMetrics();loadEmpresasDropdown();}
-  catch(e){toast('Erro: '+e.message,'err')}
+  try{
+    let update={status:'ativo'};
+    if(role==='contador'){
+      // coleta checkboxes marcados do multi-select
+      const checked=[...document.querySelectorAll(`input[name="pend-emp-${uid}"]:checked`)];
+      const empresas=checked.map(cb=>({id:cb.value,nome:cb.dataset.nome}));
+      const empresas_ids=empresas.map(e=>e.id);
+      update={...update,empresas,empresas_ids,id_empresa:'',empresa_nome:''};
+    } else {
+      const empSel=document.getElementById('pend-emp-'+uid);
+      const id_empresa=empSel?.value||'';
+      const empresa_nome=id_empresa?(empSel?.options[empSel.selectedIndex]?.text||''):'';
+      update={...update,id_empresa,empresa_nome};
+    }
+    await updateDoc(doc(db,'users',uid),update);
+    toast('Usuário ativado!','ok');loadAdmin();loadAdminMetrics();loadEmpresasDropdown();
+  }catch(e){toast('Erro: '+e.message,'err');}
   loading(false);
 };
 
